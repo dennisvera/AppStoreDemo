@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3906AB872442632B0032C263 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3906AB862442632B0032C263 /* BaseTabBarController.swift */; };
 		393FC0F7244005BF002E038B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393FC0F6244005BF002E038B /* AppDelegate.swift */; };
 		393FC0F9244005BF002E038B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393FC0F8244005BF002E038B /* SceneDelegate.swift */; };
 		393FC0FB244005BF002E038B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393FC0FA244005BF002E038B /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3906AB862442632B0032C263 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		393FC0F3244005BF002E038B /* AppStoreDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppStoreDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		393FC0F6244005BF002E038B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		393FC0F8244005BF002E038B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				393FC0F6244005BF002E038B /* AppDelegate.swift */,
 				393FC0F8244005BF002E038B /* SceneDelegate.swift */,
 				393FC0FA244005BF002E038B /* ViewController.swift */,
+				3906AB862442632B0032C263 /* BaseTabBarController.swift */,
 				393FC0FC244005BF002E038B /* Main.storyboard */,
 				393FC0FF244005C3002E038B /* Assets.xcassets */,
 				393FC101244005C3002E038B /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3906AB872442632B0032C263 /* BaseTabBarController.swift in Sources */,
 				393FC0FB244005BF002E038B /* ViewController.swift in Sources */,
 				393FC0F7244005BF002E038B /* AppDelegate.swift in Sources */,
 				393FC0F9244005BF002E038B /* SceneDelegate.swift in Sources */,
