@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SnapKit
 
 class SearchResultCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  let imageView: UIImageView = {
+  let appIconImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.backgroundColor = .red
     imageView.widthAnchor.constraint(equalToConstant: 64).isActive = true
@@ -44,38 +45,61 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     button.setTitle("GET", for: .normal)
     button.setTitleColor(.blue, for: .normal)
     button.titleLabel?.font = .boldSystemFont(ofSize: 14)
-    button.backgroundColor = .darkGray
+    button.backgroundColor = UIColor(white: 0.95, alpha: 1)
     button.widthAnchor.constraint(equalToConstant: 80).isActive = true
+    button.heightAnchor.constraint(equalToConstant: 32).isActive = true
+    button.layer.cornerRadius = 16
     return button
   }()
+
+  lazy var screenshot1ImageView = createScreenShotImage()
+  lazy var screenshot2ImageView = createScreenShotImage()
+  lazy var screenshot3ImageView = createScreenShotImage()
+
 
   // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    let labelsStackView = UIStackView(arrangedSubviews: [
-    nameLabel, categoryLabel, ratingsLabel])
-    labelsStackView.axis = .vertical
-
-    let stackView = UIStackView(arrangedSubviews: [
-      imageView, labelsStackView, getButton
-    ])
-    stackView.spacing = 12
-    stackView.axis = .horizontal
-    stackView.alignment = .center
-
-    addSubview(stackView)
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-    stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-
-    backgroundColor = .yellow
+    // Setup Views
+    setupViews()
   }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: Helper Methods
+
+  private func setupViews() {
+    let labelsStackView = UIStackView(arrangedSubviews: [nameLabel, categoryLabel, ratingsLabel])
+    labelsStackView.axis = .vertical
+
+    let infoTopStackView = UIStackView(arrangedSubviews: [appIconImageView, labelsStackView, getButton])
+    infoTopStackView.spacing = 12
+    infoTopStackView.axis = .horizontal
+    infoTopStackView.alignment = .center
+
+    let screenShotsStackView = UIStackView(arrangedSubviews: [screenshot1ImageView, screenshot2ImageView, screenshot3ImageView])
+    screenShotsStackView.axis = .horizontal
+    screenShotsStackView.spacing = 12
+    screenShotsStackView.distribution = .fillEqually
+
+    let overallStackView = UIStackView(arrangedSubviews: [infoTopStackView, screenShotsStackView])
+    overallStackView.axis = .vertical
+    overallStackView.spacing = 6
+
+    addSubview(overallStackView)
+    overallStackView.snp.makeConstraints { make in
+      make.top.leading.equalToSuperview().offset(16)
+      make.bottom.trailing.equalToSuperview().offset(-16)
+    }
+  }
+
+  private func createScreenShotImage() -> UIImageView {
+    let imageView = UIImageView()
+    imageView.backgroundColor = .blue
+    return imageView
   }
 }
