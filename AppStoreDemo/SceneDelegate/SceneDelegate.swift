@@ -10,7 +10,11 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+  // MARK: - Properties
+
   var window: UIWindow?
+
+  // MARK: - Application Life Cycle
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     if let windowScene = scene as? UIWindowScene {

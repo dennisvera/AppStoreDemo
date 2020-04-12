@@ -1,5 +1,5 @@
 //
-//  AppsSearchViewController.swift
+//  SearchViewController.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 4/12/20.
@@ -8,16 +8,13 @@
 
 import UIKit
 
-class AppsSearchViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class SearchViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+
+  // MARK: - Properties
 
   fileprivate let cellId = "AppsSearchId"
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    collectionView.backgroundColor = .white
-    collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-  }
+  // MARK: - Initialization
 
   init() {
     super.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -26,6 +23,17 @@ class AppsSearchViewController: UICollectionViewController, UICollectionViewDele
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  // MARK: - View Life Cycle
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    collectionView.backgroundColor = .white
+    collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+  }
+
+  // MARK: - Helper Methods
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: view.frame.width, height: 250)

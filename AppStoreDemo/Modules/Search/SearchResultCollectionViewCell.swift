@@ -10,6 +10,8 @@ import UIKit
 
 class SearchResultCollectionViewCell: UICollectionViewCell {
 
+  // MARK: - Properties
+
   let imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.backgroundColor = .red
@@ -46,6 +48,8 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     button.widthAnchor.constraint(equalToConstant: 80).isActive = true
     return button
   }()
+
+  // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
