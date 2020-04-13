@@ -13,6 +13,7 @@ class SearchViewController: UICollectionViewController, UICollectionViewDelegate
   // MARK: - Properties
 
   fileprivate let cellId = "AppsSearchId"
+  fileprivate var searchResults = [Result]()
 
   // MARK: - Initialization
 
@@ -38,24 +39,18 @@ class SearchViewController: UICollectionViewController, UICollectionViewDelegate
   // MARK: - Helper Methods
 
   fileprivate func fetchItunesApps() {
-    let urlString = "https://itunes.apple.com/search?term=instagram&entity=software"
-    guard let url = URL(string: urlString) else { return }
-
-    URLSession.shared.dataTask(with: url) { (data, response, error) in
+    ItunesClient.shared.fetchApps { results, error in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
 
-      guard let data = data else { return }
+      self.searchResults = results
 
-      do {
-        let searchResult = try JSONDecoder().decode(SearchResults.self, from: data)
-        searchResult.results.forEach({print($0.trackName, $0.primaryGenreName)})
-      } catch let jsonError {
-        print("Failed to Decode JSON: ", jsonError)
+      DispatchQueue.main.async {
+        self.collectionView.reloadData()
       }
-    }.resume()
+    }
   }
 
   // MARK: - CollectionView Delegate
@@ -65,11 +60,17 @@ class SearchViewController: UICollectionViewController, UICollectionViewDelegate
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 5
+    return searchResults.count
   }
 
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResultCollectionViewCell
+
+    let searchResult = searchResults[indexPath.item]
+    cell.nameLabel.text = searchResult.trackName
+    cell.categoryLabel.text = searchResult.primaryGenreName
+    cell.ratingsLabel.text = "\(searchResult.averageUserRating ?? 0)"
+
     return cell
   }
 }
