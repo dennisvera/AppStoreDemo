@@ -6,4 +6,7 @@ target 'AppStoreDemo' do
   # Snapkit
   pod 'SnapKit', '~> 5.0.0'
 
+  # SDWebImage
+  pod 'SDWebImage', '~> 5.0'
+
 end

@@ -76,12 +76,12 @@
 			path = Modules;
 			sourceTree = "<group>";
 		};
-		3906AB9224439FB50032C263 /* Root View Controller */ = {
+		3906AB9224439FB50032C263 /* Root TabBar Controller */ = {
 			isa = PBXGroup;
 			children = (
 				3906AB862442632B0032C263 /* BaseTabBarController.swift */,
 			);
-			path = "Root View Controller";
+			path = "Root TabBar Controller";
 			sourceTree = "<group>";
 		};
 		3906AB932443A0150032C263 /* Search */ = {
@@ -162,10 +162,10 @@
 		393FC0F5244005BF002E038B /* AppStoreDemo */ = {
 			isa = PBXGroup;
 			children = (
-				3906AB9B244522D10032C263 /* Networking */,
 				3906AB8A244374C80032C263 /* AppDelegate */,
 				3906AB8B244374D90032C263 /* SceneDelegate */,
-				3906AB9224439FB50032C263 /* Root View Controller */,
+				3906AB9224439FB50032C263 /* Root TabBar Controller */,
+				3906AB9B244522D10032C263 /* Networking */,
 				3906AB982443E8510032C263 /* Models */,
 				3906AB8F244394840032C263 /* Modules */,
 				3906AB962443A1EB0032C263 /* Resources */,
