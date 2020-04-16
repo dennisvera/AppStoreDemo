@@ -12,8 +12,9 @@ class ItunesClient {
 
   static let shared = ItunesClient()
 
-  func fetchApps(completion: @escaping ([Result], Error?) -> ()) {
-    let urlString = "https://itunes.apple.com/search?term=instagram&entity=software"
+  func fetchApps(searchTerm: String, completion: @escaping ([Result], Error?) -> ()) {
+    guard let search = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return }
+    let urlString = "https://itunes.apple.com/search?term=\(search)&entity=software"
     guard let url = URL(string: urlString) else { return }
 
     URLSession.shared.dataTask(with: url) { (data, response, error) in
