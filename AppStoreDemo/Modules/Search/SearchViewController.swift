@@ -8,15 +8,16 @@
 
 import UIKit
 import SDWebImage
+import SnapKit
 
-class SearchViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class SearchViewController: UICollectionViewController, UISearchBarDelegate {
 
   // MARK: - Properties
 
   fileprivate var searchResults = [Result]()
   fileprivate var timer: Timer?
 
-  fileprivate let cellId = "AppsSearchId"
+  fileprivate let cellId = "AppsSearchCellId"
   fileprivate let searchController = UISearchController(searchResultsController: nil)
   fileprivate let enterSearchaTermLabel: UILabel = {
     let label = UILabel()
@@ -96,6 +97,9 @@ class SearchViewController: UICollectionViewController, UICollectionViewDelegate
       make.trailing.equalTo(-50)
     }
   }
+}
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
   // MARK: - CollectionView Delegate
 
