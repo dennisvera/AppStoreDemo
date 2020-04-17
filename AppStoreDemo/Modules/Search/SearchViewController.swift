@@ -103,7 +103,10 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
   // MARK: - CollectionView Delegate
 
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+
     return CGSize(width: view.frame.width, height: 350)
   }
 
@@ -114,8 +117,10 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     return searchResults.count
   }
 
-  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResultCollectionViewCell
+  override func collectionView(_ collectionView: UICollectionView,
+                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId,
+                                                  for: indexPath) as! SearchResultCollectionViewCell
     cell.searchResult = searchResults[indexPath.item]
 
     return cell

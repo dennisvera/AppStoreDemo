@@ -101,7 +101,9 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     infoTopStackView.axis = .horizontal
     infoTopStackView.alignment = .center
 
-    let screenShotsStackView = UIStackView(arrangedSubviews: [screenshot1ImageView, screenshot2ImageView, screenshot3ImageView])
+    let screenShotsStackView = UIStackView(arrangedSubviews: [screenshot1ImageView,
+                                                              screenshot2ImageView,
+                                                              screenshot3ImageView])
     screenShotsStackView.axis = .horizontal
     screenShotsStackView.spacing = 12
     screenShotsStackView.distribution = .fillEqually

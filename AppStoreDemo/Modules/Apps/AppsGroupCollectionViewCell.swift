@@ -13,7 +13,8 @@ class AppsGroupCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  let titleLabels = UILabel(text: "App Section", font: .boldSystemFont(ofSize: 30))
+  let titleLabels = UILabel(text: "App Section",
+                            font: .boldSystemFont(ofSize: 30))
 
   let horizontalViewController = AppsHorizontalViewController()
 
