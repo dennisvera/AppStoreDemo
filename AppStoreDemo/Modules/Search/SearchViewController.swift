@@ -17,7 +17,7 @@ class SearchViewController: UICollectionViewController, UISearchBarDelegate {
   fileprivate var searchResults = [Result]()
   fileprivate var timer: Timer?
 
-  fileprivate let cellId = "AppsSearchCellId"
+  fileprivate let cellIdentifier = "AppsSearchCellId"
   fileprivate let searchController = UISearchController(searchResultsController: nil)
   fileprivate let enterSearchaTermLabel: UILabel = {
     let label = UILabel()
@@ -42,8 +42,9 @@ class SearchViewController: UICollectionViewController, UISearchBarDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    // Register Collection View Cell
+    collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
     collectionView.backgroundColor = .white
-    collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
 
     fetchItunesApps()
     setupSearchBar()
@@ -119,7 +120,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
                                                   for: indexPath) as! SearchResultCollectionViewCell
     cell.searchResult = searchResults[indexPath.item]
 

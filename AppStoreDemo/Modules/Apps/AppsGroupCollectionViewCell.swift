@@ -13,8 +13,12 @@ class AppsGroupCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  let titleLabels = UILabel(text: "App Section",
-                            font: .boldSystemFont(ofSize: 30))
+  let titleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "App Section"
+    label.font = .boldSystemFont(ofSize: 30)
+    return label
+  }()
 
   let horizontalViewController = AppsHorizontalViewController()
 
@@ -23,7 +27,6 @@ class AppsGroupCollectionViewCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    backgroundColor = .yellow
     setupViews()
   }
 
@@ -33,17 +36,17 @@ class AppsGroupCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Helper Methods
 
-  func setupViews() {
-
-    addSubview(titleLabels)
-    titleLabels.snp.makeConstraints { make in
-      make.top.leading.equalToSuperview()
+  fileprivate func setupViews() {
+    addSubview(titleLabel)
+    titleLabel.snp.makeConstraints { make in
+      make.top.equalToSuperview()
+      make.leading.equalTo(16)
     }
 
     addSubview(horizontalViewController.view)
     horizontalViewController.view.backgroundColor = .red
     horizontalViewController.view.snp.makeConstraints { make in
-      make.top.equalTo(titleLabels.snp.bottom)
+      make.top.equalTo(titleLabel.snp.bottom)
       make.leading.trailing.bottom.equalToSuperview()
     }
   }

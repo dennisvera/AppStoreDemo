@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   // MARK: - Properties
@@ -19,8 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     if let windowScene = scene as? UIWindowScene {
       window = UIWindow(windowScene: windowScene)
-      window?.rootViewController = BaseTabBarController()
       window?.makeKeyAndVisible()
+      window?.rootViewController = BaseTabBarController()
     }
   }
 

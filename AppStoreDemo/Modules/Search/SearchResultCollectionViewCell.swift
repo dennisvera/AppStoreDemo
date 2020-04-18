@@ -15,10 +15,11 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
 
   let appIconImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.widthAnchor.constraint(equalToConstant: 64).isActive = true
-    imageView.heightAnchor.constraint(equalToConstant: 64).isActive = true
     imageView.layer.cornerRadius = 12
     imageView.clipsToBounds = true
+    imageView.contentMode = .scaleAspectFill
+    imageView.widthAnchor.constraint(equalToConstant: 64).isActive = true
+    imageView.heightAnchor.constraint(equalToConstant: 64).isActive = true
     return imageView
   }()
 
@@ -46,9 +47,9 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     button.setTitleColor(.blue, for: .normal)
     button.titleLabel?.font = .boldSystemFont(ofSize: 14)
     button.backgroundColor = UIColor(white: 0.95, alpha: 1)
+    button.layer.cornerRadius = 16
     button.widthAnchor.constraint(equalToConstant: 80).isActive = true
     button.heightAnchor.constraint(equalToConstant: 32).isActive = true
-    button.layer.cornerRadius = 16
     return button
   }()
 
@@ -108,12 +109,12 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     screenShotsStackView.spacing = 12
     screenShotsStackView.distribution = .fillEqually
 
-    let overallStackView = UIStackView(arrangedSubviews: [infoTopStackView, screenShotsStackView])
-    overallStackView.axis = .vertical
-    overallStackView.spacing = 6
+    let mainStackView = UIStackView(arrangedSubviews: [infoTopStackView, screenShotsStackView])
+    mainStackView.axis = .vertical
+    mainStackView.spacing = 6
 
-    addSubview(overallStackView)
-    overallStackView.snp.makeConstraints { make in
+    addSubview(mainStackView)
+    mainStackView.snp.makeConstraints { make in
       make.top.leading.equalToSuperview().offset(16)
       make.bottom.trailing.equalToSuperview().offset(-16)
     }

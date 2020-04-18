@@ -19,6 +19,7 @@
 		39EA7E7F2449498B004D1E20 /* AppsGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E7E2449498B004D1E20 /* AppsGroupCollectionViewCell.swift */; };
 		39EA7E8224494D47004D1E20 /* UILabels+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E8124494D47004D1E20 /* UILabels+Helpers.swift */; };
 		39EA7E8424495124004D1E20 /* AppsHorizontalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E8324495124004D1E20 /* AppsHorizontalViewController.swift */; };
+		39EA7E86244B801E004D1E20 /* AppsRowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E85244B801E004D1E20 /* AppsRowCollectionViewCell.swift */; };
 		9604B61CDE84056806ECA702 /* Pods_AppStoreDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		39EA7E7E2449498B004D1E20 /* AppsGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsGroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		39EA7E8124494D47004D1E20 /* UILabels+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabels+Helpers.swift"; sourceTree = "<group>"; };
 		39EA7E8324495124004D1E20 /* AppsHorizontalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHorizontalViewController.swift; sourceTree = "<group>"; };
+		39EA7E85244B801E004D1E20 /* AppsRowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsRowCollectionViewCell.swift; sourceTree = "<group>"; };
 		95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F861CCC9D2ACE370147698CB /* Pods-AppStoreDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreDemo.release.xcconfig"; path = "Target Support Files/Pods-AppStoreDemo/Pods-AppStoreDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +186,7 @@
 				39EA7E7C2449454D004D1E20 /* AppsViewController.swift */,
 				39EA7E7E2449498B004D1E20 /* AppsGroupCollectionViewCell.swift */,
 				39EA7E8324495124004D1E20 /* AppsHorizontalViewController.swift */,
+				39EA7E85244B801E004D1E20 /* AppsRowCollectionViewCell.swift */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				39EA7E7D2449454D004D1E20 /* AppsViewController.swift in Sources */,
 				3906AB89244374920032C263 /* SearchViewController.swift in Sources */,
 				393FC0F9244005BF002E038B /* SceneDelegate.swift in Sources */,
+				39EA7E86244B801E004D1E20 /* AppsRowCollectionViewCell.swift in Sources */,
 				39EA7E8224494D47004D1E20 /* UILabels+Helpers.swift in Sources */,
 				3906AB9A2443E86D0032C263 /* SearchResults.swift in Sources */,
 				39EA7E8424495124004D1E20 /* AppsHorizontalViewController.swift in Sources */,

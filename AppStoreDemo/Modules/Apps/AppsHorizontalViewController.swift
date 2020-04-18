@@ -12,7 +12,7 @@ class AppsHorizontalViewController: UICollectionViewController {
 
   // MARK: - Properties
 
-  let cellId = "cellId"
+  let cellIdentifier = "cellId"
 
   // MARK: - Initialization
 
@@ -29,9 +29,11 @@ class AppsHorizontalViewController: UICollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    collectionView.backgroundColor = .lightGray
-    collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+    // Register Collection View Cell
+    collectionView.register(AppsRowCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+    collectionView.backgroundColor = .white
 
+    // Set Collection View Scroll Direction
     if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
       layout.scrollDirection = .horizontal
     }
@@ -49,8 +51,8 @@ extension AppsHorizontalViewController: UICollectionViewDelegateFlowLayout {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-    cell.backgroundColor = .cyan
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
+                                                  for: indexPath) as! AppsRowCollectionViewCell
 
     return cell
   }
@@ -59,10 +61,10 @@ extension AppsHorizontalViewController: UICollectionViewDelegateFlowLayout {
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     let sectionLineSpacing: CGFloat = 20
-    let sectionInsetTopAndBottom: CGFloat = 24
-    let height = (view.frame.height - sectionInsetTopAndBottom - sectionLineSpacing) / 3
+    let sectionInsetTopBottomPadding: CGFloat = 24
+    let height = (view.frame.height - sectionInsetTopBottomPadding - sectionLineSpacing) / 3
     
-    return .init(width: view.frame.width, height: height)
+    return .init(width: view.frame.width - 48, height: height)
   }
 
   func collectionView(_ collectionView: UICollectionView,
@@ -78,5 +80,4 @@ extension AppsHorizontalViewController: UICollectionViewDelegateFlowLayout {
 
     return .init(top: 12, left: 16, bottom: 12, right: 16)
   }
-
 }
