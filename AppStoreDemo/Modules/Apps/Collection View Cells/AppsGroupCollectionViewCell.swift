@@ -20,7 +20,7 @@ class AppsGroupCollectionViewCell: UICollectionViewCell {
     return label
   }()
 
-  let horizontalViewController = AppsHorizontalViewController()
+  let horizontalViewController = AppsHorizontalCollectionViewController()
 
   // MARK: - Initialization
 

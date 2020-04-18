@@ -1,16 +1,16 @@
 //
-//  AppsHorizontalViewController.swift
+//  AppsHeaderHorizontalCollectionViewController.swift
 //  AppStoreDemo
 //
-//  Created by Dennis Vera on 4/16/20.
+//  Created by Dennis Vera on 4/18/20.
 //  Copyright © 2020 Dennis Vera. All rights reserved.
 //
 
 import UIKit
 
-class AppsHorizontalViewController: UICollectionViewController {
+class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
 
-  // MARK: - Properties
+  // MARK: Properties
 
   let cellIdentifier = "cellId"
 
@@ -29,55 +29,56 @@ class AppsHorizontalViewController: UICollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Register Collection View Cell
-    collectionView.register(AppsRowCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
-    collectionView.backgroundColor = .white
+    setupCollectionView()
+  }
 
-    // Set Collection View Scroll Direction
+  // MARK: - Helper Methods
+
+  fileprivate func setupCollectionView() {
+    collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+    collectionView.backgroundColor = .white
+    collectionView.showsHorizontalScrollIndicator = false
+
+    // Set Collection View Scroll Direction to Horizontal
     if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
       layout.scrollDirection = .horizontal
     }
   }
 }
 
-extension AppsHorizontalViewController: UICollectionViewDelegateFlowLayout {
+// MARK: - CollectionView Delegate
 
-  // MARK: - CollectionView Delegate
+extension AppsHeaderHorizontalCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-    return 5
+    return 3
   }
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
-                                                  for: indexPath) as! AppsRowCollectionViewCell
-
+                                                  for: indexPath) as! AppsHeaderCollectionViewCell
+    
     return cell
   }
+}
+
+// MARK: - CollectionView Delegate Flow Layout
+
+extension AppsHeaderHorizontalCollectionViewController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let sectionLineSpacing: CGFloat = 20
-    let sectionInsetTopBottomPadding: CGFloat = 24
-    let height = (view.frame.height - sectionInsetTopBottomPadding - sectionLineSpacing) / 3
-    
-    return .init(width: view.frame.width - 48, height: height)
-  }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-
-    return 10
+    return .init(width: view.frame.width - 48, height: view.frame.height)
   }
 
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       insetForSectionAt section: Int) -> UIEdgeInsets {
 
-    return .init(top: 12, left: 16, bottom: 12, right: 16)
+    return .init(top: 0, left: 16, bottom: 0, right: 0)
   }
 }
