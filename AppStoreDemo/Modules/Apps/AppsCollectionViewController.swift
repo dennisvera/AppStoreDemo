@@ -15,7 +15,7 @@ class AppsCollectionViewController: UICollectionViewController {
 
   private let reuseIdentifier = "reuseIdentifier"
   private let headerIdentification = "HeaderId"
-  private var musicResults = [FeedResult]()
+  private var appsFeedGroup: FeedGroup?
 
   // MARK: - Initialization
 
@@ -57,10 +57,7 @@ class AppsCollectionViewController: UICollectionViewController {
         return
       }
 
-      if let results = results {
-        self.musicResults = results.feed.results
-        print(self.musicResults)
-      }
+      self.appsFeedGroup = results
 
       DispatchQueue.main.async {
         self.collectionView.reloadData()
@@ -83,6 +80,9 @@ extension AppsCollectionViewController {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath) as! AppsGroupCollectionViewCell
 
+    cell.titleLabel.text = appsFeedGroup?.feed.title
+    cell.horizontalViewController.appsFeedGroup = appsFeedGroup
+    cell.horizontalViewController.collectionView.reloadData()
     return cell
   }
 }

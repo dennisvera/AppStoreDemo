@@ -13,32 +13,31 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  private let appIconImageView: UIImageView = {
+  let appIconImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
     imageView.widthAnchor.constraint(equalToConstant: 64).isActive = true
     imageView.heightAnchor.constraint(equalToConstant: 64).isActive = true
-    imageView.backgroundColor = .purple
     return imageView
   }()
 
-  private let nameLabel: UILabel = {
+  let nameLabel: UILabel = {
     let label = UILabel()
     label.text = "App Name"
     label.font = .systemFont(ofSize: 20)
     return label
   }()
 
-  private let companyLabel: UILabel = {
+  let companyLabel: UILabel = {
     let label = UILabel()
     label.text = "Company Name"
     label.font = .systemFont(ofSize: 13)
     return label
   }()
 
-  private let getBUtton: UIButton = {
+  let getBUtton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle("GET", for: .normal)
     button.setTitleColor(.blue, for: .normal)

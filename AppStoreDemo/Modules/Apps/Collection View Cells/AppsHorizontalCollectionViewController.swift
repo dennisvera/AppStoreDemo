@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SDWebImage
 
 class AppsHorizontalCollectionViewController: UICollectionViewController {
 
   // MARK: - Properties
 
   private let reuseIdentifier = "reuseIdentifier"
+
+  var appsFeedGroup: FeedGroup?
 
   // MARK: - Initialization
 
@@ -50,14 +53,20 @@ class AppsHorizontalCollectionViewController: UICollectionViewController {
 extension AppsHorizontalCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    guard let count = appsFeedGroup?.feed.results.count else { return 0 }
 
-    return 5
+    return count
   }
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath) as! AppsRowCollectionViewCell
+
+    let app = appsFeedGroup?.feed.results[indexPath.row]
+    cell.nameLabel.text = app?.artistName
+    cell.companyLabel.text = app?.name
+    cell.appIconImageView.sd_setImage(with: URL(string: app?.artworkUrl100 ?? ""))
 
     return cell
   }

@@ -59,7 +59,7 @@ class ItunesClient {
   // MARK: - Public API
 
   func fetchMusic(completion: @escaping (FeedGroup?, Error?) -> Void) {
-    let urlString = "https://rss.itunes.apple.com/api/v1/us/itunes-music/new-music/all/50/explicit.json"
+    let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/50/explicit.json"
     guard let url = URL(string: urlString) else { return }
 
     // Initialize and Initiate Data Task
