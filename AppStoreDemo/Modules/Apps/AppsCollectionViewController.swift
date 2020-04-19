@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class AppsCollectionViewController: UICollectionViewController {
 
@@ -14,6 +15,7 @@ class AppsCollectionViewController: UICollectionViewController {
 
   private let reuseIdentifier = "reuseIdentifier"
   private let headerIdentification = "HeaderId"
+  private var musicResults = [FeedResult]()
 
   // MARK: - Initialization
 
@@ -31,7 +33,11 @@ class AppsCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
 
     setupCollectionView()
+    fetchItunesMusic()
   }
+
+
+  // MARK: - Helper Mehtods
 
   private func setupCollectionView() {
     // Register Collection View Cell
@@ -42,6 +48,24 @@ class AppsCollectionViewController: UICollectionViewController {
     collectionView.register(AppsHeaderReusableView.self,
                             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                             withReuseIdentifier: headerIdentification)
+  }
+
+  private func fetchItunesMusic() {
+    ItunesClient.shared.fetchMusic { (results, error) in
+      if let error = error {
+        print("Failed to Fetch Music: ", error)
+        return
+      }
+
+      if let results = results {
+        self.musicResults = results.feed.results
+        print(self.musicResults)
+      }
+
+      DispatchQueue.main.async {
+        self.collectionView.reloadData()
+      }
+    }
   }
 }
 

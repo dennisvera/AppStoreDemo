@@ -23,6 +23,7 @@
 		39EA7E8C244BB092004D1E20 /* AppsHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E8B244BB092004D1E20 /* AppsHeaderReusableView.swift */; };
 		39EA7E8E244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E8D244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift */; };
 		39EA7E92244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E91244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift */; };
+		39EA7E97244CD46F004D1E20 /* FeedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E96244CD46F004D1E20 /* FeedResults.swift */; };
 		9604B61CDE84056806ECA702 /* Pods_AppStoreDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		39EA7E8B244BB092004D1E20 /* AppsHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHeaderReusableView.swift; sourceTree = "<group>"; };
 		39EA7E8D244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHeaderHorizontalCollectionViewController.swift; sourceTree = "<group>"; };
 		39EA7E91244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		39EA7E96244CD46F004D1E20 /* FeedResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedResults.swift; sourceTree = "<group>"; };
 		95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F861CCC9D2ACE370147698CB /* Pods-AppStoreDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreDemo.release.xcconfig"; path = "Target Support Files/Pods-AppStoreDemo/Pods-AppStoreDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				3906AB992443E86D0032C263 /* SearchResults.swift */,
+				39EA7E96244CD46F004D1E20 /* FeedResults.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 			files = (
 				3906AB872442632B0032C263 /* BaseTabBarController.swift in Sources */,
 				3906AB91244394B70032C263 /* SearchResultCollectionViewCell.swift in Sources */,
+				39EA7E97244CD46F004D1E20 /* FeedResults.swift in Sources */,
 				39EA7E7F2449498B004D1E20 /* AppsGroupCollectionViewCell.swift in Sources */,
 				393FC0F7244005BF002E038B /* AppDelegate.swift in Sources */,
 				3906AB9E2445233D0032C263 /* ItunesClient.swift in Sources */,
