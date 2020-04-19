@@ -16,6 +16,10 @@ class AppsCollectionViewController: UICollectionViewController {
   private let reuseIdentifier = "reuseIdentifier"
   private let headerIdentification = "HeaderId"
   private var appsFeedGroup: FeedGroup?
+  private var appGroups = [FeedGroup]()
+  private var group1: FeedGroup?
+  private var group2: FeedGroup?
+  private var group3: FeedGroup?
 
   // MARK: - Initialization
 
@@ -33,7 +37,7 @@ class AppsCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
 
     setupCollectionView()
-    fetchItunesMusic()
+    fetchAppGroup()
   }
 
 
@@ -50,18 +54,56 @@ class AppsCollectionViewController: UICollectionViewController {
                             withReuseIdentifier: headerIdentification)
   }
 
-  private func fetchItunesMusic() {
-    ItunesClient.shared.fetchMusic { (results, error) in
+  private func fetchAppGroup() {
+    let dispatchGroup = DispatchGroup()
+
+    dispatchGroup.enter()
+    ItunesClient.shared.fetcNewApps { (appGroup, error) in
       if let error = error {
         print("Failed to Fetch Music: ", error)
         return
       }
 
-      self.appsFeedGroup = results
+      dispatchGroup.leave()
+      self.group1 = appGroup
+    }
 
-      DispatchQueue.main.async {
-        self.collectionView.reloadData()
+    dispatchGroup.enter()
+    ItunesClient.shared.fetcTopGrossingApps { (appGroup, error) in
+      if let error = error {
+        print("Failed to Fetch Music: ", error)
+        return
       }
+
+      dispatchGroup.leave()
+      self.group2 = appGroup
+    }
+
+    dispatchGroup.enter()
+    ItunesClient.shared.fetcTopFreeApps { (appGroup, error) in
+      if let error = error {
+        print("Failed to Fetch Music: ", error)
+        return
+      }
+
+      dispatchGroup.leave()
+      self.group3 = appGroup
+    }
+
+    dispatchGroup.notify(queue: .main) {
+      if let group = self.group1 {
+        self.appGroups.append(group)
+      }
+
+      if let group = self.group2 {
+        self.appGroups.append(group)
+      }
+
+      if let group = self.group3 {
+        self.appGroups.append(group)
+      }
+
+      self.collectionView.reloadData()
     }
   }
 }
@@ -72,7 +114,7 @@ extension AppsCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-    return 5
+    return appGroups.count
   }
 
   override func collectionView(_ collectionView: UICollectionView,
@@ -80,9 +122,11 @@ extension AppsCollectionViewController {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath) as! AppsGroupCollectionViewCell
 
-    cell.titleLabel.text = appsFeedGroup?.feed.title
-    cell.horizontalViewController.appsFeedGroup = appsFeedGroup
+    let appGroup = appGroups[indexPath.item]
+    cell.titleLabel.text = appGroup.feed.title
+    cell.horizontalViewController.appsFeedGroup = appGroup
     cell.horizontalViewController.collectionView.reloadData()
+
     return cell
   }
 }

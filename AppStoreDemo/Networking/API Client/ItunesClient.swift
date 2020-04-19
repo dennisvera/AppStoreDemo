@@ -58,8 +58,27 @@ class ItunesClient {
 
   // MARK: - Public API
 
-  func fetchMusic(completion: @escaping (FeedGroup?, Error?) -> Void) {
-    let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/50/explicit.json"
+  func fetcNewApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
+    let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/25/explicit.json"
+
+    fetchAppGroup(urlString: urlString, completion: completion)
+  }
+
+  func fetcTopGrossingApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
+    let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-grossing/all/25/explicit.json"
+
+    fetchAppGroup(urlString: urlString, completion: completion)
+  }
+
+  func fetcTopFreeApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
+    let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-free/all/25/explicit.json"
+
+    fetchAppGroup(urlString: urlString, completion: completion)
+  }
+
+  // MARK: - API Helper Method
+
+  private func fetchAppGroup(urlString: String, completion: @escaping (FeedGroup?, Error?) -> Void) {
     guard let url = URL(string: urlString) else { return }
 
     // Initialize and Initiate Data Task
@@ -94,7 +113,6 @@ class ItunesClient {
         // Invoke Handler
         completion(nil, jsonError)
       }
-
     }.resume()
   }
 }
