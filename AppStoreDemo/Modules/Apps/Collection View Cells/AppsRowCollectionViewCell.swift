@@ -13,7 +13,7 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  let appIconImageView: UIImageView = {
+  private let appIconImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
@@ -24,21 +24,21 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
     return imageView
   }()
 
-  let nameLabel: UILabel = {
+  private let nameLabel: UILabel = {
     let label = UILabel()
     label.text = "App Name"
     label.font = .systemFont(ofSize: 20)
     return label
   }()
 
-  let companyLabel: UILabel = {
+  private let companyLabel: UILabel = {
     let label = UILabel()
     label.text = "Company Name"
     label.font = .systemFont(ofSize: 13)
     return label
   }()
 
-  let getBUtton: UIButton = {
+  private let getBUtton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle("GET", for: .normal)
     button.setTitleColor(.blue, for: .normal)
@@ -64,7 +64,7 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
 
   // MARK: Helper Methods
 
-  fileprivate func setupViews() {
+  private func setupViews() {
     let labelsStackView = UIStackView(arrangedSubviews: [nameLabel, companyLabel])
     labelsStackView.axis = .vertical
     labelsStackView.spacing = 4

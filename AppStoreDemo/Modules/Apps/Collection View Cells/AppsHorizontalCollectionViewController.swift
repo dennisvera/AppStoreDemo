@@ -12,7 +12,7 @@ class AppsHorizontalCollectionViewController: UICollectionViewController {
 
   // MARK: - Properties
 
-  let cellIdentifier = "cellId"
+  private let reuseIdentifier = "reuseIdentifier"
 
   // MARK: - Initialization
 
@@ -32,20 +32,20 @@ class AppsHorizontalCollectionViewController: UICollectionViewController {
     setupCollectionView()
   }
 
-  fileprivate func setupCollectionView() {
+  private func setupCollectionView() {
     // Register Collection View Cell
-    collectionView.register(AppsRowCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+    collectionView.register(AppsRowCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     collectionView.backgroundColor = .white
     collectionView.showsHorizontalScrollIndicator = false
 
-     // Set Collection View Scroll Direction to Horizontal
+    // Set Collection View Scroll Direction to Horizontal
     if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
       layout.scrollDirection = .horizontal
     }
   }
 }
 
-// MARK: - CollectionView Delegate
+// MARK: UICollectionViewDataSource
 
 extension AppsHorizontalCollectionViewController {
 
@@ -56,14 +56,14 @@ extension AppsHorizontalCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath) as! AppsRowCollectionViewCell
 
     return cell
   }
 }
 
-// MARK: - CollectionView Delegate Flow Layout
+// MARK: - CollectionViewDelegateFlowLayout
 
 extension AppsHorizontalCollectionViewController: UICollectionViewDelegateFlowLayout {
 
@@ -73,7 +73,7 @@ extension AppsHorizontalCollectionViewController: UICollectionViewDelegateFlowLa
     let sectionLineSpacing: CGFloat = 20
     let sectionInsetTopBottomPadding: CGFloat = 24
     let height = (view.frame.height - sectionInsetTopBottomPadding - sectionLineSpacing) / 3
-
+    
     return .init(width: view.frame.width - 48, height: height)
   }
 

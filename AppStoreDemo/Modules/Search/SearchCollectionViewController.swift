@@ -1,5 +1,5 @@
 //
-//  SearchViewController.swift
+//  SearchCollectionViewController.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 4/12/20.
@@ -10,16 +10,16 @@ import UIKit
 import SDWebImage
 import SnapKit
 
-class SearchViewController: UICollectionViewController, UISearchBarDelegate {
+class SearchCollectionViewController: UICollectionViewController, UISearchBarDelegate {
 
   // MARK: - Properties
 
-  fileprivate var searchResults = [Result]()
-  fileprivate var timer: Timer?
+  private var searchResults = [Result]()
+  private var timer: Timer?
 
-  fileprivate let cellIdentifier = "AppsSearchCellId"
-  fileprivate let searchController = UISearchController(searchResultsController: nil)
-  fileprivate let enterSearchaTermLabel: UILabel = {
+  private let reuseIdentifier = "reuseIdentifier"
+  private let searchController = UISearchController(searchResultsController: nil)
+  private let enterSearchaTermLabel: UILabel = {
     let label = UILabel()
     label.text = "Please enter search term above..."
     label.textAlignment = .center
@@ -42,10 +42,7 @@ class SearchViewController: UICollectionViewController, UISearchBarDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Register Collection View Cell
-    collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
-    collectionView.backgroundColor = .white
-
+    setupCollectionView()
     fetchItunesApps()
     setupSearchBar()
     setupEnterSearchTextLabel()
@@ -53,7 +50,13 @@ class SearchViewController: UICollectionViewController, UISearchBarDelegate {
 
   // MARK: - Helper Methods
 
-  fileprivate func fetchItunesApps() {
+  private func setupCollectionView() {
+    // Register Collection View Cell
+    collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    collectionView.backgroundColor = .white
+  }
+
+  private func fetchItunesApps() {
     ItunesClient.shared.fetchApps(searchTerm: "Facebook") { results, error in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
@@ -68,7 +71,7 @@ class SearchViewController: UICollectionViewController, UISearchBarDelegate {
     }
   }
 
-  fileprivate func setupSearchBar() {
+  private func setupSearchBar() {
     definesPresentationContext = true
     navigationItem.searchController = self.searchController
     navigationItem.hidesSearchBarWhenScrolling = false
@@ -90,7 +93,7 @@ class SearchViewController: UICollectionViewController, UISearchBarDelegate {
     })
   }
 
-  fileprivate func setupEnterSearchTextLabel() {
+  private func setupEnterSearchTextLabel() {
     collectionView.addSubview(enterSearchaTermLabel)
     enterSearchaTermLabel.snp.makeConstraints { make in
       make.top.equalTo(140)
@@ -100,16 +103,9 @@ class SearchViewController: UICollectionViewController, UISearchBarDelegate {
   }
 }
 
-extension SearchViewController: UICollectionViewDelegateFlowLayout {
+// MARK: UICollectionViewDataSource
 
-  // MARK: - CollectionView Delegate
-
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-    return CGSize(width: view.frame.width, height: 350)
-  }
+extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     // Set the search term label if count is 0
@@ -118,9 +114,16 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     return searchResults.count
   }
 
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+    return CGSize(width: view.frame.width, height: 350)
+  }
+
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath) as! SearchResultCollectionViewCell
     cell.searchResult = searchResults[indexPath.item]
 

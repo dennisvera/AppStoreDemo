@@ -13,7 +13,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  let companyLabel: UILabel = {
+  private let companyLabel: UILabel = {
     let label = UILabel()
     label.text = "Facebook"
     label.textColor = .blue
@@ -21,7 +21,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
     return label
   }()
 
-  let descriptionLabel: UILabel = {
+  private let descriptionLabel: UILabel = {
     let label = UILabel()
     label.text = "Keeping up with friends is faster than ever"
     label.numberOfLines = 2
@@ -29,13 +29,11 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
     return label
   }()
 
-  let imageView: UIImageView = {
+  private let imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
-//    imageView.widthAnchor.constraint(equalToConstant: 140).isActive = true
-//    imageView.heightAnchor.constraint(equalToConstant: 140).isActive = true
     imageView.backgroundColor = .red
     return imageView
   }()
@@ -55,8 +53,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   // MARK: Helper Methods
 
-  fileprivate func setupViews() {
-
+  private func setupViews() {
     let mainStackView = UIStackView(arrangedSubviews: [companyLabel, descriptionLabel, imageView])
     mainStackView.spacing = 12
     mainStackView.axis = .vertical

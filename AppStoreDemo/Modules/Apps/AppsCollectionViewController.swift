@@ -1,5 +1,5 @@
 //
-//  AppsViewController.swift
+//  AppsCollectionViewController.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 4/16/20.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class AppsViewController: UICollectionViewController {
+class AppsCollectionViewController: UICollectionViewController {
 
   // MARK: - Properties
 
-  fileprivate let cellIdentifier = "AppsCellId"
-  fileprivate let headerIdentification = "HeaderId"
+  private let reuseIdentifier = "reuseIdentifier"
+  private let headerIdentification = "HeaderId"
 
   // MARK: - Initialization
 
@@ -30,12 +30,12 @@ class AppsViewController: UICollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    registerCollectionView()
+    setupCollectionView()
   }
 
-  fileprivate func registerCollectionView() {
+  private func setupCollectionView() {
     // Register Collection View Cell
-    collectionView.register(AppsGroupCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+    collectionView.register(AppsGroupCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     collectionView.backgroundColor = .white
 
     // Register Collection Header View
@@ -45,9 +45,9 @@ class AppsViewController: UICollectionViewController {
   }
 }
 
-// MARK: - CollectionView Delegate Flow Layout
+// MARK: UICollectionViewDataSource
 
-extension AppsViewController: UICollectionViewDelegateFlowLayout {
+extension AppsCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
@@ -56,11 +56,16 @@ extension AppsViewController: UICollectionViewDelegateFlowLayout {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath) as! AppsGroupCollectionViewCell
 
     return cell
   }
+}
+
+// MARK: - CollectionViewDelegateFlowLayout
+
+extension AppsCollectionViewController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
@@ -72,14 +77,14 @@ extension AppsViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       insetForSectionAt section: Int) -> UIEdgeInsets {
-    
+
     return .init(top: 16, left: 0, bottom: 0, right: 0)
   }
 }
 
-// MARK: - CollectionView Header
+// MARK: - CollectionViewHeader
 
-extension AppsViewController {
+extension AppsCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                viewForSupplementaryElementOfKind kind: String,

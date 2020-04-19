@@ -13,7 +13,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  let appIconImageView: UIImageView = {
+  private let appIconImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 12
     imageView.clipsToBounds = true
@@ -23,25 +23,25 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     return imageView
   }()
 
-  let nameLabel: UILabel = {
+  private let nameLabel: UILabel = {
     let label = UILabel()
     label.text = "App Name"
     return label
   }()
 
-  let categoryLabel: UILabel = {
+  private let categoryLabel: UILabel = {
     let label = UILabel()
     label.text = "Photos & Videos"
     return label
   }()
 
-  let ratingsLabel: UILabel = {
+  private let ratingsLabel: UILabel = {
     let label = UILabel()
     label.text = "92.6M"
     return label
   }()
 
-  let getButton: UIButton = {
+  private let getButton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle("GET", for: .normal)
     button.setTitleColor(.blue, for: .normal)
@@ -112,7 +112,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     let mainStackView = UIStackView(arrangedSubviews: [infoTopStackView, screenShotsStackView])
     mainStackView.axis = .vertical
     mainStackView.spacing = 6
-
+    
     addSubview(mainStackView)
     mainStackView.snp.makeConstraints { make in
       make.top.leading.equalToSuperview().offset(16)

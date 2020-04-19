@@ -12,7 +12,7 @@ class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
 
   // MARK: Properties
 
-  let cellIdentifier = "cellId"
+  private let reuseIdentifier = "reuseIdentifier"
 
   // MARK: - Initialization
 
@@ -34,8 +34,8 @@ class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
 
   // MARK: - Helper Methods
 
-  fileprivate func setupCollectionView() {
-    collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+  private func setupCollectionView() {
+    collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     collectionView.backgroundColor = .white
     collectionView.showsHorizontalScrollIndicator = false
 
@@ -46,7 +46,7 @@ class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
   }
 }
 
-// MARK: - CollectionView Delegate
+// MARK: UICollectionViewDataSource
 
 extension AppsHeaderHorizontalCollectionViewController {
 
@@ -57,14 +57,14 @@ extension AppsHeaderHorizontalCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath) as! AppsHeaderCollectionViewCell
     
     return cell
   }
 }
 
-// MARK: - CollectionView Delegate Flow Layout
+// MARK: - CollectionViewDelegateFlowLayout
 
 extension AppsHeaderHorizontalCollectionViewController: UICollectionViewDelegateFlowLayout {
 
