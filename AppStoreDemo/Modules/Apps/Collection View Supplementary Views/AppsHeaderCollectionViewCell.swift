@@ -13,7 +13,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  private let companyLabel: UILabel = {
+  let companyLabel: UILabel = {
     let label = UILabel()
     label.text = "Facebook"
     label.textColor = .blue
@@ -21,7 +21,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
     return label
   }()
 
-  private let descriptionLabel: UILabel = {
+  let descriptionLabel: UILabel = {
     let label = UILabel()
     label.text = "Keeping up with friends is faster than ever"
     label.numberOfLines = 2
@@ -29,7 +29,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
     return label
   }()
 
-  private let imageView: UIImageView = {
+  let imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true

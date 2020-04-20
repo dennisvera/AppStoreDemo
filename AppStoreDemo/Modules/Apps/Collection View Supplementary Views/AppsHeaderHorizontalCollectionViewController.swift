@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SDWebImage
 
 class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
 
   // MARK: Properties
 
   private let reuseIdentifier = "reuseIdentifier"
+  var socialApps = [SocialApp]()
 
   // MARK: - Initialization
 
@@ -59,6 +61,10 @@ extension AppsHeaderHorizontalCollectionViewController {
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath) as! AppsHeaderCollectionViewCell
+    let app = socialApps[indexPath.item]
+    cell.companyLabel.text = app.name
+    cell.descriptionLabel.text = app.tagline
+    cell.imageView.sd_setImage(with: URL(string: app.imageUrl))
     
     return cell
   }

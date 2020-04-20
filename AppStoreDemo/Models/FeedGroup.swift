@@ -1,5 +1,5 @@
 //
-//  FeedResults.swift
+//  FeedGroup.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 4/19/20.

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 class AppsCollectionViewController: UICollectionViewController {
 
@@ -16,6 +15,7 @@ class AppsCollectionViewController: UICollectionViewController {
   private let reuseIdentifier = "reuseIdentifier"
   private let headerIdentification = "HeaderId"
   private var appsFeedGroup: FeedGroup?
+  private var socialApps = [SocialApp]()
   private var appGroups = [FeedGroup]()
   private var group1: FeedGroup?
   private var group2: FeedGroup?
@@ -90,6 +90,16 @@ class AppsCollectionViewController: UICollectionViewController {
       self.group3 = appGroup
     }
 
+    ItunesClient.shared.fetchSocialApps { (apps, error) in
+      if let error = error {
+        print("Failed to Fetch Music: ", error)
+        return
+      }
+
+      apps?.forEach({ print($0.name) })
+      self.socialApps = apps ?? []
+    }
+
     dispatchGroup.notify(queue: .main) {
       if let group = self.group1 {
         self.appGroups.append(group)
@@ -159,8 +169,10 @@ extension AppsCollectionViewController {
                                at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                  withReuseIdentifier: headerIdentification,
-                                                                 for: indexPath)
+                                                                 for: indexPath) as! AppsHeaderReusableView
 
+    header.appsHeaderHorizontalViewController.socialApps = socialApps
+    header.appsHeaderHorizontalViewController.collectionView.reloadData()
     return header
   }
 
