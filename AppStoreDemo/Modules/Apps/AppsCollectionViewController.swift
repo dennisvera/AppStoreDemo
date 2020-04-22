@@ -21,9 +21,10 @@ class AppsCollectionViewController: UICollectionViewController {
   private var group1: FeedGroup?
   private var group2: FeedGroup?
   private var group3: FeedGroup?
+
   private let activityIndicator: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(style: .large)
-    activityIndicator.backgroundColor = .darkGray
+    activityIndicator.color = .darkGray
     activityIndicator.startAnimating()
     activityIndicator.hidesWhenStopped = true
     return activityIndicator
