@@ -17,7 +17,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
     let label = UILabel()
     label.text = "Facebook"
     label.textColor = .blue
-    label.font = .boldSystemFont(ofSize: 14)
+    label.font = .boldSystemFont(ofSize: 16)
     return label
   }()
 
@@ -34,7 +34,6 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
-    imageView.backgroundColor = .red
     return imageView
   }()
 

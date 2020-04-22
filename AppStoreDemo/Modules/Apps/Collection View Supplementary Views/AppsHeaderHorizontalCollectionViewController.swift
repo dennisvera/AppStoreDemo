@@ -54,7 +54,7 @@ extension AppsHeaderHorizontalCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-    return 3
+    return socialApps.count
   }
 
   override func collectionView(_ collectionView: UICollectionView,
@@ -85,6 +85,6 @@ extension AppsHeaderHorizontalCollectionViewController: UICollectionViewDelegate
                       layout collectionViewLayout: UICollectionViewLayout,
                       insetForSectionAt section: Int) -> UIEdgeInsets {
 
-    return .init(top: 0, left: 16, bottom: 0, right: 0)
+    return .init(top: 0, left: 16, bottom: 0, right: 16)
   }
 }

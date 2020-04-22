@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class AppsCollectionViewController: UICollectionViewController {
 
@@ -20,6 +21,13 @@ class AppsCollectionViewController: UICollectionViewController {
   private var group1: FeedGroup?
   private var group2: FeedGroup?
   private var group3: FeedGroup?
+  private let activityIndicator: UIActivityIndicatorView = {
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    activityIndicator.backgroundColor = .darkGray
+    activityIndicator.startAnimating()
+    activityIndicator.hidesWhenStopped = true
+    return activityIndicator
+  }()
 
   // MARK: - Initialization
 
@@ -37,6 +45,7 @@ class AppsCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
 
     setupCollectionView()
+    setupActivityIndicator()
     fetchAppGroup()
   }
 
@@ -52,6 +61,13 @@ class AppsCollectionViewController: UICollectionViewController {
     collectionView.register(AppsHeaderReusableView.self,
                             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                             withReuseIdentifier: headerIdentification)
+  }
+
+  private func setupActivityIndicator() {
+    view.addSubview(activityIndicator)
+    activityIndicator.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
   }
 
   private func fetchAppGroup() {
@@ -90,17 +106,20 @@ class AppsCollectionViewController: UICollectionViewController {
       self.group3 = appGroup
     }
 
+    dispatchGroup.enter()
     ItunesClient.shared.fetchSocialApps { (apps, error) in
       if let error = error {
         print("Failed to Fetch Music: ", error)
         return
       }
 
-      apps?.forEach({ print($0.name) })
+      dispatchGroup.leave()
       self.socialApps = apps ?? []
     }
 
     dispatchGroup.notify(queue: .main) {
+      self.activityIndicator.stopAnimating()
+
       if let group = self.group1 {
         self.appGroups.append(group)
       }
