@@ -1,5 +1,5 @@
 //
-//  ItunesClient.swift
+//  ServiceClient.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 4/13/20.
@@ -8,14 +8,15 @@
 
 import Foundation
 
-class ItunesClient {
+class ServiceClient {
 
   // MARK: - Properties
 
-  static let shared = ItunesClient()
+  static let shared = ServiceClient()
 
   // MARK: - Public API
 
+  // // Itunes API for Searching Apps
   func fetchApps(searchTerm: String, completion: @escaping (SearchResults?, Error?) -> Void) {
     guard let search = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return }
     let urlString = "https://itunes.apple.com/search?term=\(search)&entity=software"
@@ -23,26 +24,28 @@ class ItunesClient {
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
 
-  // MARK: - Public API
-
+  // Itunes API for fetching Free New Apps
   func fetcNewApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/25/explicit.json"
 
-    fetchAppGroup(urlString: urlString, completion: completion)
+    fetchGenericJsonData(urlString: urlString, completion: completion)
   }
 
+  // Itunes API for fetching Top Grossing Apps
   func fetcTopGrossingApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-grossing/all/25/explicit.json"
 
-    fetchAppGroup(urlString: urlString, completion: completion)
+    fetchGenericJsonData(urlString: urlString, completion: completion)
   }
 
+  // Itunes API for fetching Top Free Apps
   func fetcTopFreeApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-free/all/25/explicit.json"
 
-    fetchAppGroup(urlString: urlString, completion: completion)
+    fetchGenericJsonData(urlString: urlString, completion: completion)
   }
 
+  // LetsBuildThatApp API for social feeds
   func fetchSocialApps(completion: @escaping ([SocialApp]?, Error?) -> Void) {
     let urlString = "https://api.letsbuildthatapp.com/appstore/social"
 
@@ -50,11 +53,6 @@ class ItunesClient {
   }
 
   // MARK: - API Helper Method
-
-  private func fetchAppGroup(urlString: String, completion: @escaping (FeedGroup?, Error?) -> Void) {
-
-    fetchGenericJsonData(urlString: urlString, completion: completion)
-  }
 
   private func fetchGenericJsonData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> Void) {
     guard let url = URL(string: urlString) else { return }

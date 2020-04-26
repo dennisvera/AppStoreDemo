@@ -75,7 +75,7 @@ class AppsCollectionViewController: UICollectionViewController {
     let dispatchGroup = DispatchGroup()
 
     dispatchGroup.enter()
-    ItunesClient.shared.fetcNewApps { (appGroup, error) in
+    ServiceClient.shared.fetcNewApps { (appGroup, error) in
       if let error = error {
         print("Failed to Fetch Music: ", error)
         return
@@ -86,7 +86,7 @@ class AppsCollectionViewController: UICollectionViewController {
     }
 
     dispatchGroup.enter()
-    ItunesClient.shared.fetcTopGrossingApps { (appGroup, error) in
+    ServiceClient.shared.fetcTopGrossingApps { (appGroup, error) in
       if let error = error {
         print("Failed to Fetch Music: ", error)
         return
@@ -97,7 +97,7 @@ class AppsCollectionViewController: UICollectionViewController {
     }
 
     dispatchGroup.enter()
-    ItunesClient.shared.fetcTopFreeApps { (appGroup, error) in
+    ServiceClient.shared.fetcTopFreeApps { (appGroup, error) in
       if let error = error {
         print("Failed to Fetch Music: ", error)
         return
@@ -108,7 +108,7 @@ class AppsCollectionViewController: UICollectionViewController {
     }
 
     dispatchGroup.enter()
-    ItunesClient.shared.fetchSocialApps { (apps, error) in
+    ServiceClient.shared.fetchSocialApps { (apps, error) in
       if let error = error {
         print("Failed to Fetch Music: ", error)
         return
