@@ -19,7 +19,9 @@ class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
   // MARK: - Initialization
 
   init() {
-    super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    let layout = SnappingCollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
+    super.init(collectionViewLayout: layout)
   }
 
   required init?(coder: NSCoder) {
@@ -41,10 +43,9 @@ class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
     collectionView.backgroundColor = .white
     collectionView.showsHorizontalScrollIndicator = false
 
-    // Set Collection View Scroll Direction to Horizontal
-    if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-      layout.scrollDirection = .horizontal
-    }
+    // Sets the snapping behavior speed and content inset
+    collectionView.decelerationRate = .fast
+    collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
   }
 }
 
@@ -79,12 +80,5 @@ extension AppsHeaderHorizontalCollectionViewController: UICollectionViewDelegate
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
 
     return .init(width: view.frame.width - 48, height: view.frame.height)
-  }
-
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      insetForSectionAt section: Int) -> UIEdgeInsets {
-
-    return .init(top: 0, left: 16, bottom: 0, right: 16)
   }
 }
