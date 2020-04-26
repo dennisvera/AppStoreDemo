@@ -16,6 +16,7 @@ class AppsHorizontalCollectionViewController: UICollectionViewController {
   private let reuseIdentifier = "reuseIdentifier"
 
   var appsFeedGroup: FeedGroup?
+  var didSelectHandler: ((FeedResult) -> ())?
 
   // MARK: - Initialization
 
@@ -70,6 +71,11 @@ extension AppsHorizontalCollectionViewController {
     cell.appIconImageView.sd_setImage(with: URL(string: app?.artworkUrl100 ?? ""))
 
     return cell
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    guard let app = appsFeedGroup?.feed.results[indexPath.item] else { return }
+    didSelectHandler?(app)
   }
 }
 

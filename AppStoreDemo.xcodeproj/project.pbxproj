@@ -16,6 +16,7 @@
 		393FC0F9244005BF002E038B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393FC0F8244005BF002E038B /* SceneDelegate.swift */; };
 		393FC100244005C3002E038B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 393FC0FF244005C3002E038B /* Assets.xcassets */; };
 		396F7DFB2456113200B98F63 /* SnappingCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396F7DFA2456113200B98F63 /* SnappingCollectionViewFlowLayout.swift */; };
+		396F7DFF245629E300B98F63 /* AppsDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396F7DFE245629E300B98F63 /* AppsDetailCollectionViewController.swift */; };
 		39EA7E7D2449454D004D1E20 /* AppsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E7C2449454D004D1E20 /* AppsCollectionViewController.swift */; };
 		39EA7E7F2449498B004D1E20 /* AppsGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E7E2449498B004D1E20 /* AppsGroupCollectionViewCell.swift */; };
 		39EA7E8224494D47004D1E20 /* UILabels+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E8124494D47004D1E20 /* UILabels+Helpers.swift */; };
@@ -42,6 +43,7 @@
 		393FC0FF244005C3002E038B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		393FC104244005C3002E038B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		396F7DFA2456113200B98F63 /* SnappingCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		396F7DFE245629E300B98F63 /* AppsDetailCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailCollectionViewController.swift; sourceTree = "<group>"; };
 		39EA7E7C2449454D004D1E20 /* AppsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCollectionViewController.swift; sourceTree = "<group>"; };
 		39EA7E7E2449498B004D1E20 /* AppsGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsGroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		39EA7E8124494D47004D1E20 /* UILabels+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabels+Helpers.swift"; sourceTree = "<group>"; };
@@ -203,12 +205,21 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		396F7DFD2456297E00B98F63 /* AppsDetailControllers */ = {
+			isa = PBXGroup;
+			children = (
+				396F7DFE245629E300B98F63 /* AppsDetailCollectionViewController.swift */,
+			);
+			path = AppsDetailControllers;
+			sourceTree = "<group>";
+		};
 		39EA7E7B244944F6004D1E20 /* Apps */ = {
 			isa = PBXGroup;
 			children = (
 				39EA7E7C2449454D004D1E20 /* AppsCollectionViewController.swift */,
 				39EA7E8F244BBA4A004D1E20 /* Collection View Cells */,
 				39EA7E90244BBA95004D1E20 /* Collection View Supplementary Views */,
+				396F7DFD2456297E00B98F63 /* AppsDetailControllers */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -384,6 +395,7 @@
 				39EA7E97244CD46F004D1E20 /* FeedGroup.swift in Sources */,
 				39EA7E7F2449498B004D1E20 /* AppsGroupCollectionViewCell.swift in Sources */,
 				393FC0F7244005BF002E038B /* AppDelegate.swift in Sources */,
+				396F7DFF245629E300B98F63 /* AppsDetailCollectionViewController.swift in Sources */,
 				39EA7E99244D0A05004D1E20 /* SocialApp.swift in Sources */,
 				3906AB9E2445233D0032C263 /* ServiceClient.swift in Sources */,
 				39EA7E7D2449454D004D1E20 /* AppsCollectionViewController.swift in Sources */,
