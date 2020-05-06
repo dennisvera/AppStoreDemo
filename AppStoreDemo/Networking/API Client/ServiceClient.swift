@@ -16,29 +16,36 @@ class ServiceClient {
 
   // MARK: - Public API
 
-  // // Itunes API for Searching Apps
+  // Itunes API endpoint for Searching Apps
   func fetchApps(searchTerm: String, completion: @escaping (SearchResults?, Error?) -> Void) {
     guard let search = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return }
     let urlString = "https://itunes.apple.com/search?term=\(search)&entity=software"
 
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
+  
+  // Itunes API endpoint for fetching app details
+  func fetchApps(id: String, completion: @escaping (SearchResults?, Error?) -> Void) {
+    let urlString = "https://itunes.apple.com/lookup?id=\(id)"
+    
+    fetchGenericJsonData(urlString: urlString, completion: completion)
+  }
 
-  // Itunes API for fetching Free New Apps
+  // Itunes API endpoint for fetching Free New Apps
   func fetcNewApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/25/explicit.json"
 
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
 
-  // Itunes API for fetching Top Grossing Apps
+  // Itunes API endpoint for fetching Top Grossing Apps
   func fetcTopGrossingApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-grossing/all/25/explicit.json"
 
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
 
-  // Itunes API for fetching Top Free Apps
+  // Itunes API endpoint for fetching Top Free Apps
   func fetcTopFreeApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-free/all/25/explicit.json"
 

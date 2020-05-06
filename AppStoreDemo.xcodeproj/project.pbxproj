@@ -28,6 +28,7 @@
 		39EA7E97244CD46F004D1E20 /* FeedGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E96244CD46F004D1E20 /* FeedGroup.swift */; };
 		39EA7E99244D0A05004D1E20 /* SocialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E98244D0A05004D1E20 /* SocialApp.swift */; };
 		9604B61CDE84056806ECA702 /* Pods_AppStoreDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */; };
+		E15176C424632F81000A254D /* AppsDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176C324632F81000A254D /* AppsDetailCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		39EA7E96244CD46F004D1E20 /* FeedGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedGroup.swift; sourceTree = "<group>"; };
 		39EA7E98244D0A05004D1E20 /* SocialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialApp.swift; sourceTree = "<group>"; };
 		95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E15176C324632F81000A254D /* AppsDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		F861CCC9D2ACE370147698CB /* Pods-AppStoreDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreDemo.release.xcconfig"; path = "Target Support Files/Pods-AppStoreDemo/Pods-AppStoreDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				396F7DFE245629E300B98F63 /* AppsDetailCollectionViewController.swift */,
+				E15176C224632F2A000A254D /* Collection View Cell */,
 			);
 			path = AppsDetailControllers;
 			sourceTree = "<group>";
@@ -275,6 +278,14 @@
 				F861CCC9D2ACE370147698CB /* Pods-AppStoreDemo.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E15176C224632F2A000A254D /* Collection View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E15176C324632F81000A254D /* AppsDetailCollectionViewCell.swift */,
+			);
+			path = "Collection View Cell";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,6 +404,7 @@
 				3906AB872442632B0032C263 /* BaseTabBarController.swift in Sources */,
 				3906AB91244394B70032C263 /* SearchResultCollectionViewCell.swift in Sources */,
 				39EA7E97244CD46F004D1E20 /* FeedGroup.swift in Sources */,
+				E15176C424632F81000A254D /* AppsDetailCollectionViewCell.swift in Sources */,
 				39EA7E7F2449498B004D1E20 /* AppsGroupCollectionViewCell.swift in Sources */,
 				393FC0F7244005BF002E038B /* AppDelegate.swift in Sources */,
 				396F7DFF245629E300B98F63 /* AppsDetailCollectionViewController.swift in Sources */,
