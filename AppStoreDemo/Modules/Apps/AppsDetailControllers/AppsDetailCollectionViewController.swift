@@ -25,6 +25,6 @@ class AppsDetailCollectionViewController: UICollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    collectionView.backgroundColor = .yellow
+    collectionView.backgroundColor = .white
   }
 }
