@@ -15,7 +15,6 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   let companyLabel: UILabel = {
     let label = UILabel()
-    label.text = "Facebook"
     label.textColor = .blue
     label.font = .boldSystemFont(ofSize: 14)
     return label
@@ -23,7 +22,6 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   let descriptionLabel: UILabel = {
     let label = UILabel()
-    label.text = "Keeping up with friends is faster than ever"
     label.numberOfLines = 2
     label.font = .systemFont(ofSize: 24)
     return label

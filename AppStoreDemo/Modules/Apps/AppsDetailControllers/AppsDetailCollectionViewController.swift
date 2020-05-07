@@ -13,14 +13,22 @@ class AppsDetailCollectionViewController: UICollectionViewController {
   // MARK: - Properties
 
   private let appsDetaiCellId = "reuseIdentifier"
-  var appId: String! {
+  var appId: String? {
     didSet {
+      guard let appId = appId else { return }
       ServiceClient.shared.fetchApps(id: appId) { result, error in
-        print(result?.results.first?.releaseNotes ?? "")
+        let app = result?.results.first
+        self.app = app
+        
+        DispatchQueue.main.async {
+          self.collectionView.reloadData()
+        }
       }
     }
   }
-
+  
+  var app: Result?
+  
   // MARK: - Initilalization
 
   init() {
@@ -61,7 +69,8 @@ extension AppsDetailCollectionViewController {
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsDetaiCellId, for: indexPath) as! AppsDetailCollectionViewCell
-    
+    cell.app = app
+        
     return cell
   }
 }
@@ -74,6 +83,13 @@ extension AppsDetailCollectionViewController: UICollectionViewDelegateFlowLayout
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     
-    return .init(width: view.frame.width, height: 300)
+    // Calculates the necessary cell size
+    let resizingCell = AppsDetailCollectionViewCell(frame: .init(x: 0, y: 0, width: view.frame.width, height: 1000))
+    resizingCell.app = app
+    resizingCell.layoutIfNeeded()
+    
+    let estimatedCellSize = resizingCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 1000))
+    
+    return .init(width: view.frame.width, height: estimatedCellSize.height)
   }
 }

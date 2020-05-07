@@ -25,14 +25,12 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
 
   let nameLabel: UILabel = {
     let label = UILabel()
-    label.text = "App Name"
     label.font = .systemFont(ofSize: 20)
     return label
   }()
 
   let companyLabel: UILabel = {
     let label = UILabel()
-    label.text = "Company Name"
     label.font = .systemFont(ofSize: 13)
     return label
   }()

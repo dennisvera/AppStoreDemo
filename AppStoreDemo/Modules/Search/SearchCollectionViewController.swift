@@ -18,6 +18,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchBarDel
   private var timer: Timer?
 
   private let reuseIdentifier = "reuseIdentifier"
+  private let instagram = "instagram"
   private let searchController = UISearchController(searchResultsController: nil)
   private let enterSearchaTermLabel: UILabel = {
     let label = UILabel()
@@ -57,7 +58,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchBarDel
   }
 
   private func fetchItunesApps() {
-    ServiceClient.shared.fetchApps(searchTerm: "Facebook") { [weak self] search, error in
+    ServiceClient.shared.fetchApps(searchTerm: instagram) { [weak self] search, error in
       guard let strongSelf = self else {return }
 
       if let error = error {

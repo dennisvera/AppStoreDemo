@@ -25,19 +25,16 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
 
   private let nameLabel: UILabel = {
     let label = UILabel()
-    label.text = "App Name"
     return label
   }()
 
   private let categoryLabel: UILabel = {
     let label = UILabel()
-    label.text = "Photos & Videos"
     return label
   }()
 
   private let ratingsLabel: UILabel = {
     let label = UILabel()
-    label.text = "92.6M"
     return label
   }()
 

@@ -13,66 +13,71 @@ class AppsDetailCollectionViewCell: UICollectionViewCell {
   
   // MARK: - Properties
   
-  let appIconImageView: UIImageView = {
+  private let appIconImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.layer.cornerRadius = 8
+    imageView.layer.cornerRadius = 16
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFit
     imageView.widthAnchor.constraint(equalToConstant: 140).isActive = true
     imageView.heightAnchor.constraint(equalToConstant: 140).isActive = true
-    imageView.backgroundColor = .red
     return imageView
   }()
   
-  let nameLabel: UILabel = {
+  private let nameLabel: UILabel = {
     let label = UILabel()
-    label.text = "App Name"
     label.numberOfLines = 2
     label.font = .boldSystemFont(ofSize: 24)
     return label
   }()
   
-  let descriptionLabel: UILabel = {
+  private let descriptionLabel: UILabel = {
     let label = UILabel()
-    label.text = "Description"
+    label.numberOfLines = 0
     label.font = .systemFont(ofSize: 13)
     return label
   }()
   
-  let priceButton: UIButton = {
+  private let priceButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setTitle("Free", for: .normal)
     button.setTitleColor(.white, for: .normal)
     button.titleLabel?.font = .boldSystemFont(ofSize: 14)
-    button.layer.cornerRadius = 16
+    button.layer.cornerRadius = 32 / 2
     button.backgroundColor = #colorLiteral(red: 0.1959072053, green: 0.4716053605, blue: 0.9613705277, alpha: 1)
     button.widthAnchor.constraint(equalToConstant: 80).isActive = true
     button.heightAnchor.constraint(equalToConstant: 32).isActive = true
     return button
   }()
   
-  let whatsNewLabel: UILabel = {
+  private let whatsNewLabel: UILabel = {
     let label = UILabel()
     label.text = "What's New"
     label.font = .boldSystemFont(ofSize: 20)
     return label
   }()
   
-  let releaseNotesLabel: UILabel = {
+  private let releaseNotesLabel: UILabel = {
     let label = UILabel()
-    label.text = "Release notes goes here..."
-    label.font = .systemFont(ofSize: 12)
     label.numberOfLines = 0
+    label.font = .systemFont(ofSize: 18)
     return label
   }()
   
-  
+  var app: Result? {
+    didSet {
+      guard let app = app else { return }
+      appIconImageView.sd_setImage(with: URL(string: app.artworkUrl100))
+      nameLabel.text = app.trackName
+      descriptionLabel.text = app.description
+      releaseNotesLabel.text = app.releaseNotes
+      priceButton.setTitle(app.formattedPrice, for: .normal)
+    }
+  }
   
   // MARK: - Initializer
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-
+    
     setupViews()
   }
   
@@ -87,7 +92,6 @@ class AppsDetailCollectionViewCell: UICollectionViewCell {
     topVerticalStackview.axis = .vertical
     topVerticalStackview.spacing = 6
     topVerticalStackview.alignment = .leading
-    topVerticalStackview.setCustomSpacing(10, after: priceButton)
     
     let topHorizontalStackView = UIStackView(arrangedSubviews: [appIconImageView, topVerticalStackview])
     topHorizontalStackView.axis = .horizontal
@@ -95,12 +99,12 @@ class AppsDetailCollectionViewCell: UICollectionViewCell {
     
     let verticalStackview = UIStackView(arrangedSubviews: [topHorizontalStackView, whatsNewLabel, releaseNotesLabel])
     verticalStackview.axis = .vertical
-    verticalStackview.distribution = .fillProportionally
-    verticalStackview.spacing = 0
+    verticalStackview.spacing = 12
     
     addSubview(verticalStackview)
     verticalStackview.snp.makeConstraints { make in
-      make.edges.equalTo(20)
+      make.top.leading.bottom.equalTo(20)
+      make.trailing.equalToSuperview().offset(-20)
     }
   }
 }
