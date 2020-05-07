@@ -29,6 +29,9 @@
 		39EA7E99244D0A05004D1E20 /* SocialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E98244D0A05004D1E20 /* SocialApp.swift */; };
 		9604B61CDE84056806ECA702 /* Pods_AppStoreDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */; };
 		E15176C424632F81000A254D /* AppsDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176C324632F81000A254D /* AppsDetailCollectionViewCell.swift */; };
+		E15176C6246462E9000A254D /* AppsDetailPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176C5246462E9000A254D /* AppsDetailPreviewCollectionViewCell.swift */; };
+		E15176C824646B0E000A254D /* AppsDetailPreviewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176C724646B0E000A254D /* AppsDetailPreviewCollectionViewController.swift */; };
+		E15176CA24647F9B000A254D /* AppsDetailPreviewScreensCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176C924647F9B000A254D /* AppsDetailPreviewScreensCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +60,9 @@
 		39EA7E98244D0A05004D1E20 /* SocialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialApp.swift; sourceTree = "<group>"; };
 		95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15176C324632F81000A254D /* AppsDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailCollectionViewCell.swift; sourceTree = "<group>"; };
+		E15176C5246462E9000A254D /* AppsDetailPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		E15176C724646B0E000A254D /* AppsDetailPreviewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailPreviewCollectionViewController.swift; sourceTree = "<group>"; };
+		E15176C924647F9B000A254D /* AppsDetailPreviewScreensCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailPreviewScreensCollectionViewCell.swift; sourceTree = "<group>"; };
 		F861CCC9D2ACE370147698CB /* Pods-AppStoreDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreDemo.release.xcconfig"; path = "Target Support Files/Pods-AppStoreDemo/Pods-AppStoreDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,22 +213,25 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		396F7DFD2456297E00B98F63 /* AppsDetailControllers */ = {
+		396F7DFD2456297E00B98F63 /* Apps Detail Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				396F7DFE245629E300B98F63 /* AppsDetailCollectionViewController.swift */,
+				E15176C724646B0E000A254D /* AppsDetailPreviewCollectionViewController.swift */,
 				E15176C224632F2A000A254D /* Collection View Cell */,
 			);
-			path = AppsDetailControllers;
+			path = "Apps Detail Controllers";
 			sourceTree = "<group>";
 		};
 		39EA7E7B244944F6004D1E20 /* Apps */ = {
 			isa = PBXGroup;
 			children = (
 				39EA7E7C2449454D004D1E20 /* AppsCollectionViewController.swift */,
+				39EA7E8324495124004D1E20 /* AppsHorizontalCollectionViewController.swift */,
+				39EA7E8D244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift */,
 				39EA7E8F244BBA4A004D1E20 /* Collection View Cells */,
 				39EA7E90244BBA95004D1E20 /* Collection View Supplementary Views */,
-				396F7DFD2456297E00B98F63 /* AppsDetailControllers */,
+				396F7DFD2456297E00B98F63 /* Apps Detail Controllers */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -240,7 +249,6 @@
 			children = (
 				39EA7E85244B801E004D1E20 /* AppsRowCollectionViewCell.swift */,
 				39EA7E7E2449498B004D1E20 /* AppsGroupCollectionViewCell.swift */,
-				39EA7E8324495124004D1E20 /* AppsHorizontalCollectionViewController.swift */,
 			);
 			path = "Collection View Cells";
 			sourceTree = "<group>";
@@ -250,7 +258,6 @@
 			children = (
 				39EA7E8B244BB092004D1E20 /* AppsHeaderReusableView.swift */,
 				39EA7E91244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift */,
-				39EA7E8D244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift */,
 			);
 			path = "Collection View Supplementary Views";
 			sourceTree = "<group>";
@@ -284,6 +291,8 @@
 			isa = PBXGroup;
 			children = (
 				E15176C324632F81000A254D /* AppsDetailCollectionViewCell.swift */,
+				E15176C5246462E9000A254D /* AppsDetailPreviewCollectionViewCell.swift */,
+				E15176C924647F9B000A254D /* AppsDetailPreviewScreensCollectionViewCell.swift */,
 			);
 			path = "Collection View Cell";
 			sourceTree = "<group>";
@@ -411,14 +420,17 @@
 				39EA7E99244D0A05004D1E20 /* SocialApp.swift in Sources */,
 				3906AB9E2445233D0032C263 /* ServiceClient.swift in Sources */,
 				39EA7E7D2449454D004D1E20 /* AppsCollectionViewController.swift in Sources */,
+				E15176C6246462E9000A254D /* AppsDetailPreviewCollectionViewCell.swift in Sources */,
 				3906AB89244374920032C263 /* SearchCollectionViewController.swift in Sources */,
 				393FC0F9244005BF002E038B /* SceneDelegate.swift in Sources */,
 				396F7DFB2456113200B98F63 /* SnappingCollectionViewFlowLayout.swift in Sources */,
 				39EA7E86244B801E004D1E20 /* AppsRowCollectionViewCell.swift in Sources */,
 				39EA7E92244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift in Sources */,
+				E15176C824646B0E000A254D /* AppsDetailPreviewCollectionViewController.swift in Sources */,
 				39EA7E8224494D47004D1E20 /* UILabels+Helpers.swift in Sources */,
 				39EA7E8E244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift in Sources */,
 				39EA7E8C244BB092004D1E20 /* AppsHeaderReusableView.swift in Sources */,
+				E15176CA24647F9B000A254D /* AppsDetailPreviewScreensCollectionViewCell.swift in Sources */,
 				3906AB9A2443E86D0032C263 /* SearchResults.swift in Sources */,
 				39EA7E8424495124004D1E20 /* AppsHorizontalCollectionViewController.swift in Sources */,
 			);

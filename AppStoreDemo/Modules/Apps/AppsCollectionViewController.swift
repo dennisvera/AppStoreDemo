@@ -143,7 +143,6 @@ class AppsCollectionViewController: UICollectionViewController {
 extension AppsCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
     return appGroups.count
   }
 

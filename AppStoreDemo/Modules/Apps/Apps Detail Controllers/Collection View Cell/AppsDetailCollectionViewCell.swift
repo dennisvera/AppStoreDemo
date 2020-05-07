@@ -73,7 +73,7 @@ class AppsDetailCollectionViewCell: UICollectionViewCell {
     }
   }
   
-  // MARK: - Initializer
+  // MARK: - Initialization
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -100,11 +100,11 @@ class AppsDetailCollectionViewCell: UICollectionViewCell {
     let verticalStackview = UIStackView(arrangedSubviews: [topHorizontalStackView, whatsNewLabel, releaseNotesLabel])
     verticalStackview.axis = .vertical
     verticalStackview.spacing = 12
-    
+
     addSubview(verticalStackview)
     verticalStackview.snp.makeConstraints { make in
-      make.top.leading.bottom.equalTo(20)
-      make.trailing.equalToSuperview().offset(-20)
+      make.top.leading.equalTo(20)
+      make.trailing.bottom.equalToSuperview().offset(-20)
     }
   }
 }
