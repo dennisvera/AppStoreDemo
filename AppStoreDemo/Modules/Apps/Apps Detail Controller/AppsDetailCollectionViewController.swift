@@ -19,49 +19,16 @@ class AppsDetailCollectionViewController: UICollectionViewController {
   private var appReviews: Reviews?
   private var cellHeight: CGFloat = 300
   
-  var appId: String? {
-    didSet {
-      guard let appId = appId else { return }
-      ServiceClient.shared.fetchApps(id: appId) { [weak self] result, error in
-        guard let strongSelf = self else { return }
-        if let error = error {
-          print("Failed to Fetch Apps: ", error)
-          return
-        }
-        
-        let app = result?.results.first
-        strongSelf.app = app
-        
-        DispatchQueue.main.async {
-          strongSelf.collectionView.reloadData()
-        }
-      }
-    }
-  }
+  fileprivate var appId: String
   
-  var appReview: String? {
-    didSet {
-      guard let appId = appId else { return }
-      ServiceClient.shared.fetchAppReview(id: appId) { [weak self] reviews, error in
-        guard let strongSelf = self else { return }
-        if let error = error {
-          print("Failed to Fetch Apps: ", error)
-          return
-        }
-        
-        strongSelf.appReviews = reviews
-        
-        DispatchQueue.main.async {
-          strongSelf.collectionView.reloadData()
-        }
-      }
-    }
-  }
+  // MARK: - Initialization
   
-  // MARK: - Initilalization
-
-  init() {
+  init(appId: String) {
+    self.appId = appId
     super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    
+    // This is Dependency Injection / Constructor.
+    // We are injecting the appId when the controller is instantiated.
   }
 
   required init?(coder: NSCoder) {
@@ -74,6 +41,7 @@ class AppsDetailCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
+    fetchData()
   }
   
   // MARK: - Helper Methods
@@ -85,6 +53,37 @@ class AppsDetailCollectionViewController: UICollectionViewController {
     collectionView.register(AppsDetailReviewsCollectionViewCell.self, forCellWithReuseIdentifier: appsDetailReviewsCellId)
     collectionView.backgroundColor = .white
     navigationItem.largeTitleDisplayMode = .never
+  }
+  
+  private func fetchData() {
+    ServiceClient.shared.fetchApps(id: appId) { [weak self] result, error in
+      guard let strongSelf = self else { return }
+      if let error = error {
+        print("Failed to Fetch Apps: ", error)
+        return
+      }
+      
+      let app = result?.results.first
+      strongSelf.app = app
+      
+      DispatchQueue.main.async {
+        strongSelf.collectionView.reloadData()
+      }
+    }
+    
+    ServiceClient.shared.fetchAppReview(id: appId) { [weak self] reviews, error in
+      guard let strongSelf = self else { return }
+      if let error = error {
+        print("Failed to Fetch Apps: ", error)
+        return
+      }
+
+      strongSelf.appReviews = reviews
+
+      DispatchQueue.main.async {
+        strongSelf.collectionView.reloadData()
+      }
+    }
   }
 }
 

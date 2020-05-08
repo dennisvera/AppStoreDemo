@@ -88,6 +88,10 @@ class SearchCollectionViewController: UICollectionViewController, UISearchBarDel
     timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
       ServiceClient.shared.fetchApps(searchTerm: searchText) { [weak self] search, error in
         guard let strongSelf = self else {return }
+        if let error = error {
+          print("Failed to Fetch Apps: ", error)
+          return
+        }
 
         strongSelf.searchResults = search?.results ?? []
 
@@ -109,6 +113,18 @@ class SearchCollectionViewController: UICollectionViewController, UISearchBarDel
 }
 
 // MARK: UICollectionViewDataSource
+
+extension SearchCollectionViewController {
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let appId = String(searchResults[indexPath.item].trackId)
+    let appDetailController = AppsDetailCollectionViewController(appId: appId)
+    
+    navigationController?.pushViewController(appDetailController, animated: true)
+  }
+}
+
+// MARK: UICollectionViewDelegateFlowLayout
 
 extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
 

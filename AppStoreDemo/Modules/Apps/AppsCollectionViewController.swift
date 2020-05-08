@@ -159,10 +159,8 @@ extension AppsCollectionViewController {
     // Navigate to the AppsDetailCollectionViewController via Handler
     cell.horizontalViewController.didSelectHandler = { [weak self] feedResult in
       guard let strongSelf = self else { return }
-      let appsDetailController = AppsDetailCollectionViewController()
+      let appsDetailController = AppsDetailCollectionViewController(appId: feedResult.id)
       appsDetailController.title = feedResult.name
-      appsDetailController.appId = feedResult.id
-      appsDetailController.appReview = feedResult.id
       strongSelf.navigationController?.pushViewController(appsDetailController, animated: true)
     }
     
