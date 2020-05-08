@@ -89,8 +89,9 @@ extension AppsHorizontalCollectionViewController: UICollectionViewDelegateFlowLa
     let sectionLineSpacing: CGFloat = 20
     let sectionInsetTopBottomPadding: CGFloat = 24
     let height = (view.frame.height - sectionInsetTopBottomPadding - sectionLineSpacing) / 3
-    
-    return .init(width: view.frame.width - 48, height: height)
+    let leftAndRightPadding: CGFloat = 48
+
+    return .init(width: view.frame.width - leftAndRightPadding, height: height)
   }
 
   func collectionView(_ collectionView: UICollectionView,

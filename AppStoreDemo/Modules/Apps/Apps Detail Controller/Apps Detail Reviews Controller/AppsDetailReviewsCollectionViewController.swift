@@ -93,8 +93,9 @@ extension AppsDetailReviewsCollectionViewController: UICollectionViewDelegateFlo
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let leftAndRightPadding: CGFloat = 48
     
-    return .init(width: view.frame.width - 48, height: view.frame.height)
+    return .init(width: view.frame.width - leftAndRightPadding, height: view.frame.height)
   }
   
   func collectionView(_ collectionView: UICollectionView,

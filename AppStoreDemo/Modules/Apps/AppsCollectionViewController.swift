@@ -206,7 +206,8 @@ extension AppsCollectionViewController {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       referenceSizeForHeaderInSection section: Int) -> CGSize {
-
-    return .init(width: view.frame.width - 48, height: 300)
+    let leftAndRightPadding: CGFloat = 48
+    
+    return .init(width: view.frame.width - leftAndRightPadding, height: 300)
   }
 }
