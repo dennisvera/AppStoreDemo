@@ -71,6 +71,16 @@ extension AppsDetailReviewsCollectionViewController {
     cell.titleLabel.text = appReview?.title.label
     cell.authorLabel.text = appReview?.author.name.label
     cell.reviewLabel.text = appReview?.content.label
+    cell.ratingLabel.text = appReview?.rating.label
+    
+    // Converts the enpoint rating string into an Int to properly display
+    // the correct number of stars.
+    for (index, view) in
+      cell.ratingStackView.arrangedSubviews.enumerated() {
+        if let ratingInt = Int(appReview?.rating.label ?? "") {
+          view.alpha = index >= ratingInt ? 0 : 1
+        }
+    }
     
     return cell
   }
