@@ -14,6 +14,9 @@ class AppsDetailCollectionViewController: UICollectionViewController {
 
   private let appsDetaiCellId = "appsDetaiCellId"
   private let appsDetailPreviewCellId = "appsDetailPreviewCellId"
+  private let appsDetailReviewsCellId = "appsDetailReviewsCellId"
+  private var cellHeight: CGFloat = 300
+  
   var appId: String? {
     didSet {
       guard let appId = appId else { return }
@@ -54,6 +57,7 @@ class AppsDetailCollectionViewController: UICollectionViewController {
     // Register Collection View Cell
     collectionView.register(AppsDetailCollectionViewCell.self, forCellWithReuseIdentifier: appsDetaiCellId)
     collectionView.register(AppsDetailPreviewCollectionViewCell.self, forCellWithReuseIdentifier: appsDetailPreviewCellId)
+    collectionView.register(AppsDetailReviewsCollectionViewCell.self, forCellWithReuseIdentifier: appsDetailReviewsCellId)
     collectionView.backgroundColor = .white
     navigationItem.largeTitleDisplayMode = .never
   }
@@ -64,7 +68,7 @@ class AppsDetailCollectionViewController: UICollectionViewController {
 extension AppsDetailCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 2
+    return 3
   }
   
   override func collectionView(_ collectionView: UICollectionView,
@@ -74,10 +78,15 @@ extension AppsDetailCollectionViewController {
       cell.app = app
           
       return cell
-    } else {
+    } else if indexPath.item == 1 {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsDetailPreviewCellId,
                                                     for: indexPath) as! AppsDetailPreviewCollectionViewCell
       cell.appsDetailPreviewCollectionViewController.app = self.app
+      
+      return cell
+    } else {
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsDetailReviewsCellId,
+                                                    for: indexPath) as! AppsDetailReviewsCollectionViewCell
       
       return cell
     }
@@ -100,9 +109,13 @@ extension AppsDetailCollectionViewController: UICollectionViewDelegateFlowLayout
       
       let estimatedCellSize = resizingCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: arbitraryHeight))
       
-      return .init(width: view.frame.width, height: estimatedCellSize.height)
+      cellHeight = estimatedCellSize.height
+    } else if indexPath.item == 1 {
+      cellHeight = 500
     } else {
-      return .init(width: view.frame.width, height: 500)
+      cellHeight = 300
     }
+    
+    return .init(width: view.frame.width, height: cellHeight)
   }
 }

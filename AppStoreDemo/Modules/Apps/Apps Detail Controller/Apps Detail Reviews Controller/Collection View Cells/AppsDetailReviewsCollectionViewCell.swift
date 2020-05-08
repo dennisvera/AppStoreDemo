@@ -1,5 +1,5 @@
 //
-//  AppsDetailPreviewCollectionViewCell.swift
+//  AppsDetailReviewsCollectionViewCell.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 5/7/20.
@@ -7,23 +7,22 @@
 //
 
 import UIKit
-import SnapKit
 
-class AppsDetailPreviewCollectionViewCell: UICollectionViewCell {
-  
+class AppsDetailReviewsCollectionViewCell: UICollectionViewCell {
+    
   // MARK: - Properties
   
-  var appsDetailPreviewCollectionViewController = AppsDetailPreviewCollectionViewController()
-  private let previewLabel: UILabel = {
+  var appsDetailReviewCollectionViewController = AppsDetailReviewsCollectionViewController()
+  private let titleLabel: UILabel = {
     let label = UILabel()
-    label.text = "Preview"
-    label.font = .boldSystemFont(ofSize: 24)
+    label.text = "Reviews & Ratings"
     label.textColor = .black
+    label.font = .boldSystemFont(ofSize: 20)
     return label
   }()
   
   // MARK: - Initialization
-  
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     
@@ -37,15 +36,15 @@ class AppsDetailPreviewCollectionViewCell: UICollectionViewCell {
   // MARK: - Helper Methods
   
   private func setupViews() {
-    addSubview(previewLabel)
-    previewLabel.snp.makeConstraints { make in
+    addSubview(titleLabel)
+    titleLabel.snp.makeConstraints { make in
       make.top.equalToSuperview()
       make.leading.trailing.equalTo(20)
     }
     
-    addSubview(appsDetailPreviewCollectionViewController.view)
-    appsDetailPreviewCollectionViewController.view.snp.makeConstraints { make in
-      make.top.equalTo(previewLabel.snp.bottom).inset(-20)
+    addSubview(appsDetailReviewCollectionViewController.view)
+    appsDetailReviewCollectionViewController.view.snp.makeConstraints { make in
+      make.top.equalTo(titleLabel.snp.bottom).inset(-12)
       make.leading.trailing.bottom.equalToSuperview()
     }
   }
