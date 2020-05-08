@@ -15,23 +15,48 @@ class AppsDetailCollectionViewController: UICollectionViewController {
   private let appsDetaiCellId = "appsDetaiCellId"
   private let appsDetailPreviewCellId = "appsDetailPreviewCellId"
   private let appsDetailReviewsCellId = "appsDetailReviewsCellId"
+  private var app: Result?
+  private var appReviews: Reviews?
   private var cellHeight: CGFloat = 300
   
   var appId: String? {
     didSet {
       guard let appId = appId else { return }
-      ServiceClient.shared.fetchApps(id: appId) { result, error in
+      ServiceClient.shared.fetchApps(id: appId) { [weak self] result, error in
+        guard let strongSelf = self else { return }
+        if let error = error {
+          print("Failed to Fetch Apps: ", error)
+          return
+        }
+        
         let app = result?.results.first
-        self.app = app
+        strongSelf.app = app
         
         DispatchQueue.main.async {
-          self.collectionView.reloadData()
+          strongSelf.collectionView.reloadData()
         }
       }
     }
   }
   
-  var app: Result?
+  var appReview: String? {
+    didSet {
+      guard let appId = appId else { return }
+      ServiceClient.shared.fetchAppReview(id: appId) { [weak self] reviews, error in
+        guard let strongSelf = self else { return }
+        if let error = error {
+          print("Failed to Fetch Apps: ", error)
+          return
+        }
+        
+        strongSelf.appReviews = reviews
+        
+        DispatchQueue.main.async {
+          strongSelf.collectionView.reloadData()
+        }
+      }
+    }
+  }
   
   // MARK: - Initilalization
 
@@ -87,6 +112,7 @@ extension AppsDetailCollectionViewController {
     } else {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsDetailReviewsCellId,
                                                     for: indexPath) as! AppsDetailReviewsCollectionViewCell
+      cell.appsDetailReviewCollectionViewController.appReviews = self.appReviews
       
       return cell
     }

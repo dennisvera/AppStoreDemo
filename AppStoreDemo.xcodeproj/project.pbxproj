@@ -35,6 +35,7 @@
 		E15176CC2464BC26000A254D /* AppsDetailReviewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176CB2464BC26000A254D /* AppsDetailReviewsCollectionViewCell.swift */; };
 		E15176CE2464C37B000A254D /* AppsDetailReviewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176CD2464C37B000A254D /* AppsDetailReviewsCollectionViewController.swift */; };
 		E15176D52464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176D42464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift */; };
+		E15176D72465B5C5000A254D /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176D62465B5C5000A254D /* Reviews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		E15176CB2464BC26000A254D /* AppsDetailReviewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailReviewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E15176CD2464C37B000A254D /* AppsDetailReviewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailReviewsCollectionViewController.swift; sourceTree = "<group>"; };
 		E15176D42464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailReviewsAndRatingsCollectionViewCell.swift; sourceTree = "<group>"; };
+		E15176D62465B5C5000A254D /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
 		F861CCC9D2ACE370147698CB /* Pods-AppStoreDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreDemo.release.xcconfig"; path = "Target Support Files/Pods-AppStoreDemo/Pods-AppStoreDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 			children = (
 				3906AB992443E86D0032C263 /* SearchResults.swift */,
 				39EA7E96244CD46F004D1E20 /* FeedGroup.swift */,
+				E15176D62465B5C5000A254D /* Reviews.swift */,
 				39EA7E98244D0A05004D1E20 /* SocialApp.swift */,
 			);
 			path = Models;
@@ -457,6 +460,7 @@
 				E15176C424632F81000A254D /* AppsDetailCollectionViewCell.swift in Sources */,
 				E15176D52464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift in Sources */,
 				39EA7E7F2449498B004D1E20 /* AppsGroupCollectionViewCell.swift in Sources */,
+				E15176D72465B5C5000A254D /* Reviews.swift in Sources */,
 				393FC0F7244005BF002E038B /* AppDelegate.swift in Sources */,
 				396F7DFF245629E300B98F63 /* AppsDetailCollectionViewController.swift in Sources */,
 				39EA7E99244D0A05004D1E20 /* SocialApp.swift in Sources */,

@@ -17,6 +17,7 @@ class AppsDetailReviewsAndRatingsCollectionViewCell: UICollectionViewCell {
     label.text = "Title"
     label.font = .boldSystemFont(ofSize: 18)
     label.textColor = .black
+    label.setContentCompressionResistancePriority(.init(0), for: .horizontal)
     return label
   }()
   
@@ -25,6 +26,7 @@ class AppsDetailReviewsAndRatingsCollectionViewCell: UICollectionViewCell {
     label.text = "Author Name"
     label.font = .systemFont(ofSize: 16)
     label.textColor = .lightGray
+    label.textAlignment = .right
     return label
   }()
   
@@ -64,8 +66,7 @@ class AppsDetailReviewsAndRatingsCollectionViewCell: UICollectionViewCell {
       layer.cornerRadius = 16
       clipsToBounds = true
       
-      let emptyView = UIView()
-      let horizontaStackview = UIStackView(arrangedSubviews: [titleLabel, emptyView, authorLabel])
+      let horizontaStackview = UIStackView(arrangedSubviews: [titleLabel, authorLabel])
       horizontaStackview.axis = .horizontal
       
       let mainStackView = UIStackView(arrangedSubviews: [horizontaStackview, starsLabel, reviewLabel])

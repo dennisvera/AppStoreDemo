@@ -30,6 +30,13 @@ class ServiceClient {
     
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
+  
+  // Itunes API endpoint for fetching app reviews and ratings
+  func fetchAppReview(id: String, completion: @escaping (Reviews?, Error?) -> Void) {
+    let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(id)/sortby=mostrecent/json?l=en&cc=us"
+    
+    fetchGenericJsonData(urlString: urlString, completion: completion)
+  }
 
   // Itunes API endpoint for fetching Free New Apps
   func fetcNewApps(completion: @escaping (FeedGroup?, Error?) -> Void) {

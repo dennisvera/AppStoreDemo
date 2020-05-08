@@ -13,6 +13,7 @@ class AppsDetailReviewsCollectionViewCell: UICollectionViewCell {
   // MARK: - Properties
   
   var appsDetailReviewCollectionViewController = AppsDetailReviewsCollectionViewController()
+  
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "Reviews & Ratings"

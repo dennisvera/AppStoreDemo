@@ -14,6 +14,11 @@ class AppsDetailReviewsCollectionViewController: UICollectionViewController {
   // MARK: - Properties
   
   private let appsDetailReviewsAndRatingsCollectionViewCellId = "AppsDetailReviewsAndRatingsCollectionViewCellId"
+  var appReviews: Reviews? {
+    didSet {
+      collectionView.reloadData()
+    }
+  }
   
   // MARK: - Initialization
   
@@ -54,12 +59,18 @@ class AppsDetailReviewsCollectionViewController: UICollectionViewController {
 extension AppsDetailReviewsCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 4
+    guard let count = appReviews?.feed.entry.count else { return 0 }
+    
+    return count
   }
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsDetailReviewsAndRatingsCollectionViewCellId,
                                                   for: indexPath) as! AppsDetailReviewsAndRatingsCollectionViewCell
+    let appReview = appReviews?.feed.entry[indexPath.item]
+    cell.titleLabel.text = appReview?.title.label
+    cell.authorLabel.text = appReview?.author.name.label
+    cell.reviewLabel.text = appReview?.content.label
     
     return cell
   }
