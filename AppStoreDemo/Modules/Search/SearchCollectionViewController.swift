@@ -17,7 +17,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchBarDel
   private var searchResults = [Result]()
   private var timer: Timer?
 
-  private let reuseIdentifier = "reuseIdentifier"
+  private let SearchResultCollectionViewCellId = "SearchResultCollectionViewCellId"
   private let instagram = "instagram"
   private let searchController = UISearchController(searchResultsController: nil)
   private let enterSearchaTermLabel: UILabel = {
@@ -53,7 +53,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchBarDel
 
   private func setupCollectionView() {
     // Register Collection View Cell
-    collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCellId)
     collectionView.backgroundColor = .white
   }
 
@@ -144,7 +144,7 @@ extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCellId,
                                                   for: indexPath) as! SearchResultCollectionViewCell
     cell.searchResult = searchResults[indexPath.item]
 

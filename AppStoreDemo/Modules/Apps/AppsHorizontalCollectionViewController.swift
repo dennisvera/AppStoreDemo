@@ -13,7 +13,7 @@ class AppsHorizontalCollectionViewController: UICollectionViewController {
 
   // MARK: - Properties
 
-  private let reuseIdentifier = "reuseIdentifier"
+  private let AppsRowCollectionViewCellId = "AppsRowCollectionViewCellId"
 
   var appsFeedGroup: FeedGroup?
   var didSelectHandler: ((FeedResult) -> ())?
@@ -40,7 +40,7 @@ class AppsHorizontalCollectionViewController: UICollectionViewController {
 
   private func setupCollectionView() {
     // Register Collection View Cell
-    collectionView.register(AppsRowCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    collectionView.register(AppsRowCollectionViewCell.self, forCellWithReuseIdentifier: AppsRowCollectionViewCellId)
     collectionView.backgroundColor = .white
     collectionView.showsHorizontalScrollIndicator = false
 
@@ -62,7 +62,7 @@ extension AppsHorizontalCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppsRowCollectionViewCellId,
                                                   for: indexPath) as! AppsRowCollectionViewCell
 
     let app = appsFeedGroup?.feed.results[indexPath.row]

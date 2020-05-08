@@ -13,7 +13,7 @@ class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
 
   // MARK: Properties
 
-  private let reuseIdentifier = "reuseIdentifier"
+  private let AppsHeaderCollectionViewCellId = "AppsHeaderCollectionViewCellId"
   var socialApps = [SocialApp]()
 
   // MARK: - Initialization
@@ -39,7 +39,7 @@ class AppsHeaderHorizontalCollectionViewController: UICollectionViewController {
   // MARK: - Helper Methods
 
   private func setupCollectionView() {
-    collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: AppsHeaderCollectionViewCellId)
     collectionView.backgroundColor = .white
     collectionView.showsHorizontalScrollIndicator = false
 
@@ -60,7 +60,7 @@ extension AppsHeaderHorizontalCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppsHeaderCollectionViewCellId,
                                                   for: indexPath) as! AppsHeaderCollectionViewCell
     let app = socialApps[indexPath.item]
     cell.companyLabel.text = app.name

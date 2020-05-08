@@ -28,7 +28,7 @@ class AppsDetailCollectionViewController: UICollectionViewController {
     super.init(collectionViewLayout: UICollectionViewFlowLayout())
     
     // This is Dependency Injection / Constructor.
-    // We are injecting the appId when the controller is instantiated.
+    // We are injecting the appId everytime the controller is instantiated.
   }
 
   required init?(coder: NSCoder) {
