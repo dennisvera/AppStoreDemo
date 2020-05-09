@@ -27,7 +27,6 @@
 		39EA7E92244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E91244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift */; };
 		39EA7E97244CD46F004D1E20 /* FeedGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E96244CD46F004D1E20 /* FeedGroup.swift */; };
 		39EA7E99244D0A05004D1E20 /* SocialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E98244D0A05004D1E20 /* SocialApp.swift */; };
-		A89C1875B1AF558CA971640D /* Pods_AppStoreDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C009CB25D9D9F343E4192F /* Pods_AppStoreDemo.framework */; };
 		E13CDA922465FFE40099D1CC /* TodayCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CDA912465FFE40099D1CC /* TodayCollectionViewController.swift */; };
 		E13CDA95246604100099D1CC /* TodayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CDA94246604100099D1CC /* TodayCollectionViewCell.swift */; };
 		E15176C424632F81000A254D /* AppsDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176C324632F81000A254D /* AppsDetailCollectionViewCell.swift */; };
@@ -83,7 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A89C1875B1AF558CA971640D /* Pods_AppStoreDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
