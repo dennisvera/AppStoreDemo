@@ -18,8 +18,6 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
-    imageView.widthAnchor.constraint(equalToConstant: 64).isActive = true
-    imageView.heightAnchor.constraint(equalToConstant: 64).isActive = true
     return imageView
   }()
 
@@ -42,8 +40,6 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
     button.titleLabel?.font = .boldSystemFont(ofSize: 14)
     button.layer.cornerRadius = 16
     button.backgroundColor = UIColor(white: 0.95, alpha: 1)
-    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-    button.heightAnchor.constraint(equalToConstant: 32).isActive = true
     return button
   }()
 
@@ -62,15 +58,28 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
   // MARK: Helper Methods
 
   private func setupViews() {
+    addSubview(appIconImageView)
+    appIconImageView.snp.makeConstraints { make in
+      make.centerX.centerY.equalToSuperview()
+      make.width.height.equalTo(64)
+    }
+    
+    addSubview(getBUtton)
+    getBUtton.snp.makeConstraints { make in
+      make.centerX.centerY.equalToSuperview()
+      make.width.equalTo(80)
+      make.height.equalTo(32)
+    }
+    
     let labelsStackView = UIStackView(arrangedSubviews: [nameLabel, companyLabel])
     labelsStackView.axis = .vertical
     labelsStackView.spacing = 4
-
+    
     let mainStackView = UIStackView(arrangedSubviews: [appIconImageView, labelsStackView, getBUtton])
     mainStackView.axis = .horizontal
     mainStackView.alignment = .center
     mainStackView.spacing = 16
-
+    
     addSubview(mainStackView)
     mainStackView.snp.makeConstraints { make in
       make.edges.equalToSuperview()

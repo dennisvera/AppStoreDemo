@@ -18,8 +18,6 @@ class AppsDetailCollectionViewCell: UICollectionViewCell {
     imageView.layer.cornerRadius = 16
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFit
-    imageView.widthAnchor.constraint(equalToConstant: 140).isActive = true
-    imageView.heightAnchor.constraint(equalToConstant: 140).isActive = true
     return imageView
   }()
   
@@ -43,8 +41,6 @@ class AppsDetailCollectionViewCell: UICollectionViewCell {
     button.titleLabel?.font = .boldSystemFont(ofSize: 14)
     button.layer.cornerRadius = 32 / 2
     button.backgroundColor = #colorLiteral(red: 0.1959072053, green: 0.4716053605, blue: 0.9613705277, alpha: 1)
-    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-    button.heightAnchor.constraint(equalToConstant: 32).isActive = true
     return button
   }()
   
@@ -88,6 +84,19 @@ class AppsDetailCollectionViewCell: UICollectionViewCell {
   // MARK: - Helper Methods
   
   private func setupViews() {
+    addSubview(appIconImageView)
+    appIconImageView.snp.makeConstraints { make in
+      make.centerX.centerY.equalToSuperview()
+      make.width.height.equalTo(140)
+    }
+    
+    addSubview(priceButton)
+    priceButton.snp.makeConstraints { make in
+      make.centerX.centerY.equalToSuperview()
+      make.width.equalTo(80)
+      make.height.equalTo(32)
+    }
+    
     let topVerticalStackview = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, priceButton])
     topVerticalStackview.axis = .vertical
     topVerticalStackview.spacing = 6
