@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SnapKit
 
 class TodayCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
   private let todayCollectionViewCellId = "todayCollectionViewCellId"
+  var startingFrame: CGRect?
   
   // MARK: - Intialization
   
@@ -41,6 +43,22 @@ class TodayCollectionViewController: UICollectionViewController {
     
     navigationController?.isNavigationBarHidden = true
   }
+  
+  // MARK: Actions
+  
+  @objc private func handleRemoveRedView(gesture: UIGestureRecognizer) {
+    UIView.animate(withDuration: 0.7,
+                   delay: 0,
+                   usingSpringWithDamping: 0.7,
+                   initialSpringVelocity: 0.7,
+                   options: .curveEaseOut,
+                   animations:{
+                    gesture.view?.frame = self.startingFrame ?? .zero
+    },
+                   completion: { _ in
+                    gesture.view?.removeFromSuperview()
+    })
+  }
 }
 
 // MARK: UICollectionViewDataSource
@@ -60,8 +78,29 @@ extension TodayCollectionViewController {
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // TO DO
-    print("Animate cell when tapped")
+    let redView = UIView()
+    redView.backgroundColor = .red
+    redView.layer.cornerRadius = 16
+    redView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRemoveRedView)))
+    view.addSubview(redView)
+    
+    guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+    
+    // Absolute coordinates of cell
+    guard let startingFrame = cell.superview?.convert(cell.frame, to: nil) else { return }
+    self.startingFrame = startingFrame
+    
+    redView.frame = startingFrame
+    
+    UIView.animate(withDuration: 0.7,
+                   delay: 0,
+                   usingSpringWithDamping: 0.7,
+                   initialSpringVelocity: 0.7,
+                   options: .curveEaseOut,
+                   animations: {
+                    redView.frame = self.view.frame
+    },
+                   completion: nil)
   }
 }
 
