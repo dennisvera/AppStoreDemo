@@ -14,6 +14,7 @@ class TodayCollectionViewController: UICollectionViewController {
   // MARK: - Properties
   
   private let todayCollectionViewCellId = "todayCollectionViewCellId"
+  var appFullScreenController: UIViewController!
   var startingFrame: CGRect?
   
   // MARK: - Intialization
@@ -54,9 +55,14 @@ class TodayCollectionViewController: UICollectionViewController {
                    options: .curveEaseOut,
                    animations:{
                     gesture.view?.frame = self.startingFrame ?? .zero
+                    
+                    // Unhide TabBar
+                    self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - 80
     },
-                   completion: { _ in
+                   completion: { [weak self] _ in
+                    guard let strongSelf = self else { return }
                     gesture.view?.removeFromSuperview()
+                    strongSelf.appFullScreenController.removeFromParent()
     })
   }
 }
@@ -71,18 +77,20 @@ extension TodayCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: todayCollectionViewCellId, for: indexPath) as! TodayCollectionViewCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: todayCollectionViewCellId,
+                                                  for: indexPath) as! TodayCollectionViewCell
     cell.backgroundColor = .white
     
     return cell
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let redView = UIView()
-    redView.backgroundColor = .red
-    redView.layer.cornerRadius = 16
-    redView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRemoveRedView)))
-    view.addSubview(redView)
+    let appFullScreenController = AppFullScreenTableViewController()
+    appFullScreenController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRemoveRedView)))
+    view.addSubview(appFullScreenController.view)
+    
+    addChild(appFullScreenController)
+    self.appFullScreenController = appFullScreenController
     
     guard let cell = collectionView.cellForItem(at: indexPath) else { return }
     
@@ -90,7 +98,7 @@ extension TodayCollectionViewController {
     guard let startingFrame = cell.superview?.convert(cell.frame, to: nil) else { return }
     self.startingFrame = startingFrame
     
-    redView.frame = startingFrame
+    appFullScreenController.view.frame = startingFrame
     
     UIView.animate(withDuration: 0.7,
                    delay: 0,
@@ -98,7 +106,10 @@ extension TodayCollectionViewController {
                    initialSpringVelocity: 0.7,
                    options: .curveEaseOut,
                    animations: {
-                    redView.frame = self.view.frame
+                    self.appFullScreenController.view.frame = self.view.frame
+                    
+                    // Hide the TabBar
+                    self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height
     },
                    completion: nil)
   }
@@ -113,7 +124,7 @@ extension TodayCollectionViewController: UICollectionViewDelegateFlowLayout {
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     let leftAndRightPadding: CGFloat = 64
     
-    return .init(width: view.frame.width - leftAndRightPadding, height: 300)
+    return .init(width: view.frame.width - leftAndRightPadding, height: 450)
   }
   
   func collectionView(_ collectionView: UICollectionView,
