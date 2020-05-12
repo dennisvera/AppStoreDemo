@@ -44,7 +44,7 @@ class AppsDetailReviewsAndRatingsCollectionViewCell: UICollectionViewCell {
   let ratingStackView: UIStackView = {
     var arrangedSubViews = [UIView]()
     (0..<5).forEach { _ in
-      let imageView = UIImageView(image: #imageLiteral(resourceName: "star"))
+      let imageView = UIImageView(image: #imageLiteral(resourceName: "starImage"))
       imageView.clipsToBounds = true
       imageView.contentMode = .scaleAspectFill
       imageView.widthAnchor.constraint(equalToConstant: 24).isActive = true

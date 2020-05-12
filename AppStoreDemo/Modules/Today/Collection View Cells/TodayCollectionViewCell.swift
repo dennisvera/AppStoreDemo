@@ -15,7 +15,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
   
   let imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = #imageLiteral(resourceName: "garden")
+    imageView.image = #imageLiteral(resourceName: "gardenImage")
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
     return imageView

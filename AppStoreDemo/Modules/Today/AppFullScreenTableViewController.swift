@@ -11,6 +11,10 @@ import SnapKit
 
 class AppFullScreenTableViewController: UITableViewController {
   
+  // MARK: - Properties
+  
+  var dismissHandler: (() ->())?
+  
   // MARK: - View Life Cycle
   
   override func viewDidLoad() {
@@ -22,9 +26,16 @@ class AppFullScreenTableViewController: UITableViewController {
   // MARK: - Helper Methods
   
   private func setupTableViewController() {
-    view.backgroundColor = .white
-    view.layer.cornerRadius = 16
+    tableView.tableFooterView = UIView()
+    tableView.backgroundColor = .white
     tableView.separatorStyle = .none
+  }
+  
+  // MARK: - Actions
+  
+  @objc private func handleDismissView(button: UIButton) {
+    button.isHidden = true
+    dismissHandler?()
   }
 }
 
@@ -38,23 +49,20 @@ extension AppFullScreenTableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if indexPath.item == 0 {
-      // Hack to return a Collection View Cell inside the Table View Cell
-      // TODO: Look for a better solution
-      let tableViewCell = UITableViewCell()
-      let todayCell = TodayCollectionViewCell()
-      todayCell.frame = CGRect(x: 0, y: 0, width: 250, height: 250)
-      tableViewCell.addSubview(todayCell)
-      todayCell.snp.makeConstraints { make in
-        make.edges.equalToSuperview()
-      }
-      return tableViewCell
-    } else {
-      let appFullScreenCell = AppFullScreenTableViewCell()
-      return appFullScreenCell
+      let appFullScreenHeaderCell = AppFullScreenHeaderTableViewCell()
+      appFullScreenHeaderCell.closeButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
+      return appFullScreenHeaderCell
     }
+    
+    let appFullScreenCell = AppFullScreenTableViewCell()
+    return appFullScreenCell
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 450
-  }
+    if indexPath.row == 0 {
+      // Height for top cell
+      return 450
+    }
+    
+    return super.tableView(tableView, heightForRowAt: indexPath)  }
 }

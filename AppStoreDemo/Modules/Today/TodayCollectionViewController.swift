@@ -14,8 +14,13 @@ class TodayCollectionViewController: UICollectionViewController {
   // MARK: - Properties
   
   private let todayCollectionViewCellId = "todayCollectionViewCellId"
-  var appFullScreenController: UIViewController!
+  
+  var appFullScreenController: AppFullScreenTableViewController!
   var startingFrame: CGRect?
+  var topConstraint: NSLayoutConstraint?
+  var leadingConstraint: NSLayoutConstraint?
+  var widthConstraint: NSLayoutConstraint?
+  var heightConstraint: NSLayoutConstraint?
   
   // MARK: - Intialization
   
@@ -38,31 +43,41 @@ class TodayCollectionViewController: UICollectionViewController {
   // MARK: - Helper Methods
   
   private func setupCollectionView() {
+    navigationController?.isNavigationBarHidden = true
+    
     // Register Collection View Cell
     collectionView.register(TodayCollectionViewCell.self, forCellWithReuseIdentifier: todayCollectionViewCellId)
     collectionView.backgroundColor = #colorLiteral(red: 0.9489468932, green: 0.9490606189, blue: 0.9489082694, alpha: 1)
-    
-    navigationController?.isNavigationBarHidden = true
   }
   
   // MARK: Actions
   
-  @objc private func handleRemoveRedView(gesture: UIGestureRecognizer) {
+  @objc private func dismissFullScreenController() {
     UIView.animate(withDuration: 0.7,
                    delay: 0,
                    usingSpringWithDamping: 0.7,
                    initialSpringVelocity: 0.7,
                    options: .curveEaseOut,
-                   animations:{
-                    gesture.view?.frame = self.startingFrame ?? .zero
+                   animations: {
+                    
+                    self.appFullScreenController.tableView.contentOffset = .zero
+                    
+                    guard let startingFrame = self.startingFrame else { return }
+                    self.topConstraint?.constant = startingFrame.origin.y
+                    self.leadingConstraint?.constant = startingFrame.origin.x
+                    self.widthConstraint?.constant = startingFrame.width
+                    self.heightConstraint?.constant = startingFrame.height
+                    
+                    // Stops the animation
+                    self.view.layoutIfNeeded()
                     
                     // Unhide TabBar
                     self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - 80
-    },
-                   completion: { [weak self] _ in
-                    guard let strongSelf = self else { return }
-                    gesture.view?.removeFromSuperview()
-                    strongSelf.appFullScreenController.removeFromParent()
+                    
+    }, completion: { [weak self] _ in
+      guard let strongSelf = self else { return }
+      strongSelf.appFullScreenController.view.removeFromSuperview()
+      strongSelf.appFullScreenController.removeFromParent()
     })
   }
 }
@@ -72,7 +87,7 @@ class TodayCollectionViewController: UICollectionViewController {
 extension TodayCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
+    return 4
   }
   
   override func collectionView(_ collectionView: UICollectionView,
@@ -86,8 +101,15 @@ extension TodayCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let appFullScreenController = AppFullScreenTableViewController()
-    appFullScreenController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRemoveRedView)))
-    view.addSubview(appFullScreenController.view)
+    appFullScreenController.dismissHandler = {
+      self.dismissFullScreenController()
+    }
+    
+    let appFullScreenView = appFullScreenController.view!
+    appFullScreenView.layer.cornerRadius = 16
+    
+    appFullScreenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissFullScreenController)))
+    view.addSubview(appFullScreenView)
     
     addChild(appFullScreenController)
     self.appFullScreenController = appFullScreenController
@@ -98,7 +120,15 @@ extension TodayCollectionViewController {
     guard let startingFrame = cell.superview?.convert(cell.frame, to: nil) else { return }
     self.startingFrame = startingFrame
     
-    appFullScreenController.view.frame = startingFrame
+    // Auto Layout Animation
+    appFullScreenView.translatesAutoresizingMaskIntoConstraints = false
+    topConstraint = appFullScreenView.topAnchor.constraint(equalTo: view.topAnchor, constant: startingFrame.origin.y)
+    leadingConstraint = appFullScreenView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startingFrame.origin.x)
+    widthConstraint = appFullScreenView.widthAnchor.constraint(equalToConstant: startingFrame.width)
+    heightConstraint = appFullScreenView.heightAnchor.constraint(equalToConstant: startingFrame.height)
+    
+    [topConstraint, leadingConstraint, widthConstraint, heightConstraint].forEach({$0?.isActive = true})
+    self.view.layoutIfNeeded()
     
     UIView.animate(withDuration: 0.7,
                    delay: 0,
@@ -106,12 +136,18 @@ extension TodayCollectionViewController {
                    initialSpringVelocity: 0.7,
                    options: .curveEaseOut,
                    animations: {
-                    self.appFullScreenController.view.frame = self.view.frame
                     
-                    // Hide the TabBar
-                    self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height
-    },
-                   completion: nil)
+                    self.topConstraint?.constant = 0
+                    self.leadingConstraint?.constant = 0
+                    self.widthConstraint?.constant = self.view.frame.width
+                    self.heightConstraint?.constant = self.view.frame.height
+                    
+                    // Stops the animation
+                    self.view.layoutIfNeeded()
+                    
+                    self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
+                    
+    }, completion: nil)
   }
 }
 
