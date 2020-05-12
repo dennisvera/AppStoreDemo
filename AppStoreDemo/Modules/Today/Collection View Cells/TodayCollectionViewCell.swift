@@ -13,13 +13,43 @@ class TodayCollectionViewCell: UICollectionViewCell {
   
   // MARK: - Properties
   
-  let imageView: UIImageView = {
+  private let categoryLabel: UILabel = {
+    let label = UILabel()
+    label.font = .boldSystemFont(ofSize: 20)
+    return label
+  }()
+  
+  private let titleLabel: UILabel = {
+    let label = UILabel()
+    label.font = .boldSystemFont(ofSize: 28)
+    return label
+  }()
+  
+  private let descriptionLabel: UILabel = {
+    let label = UILabel()
+    label.font = .systemFont(ofSize: 16)
+    label.numberOfLines = 3
+    return label
+  }()
+  
+  
+  private let imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = #imageLiteral(resourceName: "gardenImage")
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
     return imageView
   }()
+  
+  var todayItem: TodayItem? {
+    didSet {
+      guard let item = todayItem else { return }
+      categoryLabel.text = item.category
+      titleLabel.text = item.title
+      descriptionLabel.text = item.description
+      imageView.image = item.image
+      backgroundColor = item.backgroundColor
+    }
+  }
   
   // MARK: - Initialization
   
@@ -36,13 +66,25 @@ class TodayCollectionViewCell: UICollectionViewCell {
   // MARK: - Helper Methods
   
   private func setupViews() {
-    backgroundColor = .white
     layer.cornerRadius = 16
+    clipsToBounds = true
     
-    addSubview(imageView)
+    let imageContainer = UIView()
+    imageContainer.addSubview(imageView)
+    
     imageView.snp.makeConstraints { make in
-      make.centerY.centerX.equalTo(self)
-      make.width.height.equalTo(250)
+      make.centerY.centerX.equalToSuperview()
+      make.width.height.equalTo(240)
+    }
+    
+    let stackView = UIStackView(arrangedSubviews: [categoryLabel, titleLabel, imageContainer, descriptionLabel])
+    stackView.axis = .vertical
+    stackView.spacing = 8
+    
+    addSubview(stackView)
+    stackView.snp.makeConstraints { make in
+      make.top.leading.equalToSuperview().offset(24)
+      make.bottom.trailing.equalToSuperview().offset(-24)
     }
   }
 }

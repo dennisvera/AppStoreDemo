@@ -22,6 +22,19 @@ class TodayCollectionViewController: UICollectionViewController {
   var widthConstraint: NSLayoutConstraint?
   var heightConstraint: NSLayoutConstraint?
   
+  let items = [
+    TodayItem(category: "LIFE HACK",
+              title: "Utilizing your Time",
+              image: #imageLiteral(resourceName: "gardenImage"),
+              description: "All the tools and apps you need to intelligently orginize your life the right way.",
+              backgroundColor: .white),
+    TodayItem(category: "HOLIDAYS",
+              title: "Travel on a Budget",
+              image: #imageLiteral(resourceName: "holiday_Image"),
+              description: "Find out all you need to know on how to travel without packing everything!",
+              backgroundColor: #colorLiteral(red: 0.988055408, green: 0.958909452, blue: 0.7275250554, alpha: 1))
+  ]
+  
   // MARK: - Intialization
   
   init() {
@@ -87,20 +100,22 @@ class TodayCollectionViewController: UICollectionViewController {
 extension TodayCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 4
+    return items.count
   }
   
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: todayCollectionViewCellId,
                                                   for: indexPath) as! TodayCollectionViewCell
-    cell.backgroundColor = .white
+    cell.todayItem = items[indexPath.item]
     
     return cell
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let appFullScreenController = AppFullScreenTableViewController()
+    appFullScreenController.todayItem = items[indexPath.row]
+    
     appFullScreenController.dismissHandler = {
       self.dismissFullScreenController()
     }
@@ -108,7 +123,6 @@ extension TodayCollectionViewController {
     let appFullScreenView = appFullScreenController.view!
     appFullScreenView.layer.cornerRadius = 16
     
-    appFullScreenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissFullScreenController)))
     view.addSubview(appFullScreenView)
     
     addChild(appFullScreenController)

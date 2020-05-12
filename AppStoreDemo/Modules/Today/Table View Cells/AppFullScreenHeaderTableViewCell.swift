@@ -13,7 +13,7 @@ class AppFullScreenHeaderTableViewCell: UITableViewCell {
   
   // MARK: - Properties
     
-  private let todayCell = TodayCollectionViewCell()
+  let todayCell = TodayCollectionViewCell()
   let closeButton: UIButton = {
     let button = UIButton(type: .system)
     button.setImage(#imageLiteral(resourceName: "closeButton"), for: .normal)

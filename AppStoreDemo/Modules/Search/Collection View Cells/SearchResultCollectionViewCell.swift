@@ -95,16 +95,16 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     labelsStackView.axis = .vertical
 
     let infoTopStackView = UIStackView(arrangedSubviews: [appIconImageView, labelsStackView, getButton])
-    infoTopStackView.spacing = 12
     infoTopStackView.axis = .horizontal
     infoTopStackView.alignment = .center
+    infoTopStackView.spacing = 12
 
     let screenShotsStackView = UIStackView(arrangedSubviews: [screenshot1ImageView,
                                                               screenshot2ImageView,
                                                               screenshot3ImageView])
     screenShotsStackView.axis = .horizontal
-    screenShotsStackView.spacing = 12
     screenShotsStackView.distribution = .fillEqually
+    screenShotsStackView.spacing = 12
 
     let mainStackView = UIStackView(arrangedSubviews: [infoTopStackView, screenShotsStackView])
     mainStackView.axis = .vertical

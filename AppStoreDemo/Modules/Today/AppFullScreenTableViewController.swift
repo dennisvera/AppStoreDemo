@@ -14,6 +14,7 @@ class AppFullScreenTableViewController: UITableViewController {
   // MARK: - Properties
   
   var dismissHandler: (() ->())?
+  var todayItem: TodayItem?
   
   // MARK: - View Life Cycle
   
@@ -29,6 +30,7 @@ class AppFullScreenTableViewController: UITableViewController {
     tableView.tableFooterView = UIView()
     tableView.backgroundColor = .white
     tableView.separatorStyle = .none
+    tableView.allowsSelection = false
   }
   
   // MARK: - Actions
@@ -51,6 +53,7 @@ extension AppFullScreenTableViewController {
     if indexPath.item == 0 {
       let appFullScreenHeaderCell = AppFullScreenHeaderTableViewCell()
       appFullScreenHeaderCell.closeButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
+      appFullScreenHeaderCell.todayCell.todayItem = todayItem
       return appFullScreenHeaderCell
     }
     
