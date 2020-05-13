@@ -69,15 +69,17 @@ class TodayCollectionViewCell: UICollectionViewCell {
     layer.cornerRadius = 16
     clipsToBounds = true
     
-    let imageContainer = UIView()
-    imageContainer.addSubview(imageView)
+    // ImageViews do not size properly on StackViews
+    // Wrapping the ImageView in a UIView resolves that issue
+    let imageContainerView = UIView()
+    imageContainerView.addSubview(imageView)
     
     imageView.snp.makeConstraints { make in
       make.centerY.centerX.equalToSuperview()
       make.width.height.equalTo(240)
     }
     
-    let stackView = UIStackView(arrangedSubviews: [categoryLabel, titleLabel, imageContainer, descriptionLabel])
+    let stackView = UIStackView(arrangedSubviews: [categoryLabel, titleLabel, imageContainerView, descriptionLabel])
     stackView.axis = .vertical
     stackView.spacing = 8
     

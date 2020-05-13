@@ -28,7 +28,6 @@ class AppFullScreenTableViewController: UITableViewController {
   
   private func setupTableViewController() {
     tableView.tableFooterView = UIView()
-    tableView.backgroundColor = .white
     tableView.separatorStyle = .none
     tableView.allowsSelection = false
   }
@@ -67,5 +66,6 @@ extension AppFullScreenTableViewController {
       return 450
     }
     
-    return super.tableView(tableView, heightForRowAt: indexPath)  }
+    return super.tableView(tableView, heightForRowAt: indexPath)
+  }
 }

@@ -52,8 +52,10 @@ class AppFullScreenTableViewCell: UITableViewCell {
   private func setupViews() {
     addSubview(descriptionLabel)
     descriptionLabel.snp.makeConstraints { make in
-      make.top.bottom.equalToSuperview()
-      make.leading.trailing.equalTo(24)
+      make.top.equalToSuperview()
+      make.bottom.equalToSuperview().offset(-32)
+      make.leading.equalToSuperview().offset(24)
+      make.trailing.equalToSuperview().offset(-24)
     }
   }
 }

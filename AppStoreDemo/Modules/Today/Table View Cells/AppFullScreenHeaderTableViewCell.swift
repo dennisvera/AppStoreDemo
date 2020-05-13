@@ -43,7 +43,7 @@ class AppFullScreenHeaderTableViewCell: UITableViewCell {
     addSubview(closeButton)
     closeButton.snp.makeConstraints { make in
       make.top.equalToSuperview()
-      make.trailing.equalTo(-12)
+      make.trailing.equalToSuperview().offset(-12)
       make.width.equalTo(80)
       make.height.equalTo(38)
     }
