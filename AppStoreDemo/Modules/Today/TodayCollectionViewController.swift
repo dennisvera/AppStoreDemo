@@ -85,13 +85,18 @@ class TodayCollectionViewController: UICollectionViewController {
                     self.view.layoutIfNeeded()
                     
                     // Unhide TabBar
-                    self.tabBarController?.tabBar.transform = .identity
-                    //                    self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - 80
+                    self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - 80
+                    
+                    // Set the TodayCollectionViewCell topConstraint below the status bar to 24pts
+                    guard let cell = self.appFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
+                    cell.todayCell.topConstraint.constant = 24
+                    cell.layoutIfNeeded()
                     
     }, completion: { [weak self] _ in
       guard let strongSelf = self else { return }
       strongSelf.appFullScreenController.view.removeFromSuperview()
       strongSelf.appFullScreenController.removeFromParent()
+      strongSelf.collectionView.isUserInteractionEnabled = true
     })
   }
 }
@@ -129,6 +134,9 @@ extension TodayCollectionViewController {
     
     self.appFullScreenController = appFullScreenController
     
+    // Disable the collectionView interaction to fix bug
+    collectionView.isUserInteractionEnabled = false
+    
     guard let cell = collectionView.cellForItem(at: indexPath) else { return }
     
     // Absolute coordinates of cell
@@ -162,6 +170,11 @@ extension TodayCollectionViewController {
                     self.view.layoutIfNeeded()
                     
                     self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
+                    
+                    // Set the TodayCollectionViewCell topConstraint below the status bar to 48pts
+                    guard let cell = self.appFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
+                    cell.todayCell.topConstraint.constant = 48
+                    cell.layoutIfNeeded()
                     
     }, completion: nil)
   }

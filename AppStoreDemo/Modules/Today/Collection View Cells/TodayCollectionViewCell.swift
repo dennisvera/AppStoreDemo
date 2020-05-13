@@ -40,6 +40,8 @@ class TodayCollectionViewCell: UICollectionViewCell {
     return imageView
   }()
   
+  var topConstraint: NSLayoutConstraint!
+  
   var todayItem: TodayItem? {
     didSet {
       guard let item = todayItem else { return }
@@ -69,8 +71,8 @@ class TodayCollectionViewCell: UICollectionViewCell {
     layer.cornerRadius = 16
     clipsToBounds = true
     
-    // ImageViews do not size properly on StackViews
-    // Wrapping the ImageView in a UIView resolves that issue
+    // ImageViews do not size properly on StackViews,
+    // wrapping the ImageView in a UIView scales better in the StackView.
     let imageContainerView = UIView()
     imageContainerView.addSubview(imageView)
     
@@ -85,8 +87,11 @@ class TodayCollectionViewCell: UICollectionViewCell {
     
     addSubview(stackView)
     stackView.snp.makeConstraints { make in
-      make.top.leading.equalToSuperview().offset(24)
+      make.leading.equalToSuperview().offset(24)
       make.bottom.trailing.equalToSuperview().offset(-24)
     }
+    
+    topConstraint = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 24)
+    topConstraint.isActive = true
   }
 }

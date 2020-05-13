@@ -30,6 +30,10 @@ class AppFullScreenTableViewController: UITableViewController {
     tableView.tableFooterView = UIView()
     tableView.separatorStyle = .none
     tableView.allowsSelection = false
+    self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0);
+
+    // Remove the status bar
+    tableView.contentInsetAdjustmentBehavior = .never
   }
   
   // MARK: - Actions
@@ -53,6 +57,7 @@ extension AppFullScreenTableViewController {
       let appFullScreenHeaderCell = AppFullScreenHeaderTableViewCell()
       appFullScreenHeaderCell.closeButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
       appFullScreenHeaderCell.todayCell.todayItem = todayItem
+      appFullScreenHeaderCell.todayCell.layer.cornerRadius = 0
       return appFullScreenHeaderCell
     }
     
