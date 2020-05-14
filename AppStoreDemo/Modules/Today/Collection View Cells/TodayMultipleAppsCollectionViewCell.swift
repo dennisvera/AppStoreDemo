@@ -27,7 +27,7 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
     return label
   }()
   
-  let multipleAppsViewController = UIViewController()
+  let todayMultipleAppsController = TodayMultipleAppsCollectionViewController()
   
   var todayItem: TodayItem? {
     didSet {
@@ -55,10 +55,8 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
   private func setupViews() {
     backgroundColor = .white
     layer.cornerRadius = 16
-    
-    multipleAppsViewController.view.backgroundColor = .red
-    
-    let stackView = UIStackView(arrangedSubviews: [categoryLabel, titleLabel, multipleAppsViewController.view])
+        
+    let stackView = UIStackView(arrangedSubviews: [categoryLabel, titleLabel, todayMultipleAppsController.view])
     stackView.axis = .vertical
     stackView.spacing = 12
     

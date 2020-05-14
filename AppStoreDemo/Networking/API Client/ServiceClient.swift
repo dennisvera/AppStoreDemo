@@ -46,14 +46,14 @@ class ServiceClient {
   }
 
   // Itunes API endpoint for fetching Top Grossing Apps
-  func fetcTopGrossingApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
+  func fetchTopGrossingApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-grossing/all/25/explicit.json"
 
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
 
   // Itunes API endpoint for fetching Top Free Apps
-  func fetcTopFreeApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
+  func fetchTopFreeApps(completion: @escaping (FeedGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-free/all/25/explicit.json"
 
     fetchGenericJsonData(urlString: urlString, completion: completion)

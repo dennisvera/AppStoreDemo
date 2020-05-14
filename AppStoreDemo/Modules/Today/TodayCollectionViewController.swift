@@ -13,9 +13,6 @@ class TodayCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
-//  private let todayCollectionViewCellId = "todayCollectionViewCellId"
-//  private let todayMultipleAppsCollectionViewCellId = "TodayMultipleAppsCollectionViewCellId"
-  
   var appFullScreenController: AppFullScreenTableViewController!
   var startingFrame: CGRect?
   var topConstraint: NSLayoutConstraint?
