@@ -52,10 +52,6 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
-    
-    if screenType == .fullAppListScreen {
-      setupDismissButton()
-    }
   }
   
   // MARK: - Helper Methods
@@ -66,6 +62,13 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
         
     // Register Collection View Cells
     collectionView.register(AppGroupsCollectionViewCell.self, forCellWithReuseIdentifier: appGroupsCollectionViewCellId)
+    
+    if screenType == .fullAppListScreen {
+      setupDismissButton()
+      navigationController?.isNavigationBarHidden = true
+    } else {
+      collectionView.isScrollEnabled = true
+    }
   }
   
   private func setupDismissButton() {
@@ -90,7 +93,6 @@ extension TodayMultipleAppsCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if screenType == .fullAppListScreen {
-      collectionView.isScrollEnabled = true
       return appResults.count
     }
     
@@ -104,6 +106,12 @@ extension TodayMultipleAppsCollectionViewController {
     cell.app = appResults[indexPath.item]
     
     return cell
+  }
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let appId = appResults[indexPath.item].id
+    let appDetailController = AppsDetailCollectionViewController(appId: appId)
+    navigationController?.pushViewController(appDetailController, animated: true)
   }
 }
 

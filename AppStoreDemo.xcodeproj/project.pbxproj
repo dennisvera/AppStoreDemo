@@ -46,6 +46,7 @@
 		E15176CE2464C37B000A254D /* AppsDetailReviewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176CD2464C37B000A254D /* AppsDetailReviewsCollectionViewController.swift */; };
 		E15176D52464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176D42464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift */; };
 		E15176D72465B5C5000A254D /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176D62465B5C5000A254D /* Reviews.swift */; };
+		E197615F246DCE4500016106 /* BackEnabledNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197615E246DCE4500016106 /* BackEnabledNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,6 +111,7 @@
 		E15176CD2464C37B000A254D /* AppsDetailReviewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailReviewsCollectionViewController.swift; sourceTree = "<group>"; };
 		E15176D42464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailReviewsAndRatingsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E15176D62465B5C5000A254D /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
+		E197615E246DCE4500016106 /* BackEnabledNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEnabledNavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				396F7DFA2456113200B98F63 /* SnappingCollectionViewFlowLayout.swift */,
+				E197615E246DCE4500016106 /* BackEnabledNavigationController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				E13CDAC1246B14FE0099D1CC /* TodayItem.swift in Sources */,
 				3906AB9E2445233D0032C263 /* ServiceClient.swift in Sources */,
 				39EA7E7D2449454D004D1E20 /* AppsCollectionViewController.swift in Sources */,
+				E197615F246DCE4500016106 /* BackEnabledNavigationController.swift in Sources */,
 				E15176C6246462E9000A254D /* AppsDetailPreviewCollectionViewCell.swift in Sources */,
 				E15176CE2464C37B000A254D /* AppsDetailReviewsCollectionViewController.swift in Sources */,
 				3906AB89244374920032C263 /* SearchCollectionViewController.swift in Sources */,

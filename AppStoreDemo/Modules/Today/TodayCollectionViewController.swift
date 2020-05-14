@@ -53,6 +53,14 @@ class TodayCollectionViewController: UICollectionViewController {
     fetchApps()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    // TODO - SOLUTION IS NOT WORKING
+    // SOLUTIION: This fixes the bug of the tab bar not anchoring down when seguing back to the controller
+    tabBarController?.tabBar.superview?.setNeedsLayout()
+  }
+  
   // MARK: - Helper Methods
   
   private func setupCollectionView() {
@@ -95,7 +103,7 @@ class TodayCollectionViewController: UICollectionViewController {
     disptachGroup.enter()
     ServiceClient.shared.fetcNewApps { [weak self] (appsGroup, error)  in
       if let error = error {
-        print("Failed to Fetch Apss: ", error)
+        print("Failed to Fetch Apps: ", error)
         return
       }
       
@@ -177,6 +185,27 @@ class TodayCollectionViewController: UICollectionViewController {
       strongSelf.collectionView.isUserInteractionEnabled = true
     })
   }
+  
+  @objc private func handleMultipleAppsTap(gesture: UIGestureRecognizer) {
+    let selectedView = gesture.view
+    
+    // Find the cell we are clicking into
+    var superView = selectedView?.superview
+    
+    while superView != nil {
+      if let cell = superView as? TodayMultipleAppsCollectionViewCell {
+        guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+        let apps = self.items[indexPath.item].apps
+        
+        let fullAppListController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
+        fullAppListController.appResults = apps
+        present(fullAppListController, animated: true)
+        return
+      }
+      
+      superView = superView?.superview
+    }
+  }
 }
 
 // MARK: UICollectionViewDataSource
@@ -199,15 +228,20 @@ extension TodayCollectionViewController {
       cell.todayItem = items[indexPath.item]
     }
     
+    // Enable tapping of Multiple Cells
+    (cell as? TodayMultipleAppsCollectionViewCell)?.todayMultipleAppsController.collectionView.addGestureRecognizer(
+      UITapGestureRecognizer(target: self, action: #selector(handleMultipleAppsTap)))
+    
     return cell
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
     if items[indexPath.item].cellType == .multiple {
-      let fullAppController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
-      fullAppController.appResults = self.items[indexPath.item].apps
-      present(fullAppController, animated: true)
+      let fullAppListController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
+      let navigationController = BackEnabledNavigationController(rootViewController: fullAppListController)
+      fullAppListController.appResults = self.items[indexPath.item].apps
+      present(navigationController, animated: true)
       return
     }
     
