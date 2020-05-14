@@ -14,7 +14,8 @@ class AppFullScreenHeaderTableViewCell: UITableViewCell {
   // MARK: - Properties
     
   let todayCell = TodayCollectionViewCell()
-  let closeButton: UIButton = {
+  
+  let dismissButton: UIButton = {
     let button = UIButton(type: .system)
     button.setImage(#imageLiteral(resourceName: "closeButton"), for: .normal)
     return button
@@ -40,8 +41,8 @@ class AppFullScreenHeaderTableViewCell: UITableViewCell {
       make.edges.equalToSuperview()
     }
     
-    addSubview(closeButton)
-    closeButton.snp.makeConstraints { make in
+    addSubview(dismissButton)
+    dismissButton.snp.makeConstraints { make in
       // BUG: the button is being blocked by the navigationbar, not tappable
       // I set the button top constraint to 140 to get access to the button
       // This needs to be resolved by properly removing the navigationbar

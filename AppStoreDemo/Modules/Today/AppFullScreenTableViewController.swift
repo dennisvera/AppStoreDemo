@@ -55,7 +55,7 @@ extension AppFullScreenTableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if indexPath.item == 0 {
       let appFullScreenHeaderCell = AppFullScreenHeaderTableViewCell()
-      appFullScreenHeaderCell.closeButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
+      appFullScreenHeaderCell.dismissButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
       appFullScreenHeaderCell.todayCell.todayItem = todayItem
       appFullScreenHeaderCell.todayCell.layer.cornerRadius = 0
       return appFullScreenHeaderCell

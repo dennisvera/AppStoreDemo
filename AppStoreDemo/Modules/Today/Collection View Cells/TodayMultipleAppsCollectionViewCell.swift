@@ -27,7 +27,7 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
     return label
   }()
   
-  let todayMultipleAppsController = TodayMultipleAppsCollectionViewController()
+  let todayMultipleAppsController = TodayMultipleAppsCollectionViewController(screenType: .shortAppListScreen)
   
   var todayItem: TodayItem? {
     didSet {

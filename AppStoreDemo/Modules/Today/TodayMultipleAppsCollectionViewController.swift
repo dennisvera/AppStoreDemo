@@ -9,18 +9,36 @@
 import UIKit
 import SnapKit
 
+enum ScreenType {
+  
+  case shortAppListScreen
+  case fullAppListScreen
+}
+
 class TodayMultipleAppsCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
+  override var prefersStatusBarHidden: Bool { return true }
+
   private let appGroupsCollectionViewCellId = "appGroupsCollectionViewCellId"
+  private let screenType: ScreenType
   private let lineSpacing: CGFloat = 16
   
   var appResults = [FeedResult]()
   
+  let dismissButton: UIButton = {
+    let button = UIButton(type: .system)
+    button.setImage(#imageLiteral(resourceName: "closeButton"), for: .normal)
+    button.tintColor = .darkGray
+    button.addTarget(self, action: #selector(handleDissmissButton), for: .touchUpInside)
+    return button
+  }()
+  
   // MARK: - Intialization
   
-  init() {
+  init(screenType: ScreenType) {
+    self.screenType = screenType
     super.init(collectionViewLayout: UICollectionViewFlowLayout())
   }
   
@@ -34,6 +52,10 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
+    
+    if screenType == .fullAppListScreen {
+      setupDismissButton()
+    }
   }
   
   // MARK: - Helper Methods
@@ -41,9 +63,24 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
   private func setupCollectionView() {
     collectionView.backgroundColor = .white
     collectionView.isScrollEnabled = false
-    
+        
     // Register Collection View Cells
     collectionView.register(AppGroupsCollectionViewCell.self, forCellWithReuseIdentifier: appGroupsCollectionViewCellId)
+  }
+  
+  private func setupDismissButton() {
+    view.addSubview(dismissButton)
+    dismissButton.snp.makeConstraints { make in
+      make.top.equalTo(view.snp.topMargin).offset(20)
+      make.trailing.equalTo(view.snp.trailing).offset(-16)
+      make.width.height.equalTo(44)
+    }
+  }
+  
+  // MARK: Actions
+  
+  @objc private func handleDissmissButton() {
+    dismiss(animated: true)
   }
 }
 
@@ -52,6 +89,11 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
 extension TodayMultipleAppsCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    if screenType == .fullAppListScreen {
+      collectionView.isScrollEnabled = true
+      return appResults.count
+    }
+    
     return min(4, appResults.count)
   }
 
@@ -72,12 +114,24 @@ extension TodayMultipleAppsCollectionViewController: UICollectionViewDelegateFlo
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let height: CGFloat = 74
     
-    let betweenCellSpacing: CGFloat = 3
-    let numberOfRows: CGFloat = 4
-    let height = (view.frame.height - betweenCellSpacing * lineSpacing) / numberOfRows
+    if screenType == .fullAppListScreen {
+      let leadingAndTrailingPadding: CGFloat = 48
+      return .init(width: view.frame.width - leadingAndTrailingPadding, height: height)
+    }
     
     return .init(width: view.frame.width, height: height)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      insetForSectionAt section: Int) -> UIEdgeInsets {
+    if screenType == .fullAppListScreen {
+      return .init(top: 12, left: 24, bottom: 12, right: 24)
+    }
+    
+    return .zero
   }
   
   func collectionView(_ collectionView: UICollectionView,

@@ -203,6 +203,14 @@ extension TodayCollectionViewController {
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    if items[indexPath.item].cellType == .multiple {
+      let fullAppController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
+      fullAppController.appResults = self.items[indexPath.item].apps
+      present(fullAppController, animated: true)
+      return
+    }
+    
     let appFullScreenController = AppFullScreenTableViewController()
     appFullScreenController.todayItem = items[indexPath.row]
     
