@@ -189,32 +189,22 @@ class TodayCollectionViewController: UICollectionViewController {
   @objc private func handleMultipleAppsTap(gesture: UIGestureRecognizer) {
     let selectedView = gesture.view
     
-    // Find the tapped cell
     var superView = selectedView?.superview
     
+    // Find the tapped cell
     while superView != nil {
       if let cell = superView as? TodayMultipleAppsCollectionViewCell {
         guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+        
         let apps = self.items[indexPath.item].apps
         
         let fullAppListController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
-        fullAppListController.appResults = apps
-        present(fullAppListController, animated: true)
+        fullAppListController.apps = apps
+        present(BackEnabledNavigationController(rootViewController: fullAppListController), animated: true)
         return
       }
       
       superView = superView?.superview
-    }
-  }
-  
-  private func navigateToTodayMultipleAppsController(indexPath: IndexPath) {
-    if items[indexPath.item].cellType == .multiple {
-      let fullAppListController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
-      let navigationController = BackEnabledNavigationController(rootViewController: fullAppListController)
-      
-      fullAppListController.appResults = self.items[indexPath.item].apps
-      present(navigationController, animated: true)
-      return
     }
   }
 }
@@ -247,9 +237,14 @@ extension TodayCollectionViewController {
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
     // Navigate to the TodayMultipleAppsCollectionViewController and show the full App list.
-    navigateToTodayMultipleAppsController(indexPath: indexPath)
+    if items[indexPath.item].cellType == .multiple {
+      let todayMultipleAppsController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
+      let navigationController = BackEnabledNavigationController(rootViewController: todayMultipleAppsController)
+      todayMultipleAppsController.apps = self.items[indexPath.item].apps
+      present(navigationController, animated: true)
+      return
+    }
     
     // Navigate to the AppFullScreenTableViewController
     // and show the Item (Holiday + Life Hack Category) hard coded cell

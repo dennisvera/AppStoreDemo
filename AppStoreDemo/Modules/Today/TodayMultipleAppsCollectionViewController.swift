@@ -25,7 +25,7 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
   private let screenType: ScreenType
   private let lineSpacing: CGFloat = 16
   
-  var appResults = [FeedResult]()
+  var apps = [FeedResult]()
   
   let dismissButton: UIButton = {
     let button = UIButton(type: .system)
@@ -92,23 +92,23 @@ extension TodayMultipleAppsCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if screenType == .fullAppListScreen {
-      return appResults.count
+      return apps.count
     }
     
-    return min(4, appResults.count)
+    return min(4, apps.count)
   }
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appGroupsCollectionViewCellId,
                                                   for: indexPath) as! AppGroupsCollectionViewCell
-    cell.app = appResults[indexPath.item]
+    cell.app = apps[indexPath.item]
     
     return cell
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let appId = appResults[indexPath.item].id
+    let appId = apps[indexPath.item].id
     let appDetailController = AppsDetailCollectionViewController(appId: appId)
     navigationController?.pushViewController(appDetailController, animated: true)
   }

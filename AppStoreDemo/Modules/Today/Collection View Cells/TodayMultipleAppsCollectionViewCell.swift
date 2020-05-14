@@ -36,7 +36,7 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
       titleLabel.text = todayItem.title
       backgroundColor = todayItem.backgroundColor
       
-      todayMultipleAppsController.appResults = todayItem.apps
+      todayMultipleAppsController.apps = todayItem.apps
       todayMultipleAppsController.collectionView.reloadData()
     }
   }
