@@ -14,9 +14,9 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
   // MARK: - Properties
   
   private let multipleAppsCollectionViewCellId = "MultipleAppsCollectionViewCellId"
-  private var appResults = [FeedResult]()
-  
   private let lineSpacing: CGFloat = 16
+  
+  var appResults = [FeedResult]()
   
   // MARK: - Intialization
   
@@ -34,7 +34,6 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
-    fetchApps()
   }
   
   // MARK: - Helper Methods
@@ -45,22 +44,6 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
     
     // Register Collection View Cells
     collectionView.register(TopGrossingAppsCollectionViewCell.self, forCellWithReuseIdentifier: multipleAppsCollectionViewCellId)
-  }
-  
-  private func fetchApps() {
-    ServiceClient.shared.fetchTopGrossingApps { [weak self] (apps, error) in
-      if let error = error {
-        print("Failed to Fetch Apps: ", error)
-        return
-      }
-            
-      guard let strongSelf = self else { return }
-      strongSelf.appResults = apps?.feed.results ?? []
-      
-      DispatchQueue.main.async {
-        strongSelf.collectionView.reloadData()
-      }
-    }
   }
 }
 

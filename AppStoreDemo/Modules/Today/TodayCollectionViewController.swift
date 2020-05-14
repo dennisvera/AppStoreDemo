@@ -13,37 +13,25 @@ class TodayCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
-  var appFullScreenController: AppFullScreenTableViewController!
-  var startingFrame: CGRect?
-  var topConstraint: NSLayoutConstraint?
-  var leadingConstraint: NSLayoutConstraint?
-  var widthConstraint: NSLayoutConstraint?
-  var heightConstraint: NSLayoutConstraint?
+  private var appFullScreenController: AppFullScreenTableViewController!
+  private var items = [TodayItem]()
+  private var topGrossingAppsGroup: FeedGroup?
+  private var newAppsGroup: FeedGroup?
   
   static let cellHeight: CGFloat = 500
+  private var startingFrame: CGRect?
+  private var topConstraint: NSLayoutConstraint?
+  private var leadingConstraint: NSLayoutConstraint?
+  private var widthConstraint: NSLayoutConstraint?
+  private var heightConstraint: NSLayoutConstraint?
   
-  let items = [
-    TodayItem(category: "LIFE HACK",
-              title: "Utilizing your Time",
-              image: #imageLiteral(resourceName: "gardenImage"),
-              description: "All the tools and apps you need to intelligently orginize your life the right way.",
-              backgroundColor: .white, cellType: .single),
-    TodayItem(category: "THE DAILY LIST",
-              title: "Test-Drive These CarPlay Apps",
-              image: #imageLiteral(resourceName: "gardenImage"),
-              description: "",
-              backgroundColor: .white, cellType: .multiple),
-    TodayItem(category: "HOLIDAYS",
-              title: "Travel on a Budget",
-              image: #imageLiteral(resourceName: "holiday_Image"),
-              description: "Find out all you need to know on how to travel without packing everything!",
-              backgroundColor: #colorLiteral(red: 0.988055408, green: 0.958909452, blue: 0.7275250554, alpha: 1), cellType: .single),
-    TodayItem(category: "THE DAILY LIST",
-              title: "Test-Drive These CarPlay Apps",
-              image: #imageLiteral(resourceName: "gardenImage"),
-              description: "",
-              backgroundColor: .white, cellType: .multiple)
-  ]
+  private let activityIndicatorView: UIActivityIndicatorView = {
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    activityIndicator.color = .darkGray
+    activityIndicator.startAnimating()
+    activityIndicator.hidesWhenStopped = true
+    return activityIndicator
+  }()
   
   // MARK: - Intialization
   
@@ -61,6 +49,8 @@ class TodayCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
+    setupActivityIndicatorView()
+    fetchApps()
   }
   
   // MARK: - Helper Methods
@@ -73,6 +63,76 @@ class TodayCollectionViewController: UICollectionViewController {
     collectionView.register(TodayCollectionViewCell.self, forCellWithReuseIdentifier: TodayItem.CellType.single.rawValue)
     collectionView.register(TodayMultipleAppsCollectionViewCell.self,
                             forCellWithReuseIdentifier: TodayItem.CellType.multiple.rawValue)
+  }
+  
+  private func setupActivityIndicatorView() {
+    view.addSubview(activityIndicatorView)
+    activityIndicatorView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+  }
+  
+  private func fetchApps() {
+    // Instantiate DispatchGroup
+    let disptachGroup = DispatchGroup()
+    
+    // Start First DispatchGroup
+    disptachGroup.enter()
+    ServiceClient.shared.fetchTopGrossingApps { [weak self] (appsGroup, error) in
+      if let error = error {
+        print("Failed to Fetch Apps: ", error)
+        return
+      }
+      
+      guard let strongSelf = self else { return }
+      strongSelf.topGrossingAppsGroup = appsGroup
+      
+      // Leave First DispatchGroup
+      disptachGroup.leave()
+    }
+    
+    // Starts Second DispatchGroup
+    disptachGroup.enter()
+    ServiceClient.shared.fetcNewApps { [weak self] (appsGroup, error)  in
+      if let error = error {
+        print("Failed to Fetch Apss: ", error)
+        return
+      }
+      
+      guard let strongSelf = self else { return }
+      strongSelf.newAppsGroup = appsGroup
+      
+      // Leave Second DispatchGroup
+      disptachGroup.leave()
+    }
+    
+    // DispatchGroup Notification
+    disptachGroup.notify(queue: .main) {
+      self.activityIndicatorView.stopAnimating()
+      
+      self.items = [
+        TodayItem(category: "DAILY LIST",
+                  title: self.topGrossingAppsGroup?.feed.title ?? "",
+                  image: #imageLiteral(resourceName: "gardenImage"),
+                  description: "",
+                  backgroundColor: .white, cellType: .multiple,
+                  apps: self.topGrossingAppsGroup?.feed.results ?? []),
+        TodayItem(category: "DAILY LIST",
+                  title: self.newAppsGroup?.feed.title ?? "",
+                  image: #imageLiteral(resourceName: "gardenImage"),
+                  description: "",
+                  backgroundColor: .white, cellType: .multiple,
+                  apps: self.newAppsGroup?.feed.results ?? []),
+        TodayItem(category: "LIFE HACK",
+                  title: "Utilizing your Time",
+                  image: #imageLiteral(resourceName: "gardenImage"),
+                  description: "All the tools and apps you need to intelligently orginize your life the right way.",
+                  backgroundColor: .white, cellType: .single,
+                  apps: [])
+      ]
+      
+      self.collectionView.reloadData()
+    }
   }
   
   // MARK: Actions

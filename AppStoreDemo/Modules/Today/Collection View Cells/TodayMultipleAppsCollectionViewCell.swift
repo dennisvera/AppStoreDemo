@@ -31,10 +31,13 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
   
   var todayItem: TodayItem? {
     didSet {
-      guard let item = todayItem else { return }
-      categoryLabel.text = item.category
-      titleLabel.text = item.title
-      backgroundColor = item.backgroundColor
+      guard let todayItem = todayItem else { return }
+      categoryLabel.text = todayItem.category
+      titleLabel.text = todayItem.title
+      backgroundColor = todayItem.backgroundColor
+      
+      todayMultipleAppsController.appResults = todayItem.apps
+      todayMultipleAppsController.collectionView.reloadData()
     }
   }
   

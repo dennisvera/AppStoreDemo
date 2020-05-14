@@ -22,7 +22,7 @@ class AppsCollectionViewController: UICollectionViewController {
   private var group2: FeedGroup?
   private var group3: FeedGroup?
 
-  private let activityIndicator: UIActivityIndicatorView = {
+  private let activityIndicatorView: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(style: .large)
     activityIndicator.color = .darkGray
     activityIndicator.startAnimating()
@@ -65,8 +65,8 @@ class AppsCollectionViewController: UICollectionViewController {
   }
 
   private func setupActivityIndicator() {
-    view.addSubview(activityIndicator)
-    activityIndicator.snp.makeConstraints { make in
+    view.addSubview(activityIndicatorView)
+    activityIndicatorView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
   }
@@ -119,7 +119,7 @@ class AppsCollectionViewController: UICollectionViewController {
     }
 
     dispatchGroup.notify(queue: .main) {
-      self.activityIndicator.stopAnimating()
+      self.activityIndicatorView.stopAnimating()
 
       if let group = self.group1 {
         self.appGroups.append(group)
