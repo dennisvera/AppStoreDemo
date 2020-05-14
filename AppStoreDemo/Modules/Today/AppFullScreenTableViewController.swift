@@ -68,7 +68,7 @@ extension AppFullScreenTableViewController {
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if indexPath.row == 0 {
       // Height for top cell
-      return 450
+      return TodayCollectionViewController.cellHeight
     }
     
     return super.tableView(tableView, heightForRowAt: indexPath)

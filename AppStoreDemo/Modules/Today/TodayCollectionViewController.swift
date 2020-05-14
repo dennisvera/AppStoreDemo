@@ -13,7 +13,8 @@ class TodayCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
-  private let todayCollectionViewCellId = "todayCollectionViewCellId"
+//  private let todayCollectionViewCellId = "todayCollectionViewCellId"
+//  private let todayMultipleAppsCollectionViewCellId = "TodayMultipleAppsCollectionViewCellId"
   
   var appFullScreenController: AppFullScreenTableViewController!
   var startingFrame: CGRect?
@@ -22,17 +23,29 @@ class TodayCollectionViewController: UICollectionViewController {
   var widthConstraint: NSLayoutConstraint?
   var heightConstraint: NSLayoutConstraint?
   
+  static let cellHeight: CGFloat = 500
+  
   let items = [
     TodayItem(category: "LIFE HACK",
               title: "Utilizing your Time",
               image: #imageLiteral(resourceName: "gardenImage"),
               description: "All the tools and apps you need to intelligently orginize your life the right way.",
-              backgroundColor: .white),
+              backgroundColor: .white, cellType: .single),
+    TodayItem(category: "THE DAILY LIST",
+              title: "Test-Drive These CarPlay Apps",
+              image: #imageLiteral(resourceName: "gardenImage"),
+              description: "",
+              backgroundColor: .white, cellType: .multiple),
     TodayItem(category: "HOLIDAYS",
               title: "Travel on a Budget",
               image: #imageLiteral(resourceName: "holiday_Image"),
               description: "Find out all you need to know on how to travel without packing everything!",
-              backgroundColor: #colorLiteral(red: 0.988055408, green: 0.958909452, blue: 0.7275250554, alpha: 1))
+              backgroundColor: #colorLiteral(red: 0.988055408, green: 0.958909452, blue: 0.7275250554, alpha: 1), cellType: .single),
+    TodayItem(category: "THE DAILY LIST",
+              title: "Test-Drive These CarPlay Apps",
+              image: #imageLiteral(resourceName: "gardenImage"),
+              description: "",
+              backgroundColor: .white, cellType: .multiple)
   ]
   
   // MARK: - Intialization
@@ -59,8 +72,10 @@ class TodayCollectionViewController: UICollectionViewController {
     navigationController?.isNavigationBarHidden = true
     collectionView.backgroundColor = #colorLiteral(red: 0.9489468932, green: 0.9490606189, blue: 0.9489082694, alpha: 1)
     
-    // Register Collection View Cell
-    collectionView.register(TodayCollectionViewCell.self, forCellWithReuseIdentifier: todayCollectionViewCellId)
+    // Register Collection View Cells
+    collectionView.register(TodayCollectionViewCell.self, forCellWithReuseIdentifier: TodayItem.CellType.single.rawValue)
+    collectionView.register(TodayMultipleAppsCollectionViewCell.self,
+                            forCellWithReuseIdentifier: TodayItem.CellType.multiple.rawValue)
   }
   
   // MARK: Actions
@@ -111,9 +126,15 @@ extension TodayCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: todayCollectionViewCellId,
-                                                  for: indexPath) as! TodayCollectionViewCell
-    cell.todayItem = items[indexPath.item]
+    let cellIdentifier = items[indexPath.item].cellType.rawValue
+    
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
+    
+    if let cell = cell as? TodayCollectionViewCell {
+      cell.todayItem = items[indexPath.item]
+    } else if let cell = cell as? TodayMultipleAppsCollectionViewCell {
+      cell.todayItem = items[indexPath.item]
+    }
     
     return cell
   }
@@ -189,7 +210,7 @@ extension TodayCollectionViewController: UICollectionViewDelegateFlowLayout {
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     let leftAndRightPadding: CGFloat = 64
     
-    return .init(width: view.frame.width - leftAndRightPadding, height: 450)
+    return .init(width: view.frame.width - leftAndRightPadding, height: TodayCollectionViewController.cellHeight)
   }
   
   func collectionView(_ collectionView: UICollectionView,

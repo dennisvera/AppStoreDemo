@@ -42,9 +42,10 @@ class AppFullScreenHeaderTableViewCell: UITableViewCell {
     
     addSubview(closeButton)
     closeButton.snp.makeConstraints { make in
-      // BUG: the button top constraint is blocked by the navigationbar and not able to be tapped,
-      // I set the button top constraint to 1230 to allow dismissal. This needs ot be resolved. 
-      make.top.equalToSuperview().offset(120)
+      // BUG: the button is being blocked by the navigationbar, not tappable
+      // I set the button top constraint to 140 to get access to the button
+      // This needs to be resolved by properly removing the navigationbar
+      make.top.equalToSuperview().offset(140)
       make.trailing.equalToSuperview().offset(-12)
       make.width.equalTo(80)
       make.height.equalTo(38)
