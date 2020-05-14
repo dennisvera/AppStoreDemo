@@ -1,5 +1,5 @@
 //
-//  TopGrossingAppsCollectionViewCell.swift
+//  AppGroupsCollectionViewCell.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 5/13/20.
@@ -12,7 +12,7 @@ import SDWebImage
 
 // TODO: Rename controller
 
-class TopGrossingAppsCollectionViewCell: UICollectionViewCell {
+class AppGroupsCollectionViewCell: UICollectionViewCell {
   
   // MARK: - Properties
   

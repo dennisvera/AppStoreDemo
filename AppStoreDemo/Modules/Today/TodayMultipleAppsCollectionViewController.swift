@@ -13,7 +13,7 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
-  private let multipleAppsCollectionViewCellId = "MultipleAppsCollectionViewCellId"
+  private let appGroupsCollectionViewCellId = "appGroupsCollectionViewCellId"
   private let lineSpacing: CGFloat = 16
   
   var appResults = [FeedResult]()
@@ -43,7 +43,7 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
     collectionView.isScrollEnabled = false
     
     // Register Collection View Cells
-    collectionView.register(TopGrossingAppsCollectionViewCell.self, forCellWithReuseIdentifier: multipleAppsCollectionViewCellId)
+    collectionView.register(AppGroupsCollectionViewCell.self, forCellWithReuseIdentifier: appGroupsCollectionViewCellId)
   }
 }
 
@@ -57,8 +57,8 @@ extension TodayMultipleAppsCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: multipleAppsCollectionViewCellId,
-                                                  for: indexPath) as! TopGrossingAppsCollectionViewCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appGroupsCollectionViewCellId,
+                                                  for: indexPath) as! AppGroupsCollectionViewCell
     cell.app = appResults[indexPath.item]
     
     return cell
