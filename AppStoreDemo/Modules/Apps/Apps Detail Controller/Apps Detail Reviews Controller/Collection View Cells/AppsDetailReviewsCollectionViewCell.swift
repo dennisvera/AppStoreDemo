@@ -22,6 +22,12 @@ class AppsDetailReviewsCollectionViewCell: UICollectionViewCell {
     return label
   }()
   
+  private let separatorLineView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
+    return view
+  }()
+  
   // MARK: - Initialization
 
   override init(frame: CGRect) {
@@ -37,15 +43,23 @@ class AppsDetailReviewsCollectionViewCell: UICollectionViewCell {
   // MARK: - Helper Methods
   
   private func setupViews() {
+    addSubview(separatorLineView)
+    separatorLineView.snp.makeConstraints { make in
+      make.top.equalToSuperview().offset(20)
+      make.leading.equalToSuperview().offset(20)
+      make.trailing.equalToSuperview().offset(-20)
+      make.height.equalTo(0.5)
+    }
+    
     addSubview(titleLabel)
     titleLabel.snp.makeConstraints { make in
-      make.top.equalToSuperview()
+      make.top.equalTo(separatorLineView.snp.bottom).offset(20)
       make.leading.trailing.equalTo(20)
     }
     
     addSubview(appsDetailReviewCollectionViewController.view)
     appsDetailReviewCollectionViewController.view.snp.makeConstraints { make in
-      make.top.equalTo(titleLabel.snp.bottom).inset(-12)
+      make.top.equalTo(titleLabel.snp.bottom).offset(12)
       make.leading.trailing.bottom.equalToSuperview()
     }
   }

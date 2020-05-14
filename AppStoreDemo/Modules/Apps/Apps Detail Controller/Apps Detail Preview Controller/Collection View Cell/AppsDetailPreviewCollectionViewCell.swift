@@ -14,12 +14,19 @@ class AppsDetailPreviewCollectionViewCell: UICollectionViewCell {
   // MARK: - Properties
   
   var appsDetailPreviewCollectionViewController = AppsDetailPreviewCollectionViewController()
+  
   private let previewLabel: UILabel = {
     let label = UILabel()
     label.text = "Preview"
     label.font = .boldSystemFont(ofSize: 20)
     label.textColor = .black
     return label
+  }()
+  
+  private let separatorLineView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
+    return view
   }()
   
   // MARK: - Initialization
@@ -37,9 +44,17 @@ class AppsDetailPreviewCollectionViewCell: UICollectionViewCell {
   // MARK: - Helper Methods
   
   private func setupViews() {
+    addSubview(separatorLineView)
+    separatorLineView.snp.makeConstraints { make in
+      make.top.equalToSuperview()
+      make.leading.equalToSuperview().offset(20)
+      make.trailing.equalToSuperview().offset(-20)
+      make.height.equalTo(0.5)
+    }
+    
     addSubview(previewLabel)
     previewLabel.snp.makeConstraints { make in
-      make.top.equalToSuperview()
+      make.top.equalTo(separatorLineView.snp.bottom).offset(20)
       make.leading.trailing.equalTo(20)
     }
     
