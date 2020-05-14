@@ -26,7 +26,7 @@
 		39EA7E8C244BB092004D1E20 /* AppsHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E8B244BB092004D1E20 /* AppsHeaderReusableView.swift */; };
 		39EA7E8E244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E8D244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift */; };
 		39EA7E92244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E91244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift */; };
-		39EA7E97244CD46F004D1E20 /* FeedGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E96244CD46F004D1E20 /* FeedGroup.swift */; };
+		39EA7E97244CD46F004D1E20 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E96244CD46F004D1E20 /* AppGroup.swift */; };
 		39EA7E99244D0A05004D1E20 /* SocialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA7E98244D0A05004D1E20 /* SocialApp.swift */; };
 		E13CDA922465FFE40099D1CC /* TodayCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CDA912465FFE40099D1CC /* TodayCollectionViewController.swift */; };
 		E13CDA95246604100099D1CC /* TodayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CDA94246604100099D1CC /* TodayCollectionViewCell.swift */; };
@@ -84,7 +84,7 @@
 		39EA7E8B244BB092004D1E20 /* AppsHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHeaderReusableView.swift; sourceTree = "<group>"; };
 		39EA7E8D244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHeaderHorizontalCollectionViewController.swift; sourceTree = "<group>"; };
 		39EA7E91244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
-		39EA7E96244CD46F004D1E20 /* FeedGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedGroup.swift; sourceTree = "<group>"; };
+		39EA7E96244CD46F004D1E20 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
 		39EA7E98244D0A05004D1E20 /* SocialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialApp.swift; sourceTree = "<group>"; };
 		5E43858C25A6B603B1B5B08C /* Pods_AppStoreDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8088F777889397CAC87E47BC /* Pods-AppStoreDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreDemo.release.xcconfig"; path = "Target Support Files/Pods-AppStoreDemo/Pods-AppStoreDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				3906AB992443E86D0032C263 /* SearchResults.swift */,
-				39EA7E96244CD46F004D1E20 /* FeedGroup.swift */,
+				39EA7E96244CD46F004D1E20 /* AppGroup.swift */,
 				E15176D62465B5C5000A254D /* Reviews.swift */,
 				39EA7E98244D0A05004D1E20 /* SocialApp.swift */,
 				E13CDAC0246B14FE0099D1CC /* TodayItem.swift */,
@@ -534,7 +534,7 @@
 				3906AB872442632B0032C263 /* BaseTabBarController.swift in Sources */,
 				E13CDABF2469EFC20099D1CC /* AppFullScreenHeaderTableViewCell.swift in Sources */,
 				3906AB91244394B70032C263 /* SearchResultCollectionViewCell.swift in Sources */,
-				39EA7E97244CD46F004D1E20 /* FeedGroup.swift in Sources */,
+				39EA7E97244CD46F004D1E20 /* AppGroup.swift in Sources */,
 				E15176C424632F81000A254D /* AppsDetailCollectionViewCell.swift in Sources */,
 				E15176D52464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift in Sources */,
 				E13CDAC3246C9BF10099D1CC /* TodayMultipleAppsCollectionViewCell.swift in Sources */,

@@ -15,12 +15,12 @@ class AppsCollectionViewController: UICollectionViewController {
 
   private let AppsGroupCollectionViewCellId = "AppsGroupCollectionViewCellId"
   private let AppsHeaderReusableViewId = "AppsHeaderReusableViewId"
-  private var appsFeedGroup: FeedGroup?
+  private var appsFeedGroup: AppGroup?
   private var socialApps = [SocialApp]()
-  private var appGroups = [FeedGroup]()
-  private var group1: FeedGroup?
-  private var group2: FeedGroup?
-  private var group3: FeedGroup?
+  private var appGroups = [AppGroup]()
+  private var group1: AppGroup?
+  private var group2: AppGroup?
+  private var group3: AppGroup?
 
   private let activityIndicatorView: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(style: .large)

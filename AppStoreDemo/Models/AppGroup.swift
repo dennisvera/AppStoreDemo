@@ -1,5 +1,5 @@
 //
-//  FeedGroup.swift
+//  AppGroup.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 4/19/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FeedGroup: Decodable {
+struct AppGroup: Decodable {
 
   // MARK: - Properties
 

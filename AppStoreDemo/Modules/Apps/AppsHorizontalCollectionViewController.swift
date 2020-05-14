@@ -15,7 +15,7 @@ class AppsHorizontalCollectionViewController: UICollectionViewController {
 
   private let AppsRowCollectionViewCellId = "AppsRowCollectionViewCellId"
 
-  var appsFeedGroup: FeedGroup?
+  var appsFeedGroup: AppGroup?
   var didSelectHandler: ((FeedResult) -> ())?
 
   // MARK: - Initialization

@@ -15,8 +15,8 @@ class TodayCollectionViewController: UICollectionViewController {
   
   private var appFullScreenController: AppFullScreenTableViewController!
   private var items = [TodayItem]()
-  private var topGrossingAppsGroup: FeedGroup?
-  private var newAppsGroup: FeedGroup?
+  private var topGrossingAppsGroup: AppGroup?
+  private var newAppsGroup: AppGroup?
   
   static let cellHeight: CGFloat = 500
   private var startingFrame: CGRect?
