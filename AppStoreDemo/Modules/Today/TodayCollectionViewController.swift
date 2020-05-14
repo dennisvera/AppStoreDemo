@@ -189,7 +189,7 @@ class TodayCollectionViewController: UICollectionViewController {
   @objc private func handleMultipleAppsTap(gesture: UIGestureRecognizer) {
     let selectedView = gesture.view
     
-    // Find the cell we are clicking into
+    // Find the tapped cell
     var superView = selectedView?.superview
     
     while superView != nil {
@@ -204,6 +204,17 @@ class TodayCollectionViewController: UICollectionViewController {
       }
       
       superView = superView?.superview
+    }
+  }
+  
+  private func navigateToTodayMultipleAppsController(indexPath: IndexPath) {
+    if items[indexPath.item].cellType == .multiple {
+      let fullAppListController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
+      let navigationController = BackEnabledNavigationController(rootViewController: fullAppListController)
+      
+      fullAppListController.appResults = self.items[indexPath.item].apps
+      present(navigationController, animated: true)
+      return
     }
   }
 }
@@ -237,14 +248,11 @@ extension TodayCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
-    if items[indexPath.item].cellType == .multiple {
-      let fullAppListController = TodayMultipleAppsCollectionViewController(screenType: .fullAppListScreen)
-      let navigationController = BackEnabledNavigationController(rootViewController: fullAppListController)
-      fullAppListController.appResults = self.items[indexPath.item].apps
-      present(navigationController, animated: true)
-      return
-    }
+    // Navigate to the TodayMultipleAppsCollectionViewController and show the full App list.
+    navigateToTodayMultipleAppsController(indexPath: indexPath)
     
+    // Navigate to the AppFullScreenTableViewController
+    // and show the Item (Holiday + Life Hack Category) hard coded cell
     let appFullScreenController = AppFullScreenTableViewController()
     appFullScreenController.todayItem = items[indexPath.row]
     

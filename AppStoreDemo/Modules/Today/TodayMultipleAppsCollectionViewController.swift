@@ -58,7 +58,6 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
   
   private func setupCollectionView() {
     collectionView.backgroundColor = .white
-    collectionView.isScrollEnabled = false
         
     // Register Collection View Cells
     collectionView.register(AppGroupsCollectionViewCell.self, forCellWithReuseIdentifier: appGroupsCollectionViewCellId)
@@ -67,7 +66,7 @@ class TodayMultipleAppsCollectionViewController: UICollectionViewController {
       setupDismissButton()
       navigationController?.isNavigationBarHidden = true
     } else {
-      collectionView.isScrollEnabled = true
+      collectionView.isScrollEnabled = false
     }
   }
   
