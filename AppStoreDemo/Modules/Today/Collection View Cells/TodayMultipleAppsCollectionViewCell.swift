@@ -13,6 +13,8 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
   
   // MARK: - Properties
   
+  let todayMultipleAppsController = TodayMultipleAppsCollectionViewController(screenType: .shortAppListScreen)
+
   private let categoryLabel: UILabel = {
     let label = UILabel()
     label.font = .boldSystemFont(ofSize: 20)
@@ -26,9 +28,7 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
     label.font = .boldSystemFont(ofSize: 28)
     return label
   }()
-  
-  let todayMultipleAppsController = TodayMultipleAppsCollectionViewController(screenType: .shortAppListScreen)
-  
+
   var todayItem: TodayItem? {
     didSet {
       guard let todayItem = todayItem else { return }
@@ -41,12 +41,26 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
     }
   }
   
+  override var isHighlighted: Bool {
+    didSet {
+      UIView.animate(withDuration: 0.5,
+                     delay: 0,
+                     usingSpringWithDamping: 1,
+                     initialSpringVelocity: 1,
+                     options: .curveEaseOut,
+                     animations: {
+                      self.transform = self.isHighlighted ? .init(scaleX: 0.9, y: 0.9) : .identity
+      })
+    }
+  }
+  
   // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     
     setupViews()
+//    setCellShadow()
   }
   
   required init?(coder: NSCoder) {
@@ -68,5 +82,25 @@ class TodayMultipleAppsCollectionViewCell: UICollectionViewCell {
       make.top.leading.equalToSuperview().offset(24)
       make.bottom.trailing.equalToSuperview().offset(-24)
     }
+  }
+  
+  // TODO: backgroundView shadow solution is not working due to the background color 
+  private func setCellShadow() {
+    self.backgroundView = UIView()
+    
+    addSubview(self.backgroundView!)
+    self.backgroundView?.snp.makeConstraints({ make in
+      make.edges.equalToSuperview()
+    })
+    
+    self.backgroundView?.layer.shadowOpacity = 0.1
+    self.backgroundView?.layer.shadowRadius = 10
+    self.backgroundView?.layer.shadowOffset = .init(width: 0, height: 10)
+//    self.backgroundView?.backgroundColor = .white
+    
+    // The shouldRasterize property helps with slow performace caused by the layer shadow
+    // The downside is that the shouldRasterize property makes text and images look blurry and poor
+    // The solution is to set the self.backgroundView = UIView() and have the layers set to self.backgroundView?.
+    layer.shouldRasterize = true
   }
 }

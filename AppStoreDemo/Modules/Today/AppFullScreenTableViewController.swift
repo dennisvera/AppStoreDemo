@@ -58,6 +58,10 @@ extension AppFullScreenTableViewController {
       appFullScreenHeaderCell.dismissButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
       appFullScreenHeaderCell.todayCell.todayItem = todayItem
       appFullScreenHeaderCell.todayCell.layer.cornerRadius = 0
+      
+      // Remove the cell shadow. ClipsToBounds does not allow the the layer shadow to appear.
+      appFullScreenHeaderCell.clipsToBounds = true
+
       return appFullScreenHeaderCell
     }
     

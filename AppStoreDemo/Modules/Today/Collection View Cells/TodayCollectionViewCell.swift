@@ -44,12 +44,25 @@ class TodayCollectionViewCell: UICollectionViewCell {
   
   var todayItem: TodayItem? {
     didSet {
-      guard let item = todayItem else { return }
-      categoryLabel.text = item.category
-      titleLabel.text = item.title
-      descriptionLabel.text = item.description
-      imageView.image = item.image
-      backgroundColor = item.backgroundColor
+      guard let todayItem = todayItem else { return }
+      categoryLabel.text = todayItem.category
+      titleLabel.text = todayItem.title
+      descriptionLabel.text = todayItem.description
+      imageView.image = todayItem.image
+      backgroundColor = todayItem.backgroundColor
+    }
+  }
+  
+  override var isHighlighted: Bool {
+    didSet {
+      UIView.animate(withDuration: 0.5,
+                     delay: 0,
+                     usingSpringWithDamping: 1,
+                     initialSpringVelocity: 1,
+                     options: .curveEaseOut,
+                     animations: {
+                      self.transform = self.isHighlighted ? .init(scaleX: 0.9, y: 0.9) : .identity
+      })
     }
   }
   
@@ -59,6 +72,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
     super.init(frame: frame)
     
     setupViews()
+//    setCellShadow()
   }
   
   required init?(coder: NSCoder) {
@@ -69,7 +83,6 @@ class TodayCollectionViewCell: UICollectionViewCell {
   
   private func setupViews() {
     layer.cornerRadius = 16
-    clipsToBounds = true
     
     // ImageViews do not size properly on StackViews,
     // wrapping the ImageView in a UIView scales better in the StackView.
@@ -93,5 +106,25 @@ class TodayCollectionViewCell: UICollectionViewCell {
     
     topConstraint = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 24)
     topConstraint.isActive = true
+  }
+  
+  // TODO: backgroundView shadow solution is not working due to the background color
+  private func setCellShadow() {
+    self.backgroundView = UIView()
+    
+    addSubview(self.backgroundView!)
+    self.backgroundView?.snp.makeConstraints({ make in
+      make.edges.equalToSuperview()
+    })
+    
+    self.backgroundView?.layer.shadowOpacity = 0.1
+    self.backgroundView?.layer.shadowRadius = 10
+    self.backgroundView?.layer.shadowOffset = .init(width: 0, height: 10)
+    //    self.backgroundView?.backgroundColor = .white
+    
+    // The shouldRasterize property helps with slow performace caused by the layer shadow
+    // The downside is that the shouldRasterize property makes text and images look blurry and poor
+    // The solution is to set the self.backgroundView = UIView() and have the layers set to self.backgroundView?.
+    layer.shouldRasterize = true
   }
 }
