@@ -13,7 +13,7 @@ class TodayCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
-  private var singleAppFullScreenController: AppFullScreenTableViewController!
+  private var singleAppFullScreenController: TodaySingleAppFullScreenViewController!
   private var items = [TodayItem]()
   private var topGrossingAppsGroup: AppGroup?
   private var newAppsGroup: AppGroup?
@@ -170,7 +170,7 @@ class TodayCollectionViewController: UICollectionViewController {
   }
   
   private func setupSingleAppFullScreenController(_ indexPath: IndexPath) {
-    let appFullScreenTableViewController = AppFullScreenTableViewController()
+    let appFullScreenTableViewController = TodaySingleAppFullScreenViewController()
     appFullScreenTableViewController.todayItem = items[indexPath.row]
     
     appFullScreenTableViewController.dismissHandler = {
@@ -243,7 +243,7 @@ class TodayCollectionViewController: UICollectionViewController {
                     self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
                     
                     // Set the TodayCollectionViewCell topConstraint below the status bar to 48pts
-                    guard let cell = self.singleAppFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
+                    guard let cell = self.singleAppFullScreenController.tableView.cellForRow(at: [0, 0]) as? TodaySingleAppFullScreenHeaderTableViewCell else { return }
                     cell.todayCell.topConstraint.constant = 48
                     cell.layoutIfNeeded()
                     
@@ -289,8 +289,8 @@ class TodayCollectionViewController: UICollectionViewController {
                     self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - 80
                     
                     // Set the TodayCollectionViewCell topConstraint below the status bar to 24pts
-                    guard let cell = self.singleAppFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
-                    cell.dismissButton.alpha = 0
+                    guard let cell = self.singleAppFullScreenController.tableView.cellForRow(at: [0, 0]) as? TodaySingleAppFullScreenHeaderTableViewCell else { return }
+                    self.singleAppFullScreenController.dismissButton.alpha = 0
                     cell.todayCell.topConstraint.constant = 24
                     cell.layoutIfNeeded()
                     

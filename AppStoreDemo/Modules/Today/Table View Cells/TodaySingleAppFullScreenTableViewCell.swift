@@ -1,5 +1,5 @@
 //
-//  AppFullScreenTableViewCell.swift
+//  TodaySingleAppFullScreenTableViewCell.swift
 //  AppStoreDemo
 //
 //  Created by Dennis Vera on 5/11/20.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class AppFullScreenTableViewCell: UITableViewCell {
+class TodaySingleAppFullScreenTableViewCell: UITableViewCell {
   
   // MARK: - Properties
   
