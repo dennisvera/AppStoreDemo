@@ -13,7 +13,7 @@ class TodayCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
-  private var appFullScreenController: AppFullScreenTableViewController!
+  private var singleAppFullScreenController: AppFullScreenTableViewController!
   private var items = [TodayItem]()
   private var topGrossingAppsGroup: AppGroup?
   private var newAppsGroup: AppGroup?
@@ -24,6 +24,8 @@ class TodayCollectionViewController: UICollectionViewController {
   private var leadingConstraint: NSLayoutConstraint?
   private var widthConstraint: NSLayoutConstraint?
   private var heightConstraint: NSLayoutConstraint?
+  
+  private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
   
   private let activityIndicatorView: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -49,8 +51,9 @@ class TodayCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
-    setupActivityIndicatorView()
     fetchApps()
+    setupActivityIndicatorView()
+    setupBlurVisualEffectView()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +74,15 @@ class TodayCollectionViewController: UICollectionViewController {
     collectionView.register(TodayCollectionViewCell.self, forCellWithReuseIdentifier: TodayItem.CellType.single.rawValue)
     collectionView.register(TodayMultipleAppsCollectionViewCell.self,
                             forCellWithReuseIdentifier: TodayItem.CellType.multiple.rawValue)
+  }
+  
+  private func setupBlurVisualEffectView() {
+    view.addSubview(blurVisualEffectView)
+    blurVisualEffectView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+    
+    blurVisualEffectView.alpha = 0
   }
   
   private func setupActivityIndicatorView() {
@@ -157,15 +169,24 @@ class TodayCollectionViewController: UICollectionViewController {
   }
   
   private func setupSingleAppFullScreenController(_ indexPath: IndexPath) {
-    let singleAppFullScreenController = AppFullScreenTableViewController()
-    singleAppFullScreenController.todayItem = items[indexPath.row]
+    let appFullScreenTableViewController = AppFullScreenTableViewController()
+    appFullScreenTableViewController.todayItem = items[indexPath.row]
     
-    singleAppFullScreenController.dismissHandler = {
-      self.dismissFullScreenController()
+    appFullScreenTableViewController.dismissHandler = {
+      self.dismissSingleAppFullScreenController()
     }
     
-    singleAppFullScreenController.view.layer.cornerRadius = 16
-    self.appFullScreenController = singleAppFullScreenController
+    appFullScreenTableViewController.view.layer.cornerRadius = 16
+    self.singleAppFullScreenController = appFullScreenTableViewController
+    
+    // setup pan gesture
+    let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSingleAppScreenDrag))
+    gestureRecognizer.delegate = self
+    appFullScreenTableViewController.view.addGestureRecognizer(gestureRecognizer)
+    
+    // add a blue effect view
+    
+    // Check that we are not interfering wiht the tableview scrollling
   }
   
   private func setupSingleAppStartingCellFrame(_ indexPath: IndexPath) {
@@ -177,10 +198,10 @@ class TodayCollectionViewController: UICollectionViewController {
   }
   
   private func setSingleAppFullScreenStartingPosition(_ indexPath: IndexPath) {
-    let singleAppFullScreen = appFullScreenController.view!
+    let singleAppFullScreen = singleAppFullScreenController.view!
     view.addSubview(singleAppFullScreen)
     
-    addChild(appFullScreenController)
+    addChild(singleAppFullScreenController)
     
     // Disable the collectionView interaction to fix bug
     collectionView.isUserInteractionEnabled = false
@@ -208,6 +229,8 @@ class TodayCollectionViewController: UICollectionViewController {
                    options: .curveEaseOut,
                    animations: {
                     
+                    self.blurVisualEffectView.alpha = 1
+                    
                     self.topConstraint?.constant = 0
                     self.leadingConstraint?.constant = 0
                     self.widthConstraint?.constant = self.view.frame.width
@@ -219,7 +242,7 @@ class TodayCollectionViewController: UICollectionViewController {
                     self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
                     
                     // Set the TodayCollectionViewCell topConstraint below the status bar to 48pts
-                    guard let cell = self.appFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
+                    guard let cell = self.singleAppFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
                     cell.todayCell.topConstraint.constant = 48
                     cell.layoutIfNeeded()
                     
@@ -239,7 +262,7 @@ class TodayCollectionViewController: UICollectionViewController {
   
   // MARK: Actions
   
-  @objc private func dismissFullScreenController() {
+  @objc private func dismissSingleAppFullScreenController() {
     UIView.animate(withDuration: 0.7,
                    delay: 0,
                    usingSpringWithDamping: 0.7,
@@ -247,7 +270,10 @@ class TodayCollectionViewController: UICollectionViewController {
                    options: .curveEaseOut,
                    animations: {
                     
-                    self.appFullScreenController.tableView.contentOffset = .zero
+                    self.singleAppFullScreenController.tableView.contentOffset = .zero
+                    
+                    self.blurVisualEffectView.alpha = 0
+                    self.singleAppFullScreenController.view.transform = .identity
                     
                     guard let startingFrame = self.startingFrame else { return }
                     self.topConstraint?.constant = startingFrame.origin.y
@@ -262,14 +288,14 @@ class TodayCollectionViewController: UICollectionViewController {
                     self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - 80
                     
                     // Set the TodayCollectionViewCell topConstraint below the status bar to 24pts
-                    guard let cell = self.appFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
+                    guard let cell = self.singleAppFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
                     cell.todayCell.topConstraint.constant = 24
                     cell.layoutIfNeeded()
                     
     }, completion: { [weak self] _ in
       guard let strongSelf = self else { return }
-      strongSelf.appFullScreenController.view.removeFromSuperview()
-      strongSelf.appFullScreenController.removeFromParent()
+      strongSelf.singleAppFullScreenController.view.removeFromSuperview()
+      strongSelf.singleAppFullScreenController.removeFromParent()
       strongSelf.collectionView.isUserInteractionEnabled = true
     })
   }
@@ -293,6 +319,19 @@ class TodayCollectionViewController: UICollectionViewController {
       }
       
       superView = superView?.superview
+    }
+  }
+  
+  @objc private func handleSingleAppScreenDrag(gesture: UIPanGestureRecognizer) {
+    let translationY = gesture.translation(in: singleAppFullScreenController.view).y
+    
+    if gesture.state == .changed {
+      let scale = 1 - translationY / 1000
+      
+      let transform: CGAffineTransform = .init(scaleX: scale, y: scale)
+      singleAppFullScreenController.view.transform = transform
+    } else if gesture.state == .ended {
+      dismissSingleAppFullScreenController()
     }
   }
 }
@@ -360,5 +399,14 @@ extension TodayCollectionViewController: UICollectionViewDelegateFlowLayout {
     let minusNavigationBarAndPadding: CGFloat = -80
     
     return .init(top: minusNavigationBarAndPadding, left: 0, bottom: 32, right: 0)
+  }
+}
+
+extension TodayCollectionViewController: UIGestureRecognizerDelegate {
+  
+  // Necessary to allow the view scrolling after the gestureRecognizer delgate is set to self
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+      return true
   }
 }
