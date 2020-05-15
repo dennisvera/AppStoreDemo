@@ -26,6 +26,7 @@ class TodayCollectionViewController: UICollectionViewController {
   private var heightConstraint: NSLayoutConstraint?
   
   private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+  private var singleAppFullScreenBeginOffset: CGFloat = 0
   
   private let activityIndicatorView: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -289,6 +290,7 @@ class TodayCollectionViewController: UICollectionViewController {
                     
                     // Set the TodayCollectionViewCell topConstraint below the status bar to 24pts
                     guard let cell = self.singleAppFullScreenController.tableView.cellForRow(at: [0, 0]) as? AppFullScreenHeaderTableViewCell else { return }
+                    cell.dismissButton.alpha = 0
                     cell.todayCell.topConstraint.constant = 24
                     cell.layoutIfNeeded()
                     
@@ -323,15 +325,34 @@ class TodayCollectionViewController: UICollectionViewController {
   }
   
   @objc private func handleSingleAppScreenDrag(gesture: UIPanGestureRecognizer) {
+    if gesture.state == .began {
+      singleAppFullScreenBeginOffset = singleAppFullScreenController.tableView.contentOffset.y
+    }
+    
+    // Exit out if the tableview is not below 0 (top of the view)
+    if singleAppFullScreenController.tableView.contentOffset.y > 0 {
+      return
+    }
+    
     let translationY = gesture.translation(in: singleAppFullScreenController.view).y
     
     if gesture.state == .changed {
-      let scale = 1 - translationY / 1000
-      
-      let transform: CGAffineTransform = .init(scaleX: scale, y: scale)
-      singleAppFullScreenController.view.transform = transform
+      if translationY > 0 {
+        let trueOffset = translationY - singleAppFullScreenBeginOffset
+        var scale = 1 - trueOffset / 1000
+        
+        // Stop scaling if the screen grows above 1. When scrolling up.
+        scale = min(1, scale)
+        // Stop scaling if the screen shrinks below 0.5. When scrolling down.
+        scale = max(0.5, scale)
+        
+        let transform: CGAffineTransform = .init(scaleX: scale, y: scale)
+        singleAppFullScreenController.view.transform = transform
+      }
     } else if gesture.state == .ended {
-      dismissSingleAppFullScreenController()
+      if translationY > 0 {
+        dismissSingleAppFullScreenController()
+      }
     }
   }
 }

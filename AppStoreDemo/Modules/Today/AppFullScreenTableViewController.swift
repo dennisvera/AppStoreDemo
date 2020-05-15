@@ -16,6 +16,15 @@ class AppFullScreenTableViewController: UITableViewController {
   var dismissHandler: (() ->())?
   var todayItem: TodayItem?
   
+  // Disable the scrolling when the Drag Gesture is scrolling upward
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y < 0 {
+      scrollView.isScrollEnabled = false
+      // HACK: set the scrolling back to true again to enable scrolling
+      scrollView.isScrollEnabled = true
+    }
+  }
+  
   // MARK: - View Life Cycle
   
   override func viewDidLoad() {
@@ -58,6 +67,7 @@ extension AppFullScreenTableViewController {
       appFullScreenHeaderCell.dismissButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
       appFullScreenHeaderCell.todayCell.todayItem = todayItem
       appFullScreenHeaderCell.todayCell.layer.cornerRadius = 0
+      appFullScreenHeaderCell.todayCell.backgroundView = nil
       
       // Remove the cell shadow. ClipsToBounds does not allow the the layer shadow to appear.
       appFullScreenHeaderCell.clipsToBounds = true
