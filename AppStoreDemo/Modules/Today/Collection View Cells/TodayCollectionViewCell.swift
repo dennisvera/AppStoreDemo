@@ -110,17 +110,19 @@ class TodayCollectionViewCell: UICollectionViewCell {
   
   // TODO: backgroundView shadow solution is not working due to the background color
   private func setCellShadow() {
-    self.backgroundView = UIView()
+    backgroundView = UIView()
     
     addSubview(self.backgroundView!)
-    self.backgroundView?.snp.makeConstraints({ make in
+    backgroundView?.snp.makeConstraints({ make in
       make.edges.equalToSuperview()
     })
     
-    self.backgroundView?.layer.shadowOpacity = 0.1
-    self.backgroundView?.layer.shadowRadius = 10
-    self.backgroundView?.layer.shadowOffset = .init(width: 0, height: 10)
-    //    self.backgroundView?.backgroundColor = .white
+    backgroundView?.layer.shadowOpacity = 0.1
+    backgroundView?.layer.shadowRadius = 10
+    backgroundView?.layer.shadowOffset = .init(width: 0, height: 10)
+    backgroundView?.layer.cornerRadius = 16
+    backgroundColor = .white
+    
     
     // The shouldRasterize property helps with slow performace caused by the layer shadow
     // The downside is that the shouldRasterize property makes text and images look blurry and poor
