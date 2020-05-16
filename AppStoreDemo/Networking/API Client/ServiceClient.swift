@@ -15,11 +15,19 @@ class ServiceClient {
   static let shared = ServiceClient()
 
   // MARK: - Public API
+  
+  // Itunes API endpoint for Searching Itunes Music
+  func fetchItunesMusic(searchTerm: String, offset: Int, completion: @escaping (MusicSearchResults?, Error?) -> Void) {
+    guard let searchTerm = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return }
+    let urlString = "https://itunes.apple.com/search?term=\(searchTerm)&offset=\(offset)&limit=20"
+
+    fetchGenericJsonData(urlString: urlString, completion: completion)
+  }
 
   // Itunes API endpoint for Searching Apps
   func fetchApps(searchTerm: String, completion: @escaping (SearchResults?, Error?) -> Void) {
-    guard let search = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return }
-    let urlString = "https://itunes.apple.com/search?term=\(search)&entity=software"
+    guard let searchTerm = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return }
+    let urlString = "https://itunes.apple.com/search?term=\(searchTerm)&entity=software"
 
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }

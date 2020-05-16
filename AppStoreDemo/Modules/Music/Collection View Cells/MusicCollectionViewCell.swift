@@ -13,18 +13,15 @@ class MusicCollectionViewCell: UICollectionViewCell {
     
   // MARK: - Properties
   
-  private let titleLabel: UILabel = {
+  private let trackLabel: UILabel = {
     let label = UILabel()
-    label.text = "Track Name"
     label.font = .boldSystemFont(ofSize: 18)
     return label
   }()
   
-  private let subtitleLabel: UILabel = {
+  private let descriptionLabel: UILabel = {
     let label = UILabel()
-    label.text = "Subtitle text goes here ...."
-    label.font = .systemFont(ofSize: 16)
-    label.numberOfLines = 2
+    label.font = .systemFont(ofSize: 14)
     return label
   }()
   
@@ -37,6 +34,15 @@ class MusicCollectionViewCell: UICollectionViewCell {
     imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
     return imageView
   }()
+  
+  var music: MusicResult? {
+    didSet {
+      guard let music = music else { return }
+      trackLabel.text = music.trackName
+      descriptionLabel.text = "\(music.artistName) • \(music.collectionName) • \(music.primaryGenreName)"
+      imageView.sd_setImage(with: URL(string: music.artworkUrl100))
+    }
+  }
 
   // MARK: - Initialization
   
@@ -53,7 +59,7 @@ class MusicCollectionViewCell: UICollectionViewCell {
   // MARK: - Helper Methods
   
   private func setupViews() {    
-    let verticalStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+    let verticalStackView = UIStackView(arrangedSubviews: [trackLabel, descriptionLabel])
     verticalStackView.axis = .vertical
     verticalStackView.spacing = 2
     

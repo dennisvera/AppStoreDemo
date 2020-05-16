@@ -50,6 +50,7 @@
 		E19761622470591B00016106 /* MusicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19761612470591B00016106 /* MusicCollectionViewController.swift */; };
 		E197616524705B0B00016106 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197616424705B0B00016106 /* MusicCollectionViewCell.swift */; };
 		E1976168247063B100016106 /* MusicFooterReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1976167247063B100016106 /* MusicFooterReusableView.swift */; };
+		E197616A2470816200016106 /* MusicSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19761692470816200016106 /* MusicSearchResults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -118,6 +119,7 @@
 		E19761612470591B00016106 /* MusicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewController.swift; sourceTree = "<group>"; };
 		E197616424705B0B00016106 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1976167247063B100016106 /* MusicFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicFooterReusableView.swift; sourceTree = "<group>"; };
+		E19761692470816200016106 /* MusicSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSearchResults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				3906AB992443E86D0032C263 /* SearchResults.swift */,
+				E19761692470816200016106 /* MusicSearchResults.swift */,
 				39EA7E96244CD46F004D1E20 /* AppGroup.swift */,
 				E15176D62465B5C5000A254D /* Reviews.swift */,
 				39EA7E98244D0A05004D1E20 /* SocialApp.swift */,
@@ -598,6 +601,7 @@
 				39EA7E92244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift in Sources */,
 				E13CDA95246604100099D1CC /* TodayCollectionViewCell.swift in Sources */,
 				E19761622470591B00016106 /* MusicCollectionViewController.swift in Sources */,
+				E197616A2470816200016106 /* MusicSearchResults.swift in Sources */,
 				E15176C824646B0E000A254D /* AppsDetailPreviewCollectionViewController.swift in Sources */,
 				39EA7E8224494D47004D1E20 /* UILabels+Helpers.swift in Sources */,
 				39EA7E8E244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift in Sources */,

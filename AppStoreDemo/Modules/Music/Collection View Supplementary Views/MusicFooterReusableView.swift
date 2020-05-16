@@ -43,7 +43,7 @@ class MusicFooterCollectionReusableView: UICollectionReusableView {
   // MARK: - Helper Methods
   
   private func setupViews() {
-    backgroundColor = UIColor(white: 0.7, alpha: 0.7)
+    backgroundColor = UIColor(white: 0.1, alpha: 0.1)
     
     let stackView = UIStackView(arrangedSubviews: [activityIndicatorView, titleLabel])
     stackView.axis = .vertical
