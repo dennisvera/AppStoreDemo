@@ -15,6 +15,43 @@ class TodaySingleAppFullScreenViewController: UIViewController {
   
   var dismissHandler: (() ->())?
   var todayItem: TodayItem?
+  let tableView = UITableView(frame: .zero, style: .plain)
+  
+  private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+  
+  private let categoryLabel: UILabel = {
+    let label = UILabel()
+    label.font = .boldSystemFont(ofSize: 18)
+    return label
+  }()
+
+  private let titleLabel: UILabel = {
+    let label = UILabel()
+    label.font = .boldSystemFont(ofSize: 14)
+    return label
+  }()
+
+  private let imageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.clipsToBounds = true
+    imageView.contentMode = .scaleAspectFill
+    imageView.layer.cornerRadius = 16
+    imageView.widthAnchor.constraint(equalToConstant: 78).isActive = true
+    imageView.heightAnchor.constraint(equalToConstant: 78).isActive = true
+    return imageView
+  }()
+  
+  private let getBUtton: UIButton = {
+    let button = UIButton(type: .system)
+    button.setTitle("GET", for: .normal)
+    button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+    button.setTitleColor(.white, for: .normal)
+    button.backgroundColor = .darkGray
+    button.layer.cornerRadius = 16
+    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
+    button.heightAnchor.constraint(equalToConstant: 32).isActive = true
+    return button
+  }()
   
   let dismissButton: UIButton = {
     let button = UIButton(type: .system)
@@ -30,9 +67,7 @@ class TodaySingleAppFullScreenViewController: UIViewController {
       scrollView.isScrollEnabled = true
     }
   }
-  
-  let tableView = UITableView(frame: .zero, style: .plain)
-  
+    
   // MARK: - View Life Cycle
   
   override func viewDidLoad() {
@@ -42,6 +77,7 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     
     setupTableViewController()
     setupDismissButton()
+    setupFloatingView()
   }
   
   // MARK: - Helper Methods
@@ -63,6 +99,45 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     tableView.contentInsetAdjustmentBehavior = .never
   }
   
+  private func setupFloatingView() {
+    let floatingContainerView = UIView()
+    floatingContainerView.clipsToBounds = true
+    floatingContainerView.layer.cornerRadius = 16
+    
+    view.addSubview(floatingContainerView)
+    floatingContainerView.snp.makeConstraints { make in
+      make.leading.equalToSuperview().offset(16)
+      make.trailing.equalToSuperview().offset(-16)
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+      make.height.equalTo(100)
+    }
+    
+    floatingContainerView.addSubview(blurVisualEffectView)
+    blurVisualEffectView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+    
+    categoryLabel.text = todayItem?.category
+    titleLabel.text = todayItem?.title
+    imageView.image = todayItem?.image
+
+    let verticalView = UIStackView(arrangedSubviews: [categoryLabel, titleLabel])
+    verticalView.axis = .vertical
+    verticalView.spacing = 6
+    
+    let mainStackView = UIStackView(arrangedSubviews: [imageView, verticalView, getBUtton])
+    mainStackView.axis = .horizontal
+    mainStackView.spacing = 16
+    mainStackView.alignment = .center
+    
+    floatingContainerView.addSubview(mainStackView)
+    mainStackView.snp.makeConstraints { make in
+      make.top.bottom.equalToSuperview()
+      make.leading.equalToSuperview().offset(16)
+      make.trailing.equalToSuperview().offset(-16)
+    }
+  }
+  
   // MARK: - Actions
   
   @objc private func handleDismissView(button: UIButton) {
@@ -76,7 +151,7 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     // This needs to be resolved by properly removing the navigationbar
     view.addSubview(dismissButton)
     dismissButton.snp.makeConstraints { make in
-      make.top.equalToSuperview().offset(140)
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       make.trailing.equalToSuperview().offset(-12)
       make.width.equalTo(80)
       make.height.equalTo(40)

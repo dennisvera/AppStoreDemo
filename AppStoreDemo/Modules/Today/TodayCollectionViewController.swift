@@ -180,14 +180,9 @@ class TodayCollectionViewController: UICollectionViewController {
     appFullScreenTableViewController.view.layer.cornerRadius = 16
     self.singleAppFullScreenController = appFullScreenTableViewController
     
-    // setup pan gesture
     let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSingleAppScreenDrag))
     gestureRecognizer.delegate = self
     appFullScreenTableViewController.view.addGestureRecognizer(gestureRecognizer)
-    
-    // add a blue effect view
-    
-    // Check that we are not interfering wiht the tableview scrollling
   }
   
   private func setupSingleAppStartingCellFrame(_ indexPath: IndexPath) {
