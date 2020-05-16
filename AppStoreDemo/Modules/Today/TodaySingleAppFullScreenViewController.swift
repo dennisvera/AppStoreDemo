@@ -17,8 +17,9 @@ class TodaySingleAppFullScreenViewController: UIViewController {
   var todayItem: TodayItem?
   let tableView = UITableView(frame: .zero, style: .plain)
   
+  private let floatingContainerView = UIView()
   private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-  
+
   private let categoryLabel: UILabel = {
     let label = UILabel()
     label.font = .boldSystemFont(ofSize: 18)
@@ -27,7 +28,7 @@ class TodaySingleAppFullScreenViewController: UIViewController {
 
   private let titleLabel: UILabel = {
     let label = UILabel()
-    label.font = .boldSystemFont(ofSize: 14)
+    label.font = .systemFont(ofSize: 16)
     return label
   }()
 
@@ -36,8 +37,8 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
     imageView.layer.cornerRadius = 16
-    imageView.widthAnchor.constraint(equalToConstant: 78).isActive = true
-    imageView.heightAnchor.constraint(equalToConstant: 78).isActive = true
+    imageView.widthAnchor.constraint(equalToConstant: 68).isActive = true
+    imageView.heightAnchor.constraint(equalToConstant: 68).isActive = true
     return imageView
   }()
   
@@ -58,15 +59,6 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     button.setImage(#imageLiteral(resourceName: "closeButton"), for: .normal)
     return button
   }()
-  
-  // Disable the scrolling when the Drag Gesture is scrolling upward
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView.contentOffset.y < 0 {
-      scrollView.isScrollEnabled = false
-      // HACK: set the scrolling back to true again to enable scrolling
-      scrollView.isScrollEnabled = true
-    }
-  }
     
   // MARK: - View Life Cycle
   
@@ -77,7 +69,7 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     
     setupTableViewController()
     setupDismissButton()
-    setupFloatingView()
+    setupFloatingContainerView()
   }
   
   // MARK: - Helper Methods
@@ -93,23 +85,40 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     tableView.tableFooterView = UIView()
     tableView.separatorStyle = .none
     tableView.allowsSelection = false
-    self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0);
-    
+    let statusBarFrameHeight = self.view.window?.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0
+    self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: statusBarFrameHeight, right: 0);
+  
     // Remove the status bar
     tableView.contentInsetAdjustmentBehavior = .never
   }
   
-  private func setupFloatingView() {
-    let floatingContainerView = UIView()
+  private func setupDismissButton() {
+    // BUG: the button is being blocked by the navigationbar, not tappable
+    // I set the button top constraint to 140 to get access to the button
+    // This needs to be resolved by properly removing the navigationbar
+    view.addSubview(dismissButton)
+    dismissButton.snp.makeConstraints { make in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.trailing.equalToSuperview().offset(-12)
+      make.width.equalTo(80)
+      make.height.equalTo(40)
+    }
+    
+    dismissButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
+  }
+  
+  private func setupFloatingContainerView() {
     floatingContainerView.clipsToBounds = true
     floatingContainerView.layer.cornerRadius = 16
+    
+    view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewTap)))
     
     view.addSubview(floatingContainerView)
     floatingContainerView.snp.makeConstraints { make in
       make.leading.equalToSuperview().offset(16)
       make.trailing.equalToSuperview().offset(-16)
-      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-      make.height.equalTo(100)
+      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(90)
+      make.height.equalTo(90)
     }
     
     floatingContainerView.addSubview(blurVisualEffectView)
@@ -123,7 +132,7 @@ class TodaySingleAppFullScreenViewController: UIViewController {
 
     let verticalView = UIStackView(arrangedSubviews: [categoryLabel, titleLabel])
     verticalView.axis = .vertical
-    verticalView.spacing = 6
+    verticalView.spacing = 4
     
     let mainStackView = UIStackView(arrangedSubviews: [imageView, verticalView, getBUtton])
     mainStackView.axis = .horizontal
@@ -145,19 +154,36 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     dismissHandler?()
   }
   
-  private func setupDismissButton() {
-    // BUG: the button is being blocked by the navigationbar, not tappable
-    // I set the button top constraint to 140 to get access to the button
-    // This needs to be resolved by properly removing the navigationbar
-    view.addSubview(dismissButton)
-    dismissButton.snp.makeConstraints { make in
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-      make.trailing.equalToSuperview().offset(-12)
-      make.width.equalTo(80)
-      make.height.equalTo(40)
+  @objc fileprivate func handleViewTap() {
+    UIView.animate(withDuration: 0.7,
+                   delay: 0,
+                   usingSpringWithDamping: 0.7,
+                   initialSpringVelocity: 0.7,
+                   options: .curveEaseOut,
+                   animations: {
+                    self.floatingContainerView.transform = .init(translationX: 0, y: -90)
+    })
+  }
+  
+  // Disable the scrolling when the Drag Gesture is scrolling upward
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y < 0 {
+      scrollView.isScrollEnabled = false
+      // HACK: set the scrolling back to true again to enable scrolling
+      scrollView.isScrollEnabled = true
     }
     
-    dismissButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
+    let statusBarFrameHeight = self.view.window?.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0
+    let translationY = -90 - statusBarFrameHeight
+    let transform = scrollView.contentOffset.y > 100 ? CGAffineTransform(translationX: 0, y: translationY) : .identity
+    UIView.animate(withDuration: 0.7,
+                   delay: 0,
+                   usingSpringWithDamping: 0.7,
+                   initialSpringVelocity: 0.7,
+                   options: .curveEaseOut,
+                   animations: {
+                    self.floatingContainerView.transform = transform
+    })
   }
 }
 

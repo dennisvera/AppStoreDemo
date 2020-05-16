@@ -420,7 +420,7 @@ extension TodayCollectionViewController: UICollectionViewDelegateFlowLayout {
 
 extension TodayCollectionViewController: UIGestureRecognizerDelegate {
   
-  // Necessary to allow the view scrolling after the gestureRecognizer delgate is set to self
+  // Delegate for scrolling after the gestureRecognizer delgate is set to self
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                          shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
       return true
