@@ -47,6 +47,9 @@
 		E15176D52464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176D42464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift */; };
 		E15176D72465B5C5000A254D /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15176D62465B5C5000A254D /* Reviews.swift */; };
 		E197615F246DCE4500016106 /* BackEnabledNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197615E246DCE4500016106 /* BackEnabledNavigationController.swift */; };
+		E19761622470591B00016106 /* MusicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19761612470591B00016106 /* MusicCollectionViewController.swift */; };
+		E197616524705B0B00016106 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197616424705B0B00016106 /* MusicCollectionViewCell.swift */; };
+		E1976168247063B100016106 /* MusicFooterReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1976167247063B100016106 /* MusicFooterReusableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -112,6 +115,9 @@
 		E15176D42464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsDetailReviewsAndRatingsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E15176D62465B5C5000A254D /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
 		E197615E246DCE4500016106 /* BackEnabledNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEnabledNavigationController.swift; sourceTree = "<group>"; };
+		E19761612470591B00016106 /* MusicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewController.swift; sourceTree = "<group>"; };
+		E197616424705B0B00016106 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
+		E1976167247063B100016106 /* MusicFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicFooterReusableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +151,7 @@
 		3906AB8F244394840032C263 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E1976160247058BF00016106 /* Music */,
 				E13CDA902465FF550099D1CC /* Today */,
 				39EA7E7B244944F6004D1E20 /* Apps */,
 				3906AB932443A0150032C263 /* Search */,
@@ -302,6 +309,7 @@
 			children = (
 				39EA7E85244B801E004D1E20 /* AppsRowCollectionViewCell.swift */,
 				39EA7E7E2449498B004D1E20 /* AppsGroupCollectionViewCell.swift */,
+				39EA7E91244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift */,
 			);
 			path = "Collection View Cells";
 			sourceTree = "<group>";
@@ -310,7 +318,6 @@
 			isa = PBXGroup;
 			children = (
 				39EA7E8B244BB092004D1E20 /* AppsHeaderReusableView.swift */,
-				39EA7E91244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift */,
 			);
 			path = "Collection View Supplementary Views";
 			sourceTree = "<group>";
@@ -418,6 +425,32 @@
 				E15176D42464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift */,
 			);
 			path = "Collection View Cells";
+			sourceTree = "<group>";
+		};
+		E1976160247058BF00016106 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				E19761612470591B00016106 /* MusicCollectionViewController.swift */,
+				E197616324705AE900016106 /* Collection View Cells */,
+				E19761662470631600016106 /* Collection View Supplementary Views */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		E197616324705AE900016106 /* Collection View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E197616424705B0B00016106 /* MusicCollectionViewCell.swift */,
+			);
+			path = "Collection View Cells";
+			sourceTree = "<group>";
+		};
+		E19761662470631600016106 /* Collection View Supplementary Views */ = {
+			isa = PBXGroup;
+			children = (
+				E1976167247063B100016106 /* MusicFooterReusableView.swift */,
+			);
+			path = "Collection View Supplementary Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -538,6 +571,7 @@
 				E13CDABF2469EFC20099D1CC /* TodaySingleAppFullScreenHeaderTableViewCell.swift in Sources */,
 				3906AB91244394B70032C263 /* SearchResultCollectionViewCell.swift in Sources */,
 				39EA7E97244CD46F004D1E20 /* AppGroup.swift in Sources */,
+				E197616524705B0B00016106 /* MusicCollectionViewCell.swift in Sources */,
 				E15176C424632F81000A254D /* AppsDetailCollectionViewCell.swift in Sources */,
 				E15176D52464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift in Sources */,
 				E13CDAC3246C9BF10099D1CC /* TodayMultipleAppsCollectionViewCell.swift in Sources */,
@@ -547,6 +581,7 @@
 				393FC0F7244005BF002E038B /* AppDelegate.swift in Sources */,
 				396F7DFF245629E300B98F63 /* AppsDetailCollectionViewController.swift in Sources */,
 				39EA7E99244D0A05004D1E20 /* SocialApp.swift in Sources */,
+				E1976168247063B100016106 /* MusicFooterReusableView.swift in Sources */,
 				E13CDAC1246B14FE0099D1CC /* TodayItem.swift in Sources */,
 				3906AB9E2445233D0032C263 /* ServiceClient.swift in Sources */,
 				39EA7E7D2449454D004D1E20 /* AppsCollectionViewController.swift in Sources */,
@@ -562,6 +597,7 @@
 				E15176CC2464BC26000A254D /* AppsDetailReviewsCollectionViewCell.swift in Sources */,
 				39EA7E92244BC2F2004D1E20 /* AppsHeaderCollectionViewCell.swift in Sources */,
 				E13CDA95246604100099D1CC /* TodayCollectionViewCell.swift in Sources */,
+				E19761622470591B00016106 /* MusicCollectionViewController.swift in Sources */,
 				E15176C824646B0E000A254D /* AppsDetailPreviewCollectionViewController.swift in Sources */,
 				39EA7E8224494D47004D1E20 /* UILabels+Helpers.swift in Sources */,
 				39EA7E8E244BB5A4004D1E20 /* AppsHeaderHorizontalCollectionViewController.swift in Sources */,
