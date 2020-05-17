@@ -13,8 +13,8 @@ class AppsCollectionViewController: UICollectionViewController {
 
   // MARK: - Properties
 
-  private let AppsGroupCollectionViewCellId = "AppsGroupCollectionViewCellId"
-  private let AppsHeaderReusableViewId = "AppsHeaderReusableViewId"
+  private let appsGroupCollectionViewCellId = "AppsGroupCollectionViewCellId"
+  private let appsHeaderReusableViewId = "AppsHeaderReusableViewId"
   private var appsFeedGroup: AppGroup?
   private var socialApps = [SocialApp]()
   private var appGroups = [AppGroup]()
@@ -50,18 +50,17 @@ class AppsCollectionViewController: UICollectionViewController {
     fetchAppGroup()
   }
 
-
   // MARK: - Helper Mehtods
 
   private func setupCollectionView() {
     // Register Collection View Cell
-    collectionView.register(AppsGroupCollectionViewCell.self, forCellWithReuseIdentifier: AppsGroupCollectionViewCellId)
+    collectionView.register(AppsGroupCollectionViewCell.self, forCellWithReuseIdentifier: appsGroupCollectionViewCellId)
     collectionView.backgroundColor = .white
 
     // Register Collection Header View
     collectionView.register(AppsHeaderReusableView.self,
                             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                            withReuseIdentifier: AppsHeaderReusableViewId)
+                            withReuseIdentifier: appsHeaderReusableViewId)
   }
 
   private func setupActivityIndicator() {
@@ -148,7 +147,7 @@ extension AppsCollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppsGroupCollectionViewCellId,
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsGroupCollectionViewCellId,
                                                   for: indexPath) as! AppsGroupCollectionViewCell
 
     let appGroup = appGroups[indexPath.item]
@@ -195,7 +194,7 @@ extension AppsCollectionViewController {
                                viewForSupplementaryElementOfKind kind: String,
                                at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                 withReuseIdentifier: AppsHeaderReusableViewId,
+                                                                 withReuseIdentifier: appsHeaderReusableViewId,
                                                                  for: indexPath) as! AppsHeaderReusableView
 
     header.appsHeaderHorizontalViewController.socialApps = socialApps

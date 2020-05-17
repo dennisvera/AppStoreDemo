@@ -51,6 +51,8 @@
 		E197616524705B0B00016106 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197616424705B0B00016106 /* MusicCollectionViewCell.swift */; };
 		E1976168247063B100016106 /* MusicFooterReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1976167247063B100016106 /* MusicFooterReusableView.swift */; };
 		E197616A2470816200016106 /* MusicSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19761692470816200016106 /* MusicSearchResults.swift */; };
+		E197616D2471CEA500016106 /* AppsCompositionalSwiftUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197616C2471CEA500016106 /* AppsCompositionalSwiftUiView.swift */; };
+		E19761702471D27F00016106 /* AppsCompositionalCollectionVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197616F2471D27F00016106 /* AppsCompositionalCollectionVIewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -120,6 +122,8 @@
 		E197616424705B0B00016106 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1976167247063B100016106 /* MusicFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicFooterReusableView.swift; sourceTree = "<group>"; };
 		E19761692470816200016106 /* MusicSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSearchResults.swift; sourceTree = "<group>"; };
+		E197616C2471CEA500016106 /* AppsCompositionalSwiftUiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCompositionalSwiftUiView.swift; sourceTree = "<group>"; };
+		E197616F2471D27F00016106 /* AppsCompositionalCollectionVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCompositionalCollectionVIewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +160,7 @@
 				E1976160247058BF00016106 /* Music */,
 				E13CDA902465FF550099D1CC /* Today */,
 				39EA7E7B244944F6004D1E20 /* Apps */,
+				E197616B2471CE4500016106 /* Apps Compositional */,
 				3906AB932443A0150032C263 /* Search */,
 			);
 			path = Modules;
@@ -456,6 +461,15 @@
 			path = "Collection View Supplementary Views";
 			sourceTree = "<group>";
 		};
+		E197616B2471CE4500016106 /* Apps Compositional */ = {
+			isa = PBXGroup;
+			children = (
+				E197616C2471CEA500016106 /* AppsCompositionalSwiftUiView.swift */,
+				E197616F2471D27F00016106 /* AppsCompositionalCollectionVIewController.swift */,
+			);
+			path = "Apps Compositional";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -577,6 +591,7 @@
 				E197616524705B0B00016106 /* MusicCollectionViewCell.swift in Sources */,
 				E15176C424632F81000A254D /* AppsDetailCollectionViewCell.swift in Sources */,
 				E15176D52464CB3C000A254D /* AppsDetailReviewsAndRatingsCollectionViewCell.swift in Sources */,
+				E19761702471D27F00016106 /* AppsCompositionalCollectionVIewController.swift in Sources */,
 				E13CDAC3246C9BF10099D1CC /* TodayMultipleAppsCollectionViewCell.swift in Sources */,
 				39EA7E7F2449498B004D1E20 /* AppsGroupCollectionViewCell.swift in Sources */,
 				E13CDA922465FFE40099D1CC /* TodayCollectionViewController.swift in Sources */,
@@ -592,6 +607,7 @@
 				E15176C6246462E9000A254D /* AppsDetailPreviewCollectionViewCell.swift in Sources */,
 				E15176CE2464C37B000A254D /* AppsDetailReviewsCollectionViewController.swift in Sources */,
 				3906AB89244374920032C263 /* SearchCollectionViewController.swift in Sources */,
+				E197616D2471CEA500016106 /* AppsCompositionalSwiftUiView.swift in Sources */,
 				393FC0F9244005BF002E038B /* SceneDelegate.swift in Sources */,
 				396F7DFB2456113200B98F63 /* SnappingCollectionViewFlowLayout.swift in Sources */,
 				E13CDAB62469B4290099D1CC /* TodaySingleAppFullScreenViewController.swift in Sources */,

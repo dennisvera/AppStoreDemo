@@ -85,13 +85,14 @@ class MusicCollectionViewController: UICollectionViewController {
           strongSelf.isDonePaginating = true
         }
         
-        // Optional: Itunes API is pretty fast. Sleep allows for a 2 sec pause to display the loader.
-        sleep(2)
-        
-        strongSelf.musicResult += music?.results ?? []
-        
-        DispatchQueue.main.async {
-          strongSelf.collectionView.reloadData()
+        // Optional: Itunes API is very fast. Setting a 1 sec delay to display the loader.
+        // This should NOT be done in a real app.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+          strongSelf.musicResult += music?.results ?? []
+          
+          DispatchQueue.main.async {
+            strongSelf.collectionView.reloadData()
+          }
         }
         
         strongSelf.isPaginating = false
