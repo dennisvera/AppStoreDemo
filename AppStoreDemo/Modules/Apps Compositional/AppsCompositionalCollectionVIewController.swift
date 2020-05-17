@@ -10,12 +10,29 @@ import UIKit
 
 class AppsCompositionalCollectionViewController: UICollectionViewController {
   
+  // MARK: - Properties
+  
   private let dummyCellId = "DummyCellId"
-
+  
   // MARK: - Initialization
 
   init() {
-    super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                                        heightDimension: .fractionalHeight(1)))
+    item.contentInsets.bottom = 16
+    item.contentInsets.trailing = 16
+    
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
+                                                                     heightDimension: .absolute(300)),
+                                                   subitems: [item])
+    
+    let section = NSCollectionLayoutSection(group: group)
+    section.orthogonalScrollingBehavior = .groupPaging
+    section.contentInsets.leading = 32
+    
+    let compositionalLayout = UICollectionViewCompositionalLayout(section: section)
+    
+    super.init(collectionViewLayout: compositionalLayout)
   }
 
   required init?(coder: NSCoder) {
@@ -51,7 +68,7 @@ extension AppsCompositionalCollectionViewController {
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 20
+    return 5
   }
 
   override func collectionView(_ collectionView: UICollectionView,
@@ -63,22 +80,3 @@ extension AppsCompositionalCollectionViewController {
     return cell
   }
 }
-
-//// MARK: - CollectionViewDelegateFlowLayout
-//
-//extension AppsCompositionalCollectionViewController: UICollectionViewDelegateFlowLayout {
-//
-//  func collectionView(_ collectionView: UICollectionView,
-//                      layout collectionViewLayout: UICollectionViewLayout,
-//                      sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//    return CGSize(width: 200, height: 200)
-//  }
-//
-//  func collectionView(_ collectionView: UICollectionView,
-//                      layout collectionViewLayout: UICollectionViewLayout,
-//                      insetForSectionAt section: Int) -> UIEdgeInsets {
-//
-//    return .init(top: 16, left: 0, bottom: 16, right: 0)
-//  }
-//}
