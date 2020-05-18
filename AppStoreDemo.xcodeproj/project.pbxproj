@@ -159,11 +159,11 @@
 		3906AB8F244394840032C263 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				E1976160247058BF00016106 /* Music */,
 				E13CDA902465FF550099D1CC /* Today */,
 				39EA7E7B244944F6004D1E20 /* Apps */,
 				E197616B2471CE4500016106 /* Apps Compositional */,
 				3906AB932443A0150032C263 /* Search */,
+				E1976160247058BF00016106 /* Music */,
 			);
 			path = Modules;
 			sourceTree = "<group>";

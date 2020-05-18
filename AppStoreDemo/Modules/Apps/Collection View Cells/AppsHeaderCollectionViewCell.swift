@@ -15,7 +15,6 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   let companyLabel: UILabel = {
     let label = UILabel()
-    label.text = "Company"
     label.textColor = .blue
     label.font = .boldSystemFont(ofSize: 14)
     return label
@@ -23,7 +22,6 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   let descriptionLabel: UILabel = {
     let label = UILabel()
-    label.text = "Description Text ............ Description Text ............"
     label.numberOfLines = 2
     label.font = .systemFont(ofSize: 24)
     return label
@@ -31,13 +29,20 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   let imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = #imageLiteral(resourceName: "holiday_Image")
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
     return imageView
   }()
-
+  
+  var socialApp: SocialApp? {
+    didSet {
+      guard let socialApp = socialApp else { return }
+      companyLabel.text = socialApp.name
+      descriptionLabel.text = socialApp.tagline
+      imageView.sd_setImage(with: URL(string: socialApp.imageUrl))
+    }
+  }
 
   // MARK: - Initialization
 
