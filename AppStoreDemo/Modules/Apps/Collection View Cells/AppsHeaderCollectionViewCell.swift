@@ -15,6 +15,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   let companyLabel: UILabel = {
     let label = UILabel()
+    label.text = "Facebook"
     label.textColor = .blue
     label.font = .boldSystemFont(ofSize: 14)
     return label
@@ -22,6 +23,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   let descriptionLabel: UILabel = {
     let label = UILabel()
+    label.text = "Keeping up with Friends is faster than ever"
     label.numberOfLines = 2
     label.font = .systemFont(ofSize: 24)
     return label
@@ -29,6 +31,7 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   let imageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.image = #imageLiteral(resourceName: "holiday_Image")
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill

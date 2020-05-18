@@ -22,6 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       window = UIWindow(windowScene: windowScene)
       window?.makeKeyAndVisible()
       window?.rootViewController = BaseTabBarController()
+      
+      // Launch the SwiftUI Compositional Controller
+      //      window?.rootViewController = UINavigationController(rootViewController: AppsCompositionalCollectionViewController())
     }
   }
 

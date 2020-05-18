@@ -9,7 +9,12 @@
 import SwiftUI
 
 struct AppsCompositionalSwiftUiView: UIViewControllerRepresentable {
+  
+  // MARK: - Properties
+  
   typealias UIViewControllerType = UIViewController
+  
+  // MARK: - Helper Methods
   
   func makeUIViewController(context: Context) -> UIViewController {
     let appsCompositionalController = AppsCompositionalCollectionViewController()    
@@ -22,6 +27,9 @@ struct AppsCompositionalSwiftUiView: UIViewControllerRepresentable {
 }
 
 struct AppsCompositionalSwiftUiView_Previews: PreviewProvider {
+  
+  // MARK: - Properties
+
   static var previews: some View {
     AppsCompositionalSwiftUiView()
       .edgesIgnoringSafeArea(.all)
