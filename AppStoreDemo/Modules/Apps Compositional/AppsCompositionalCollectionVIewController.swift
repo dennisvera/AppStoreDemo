@@ -12,9 +12,9 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
   
-  private let appsHeaderCollectionViewCellId = "appsHeaderCollectionViewCellId"
-  private let appsGroupCollectionViewCellId = "AppsGroupCollectionViewCellId"
-  private var socialApps = [SocialApp]()
+  private let appsCompositionalHeaderReusableViewId = "AppsCompositionalHeaderReusableViewId"
+  private let appsHeaderCollectionViewCellId = "AppsHeaderCollectionViewCellId"
+  private let appsRowCollectionViewCellId = "AppsRowCollectionViewCellId"
   
   // MARK: - Initialization
   
@@ -51,10 +51,13 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     collectionView.backgroundColor = .systemBackground
     
     // Register Collection Header View
-    collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: appsHeaderCollectionViewCellId)
-
+    collectionView.register(AppsCompositionalHeaderReusableView.self,
+                            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                            withReuseIdentifier: appsCompositionalHeaderReusableViewId)
+    
     // Register Collection View Cell
-    collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: appsGroupCollectionViewCellId)
+    collectionView.register(AppsRowCollectionViewCell.self, forCellWithReuseIdentifier: appsRowCollectionViewCellId)
+    collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: appsHeaderCollectionViewCellId)
   }
   
   static private func layoutSectionOne() -> NSCollectionLayoutSection {
@@ -62,7 +65,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
                                                         heightDimension: .fractionalHeight(1)))
     item.contentInsets = .init(top: 0, leading: 0, bottom: 16, trailing: 16)
     
-    let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                      heightDimension: .absolute(300)),
                                                    subitems: [item])
     
@@ -76,15 +79,21 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   static private func layoutSectionTwo() -> NSCollectionLayoutSection {
     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .fractionalHeight(1/3)))
-    item.contentInsets = .init(top: 0, leading: 0, bottom: 16, trailing: 16)
+    item.contentInsets = .init(top: 16, leading: 0, bottom: 16, trailing: 16)
     
     let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
-                                                                     heightDimension: .absolute(300)),
-                                                   subitems: [item])
+                                                                   heightDimension: .absolute(300)),
+                                                 subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .groupPaging
     section.contentInsets.leading = 16
+    
+    let headerKind = UICollectionView.elementKindSectionHeader
+    section.boundarySupplementaryItems = [ .init(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
+                                                                   heightDimension: .absolute(50)),
+                                                 elementKind: headerKind,
+                                                 alignment: .topLeading)]
     
     return section
   }
@@ -95,7 +104,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
 extension AppsCompositionalCollectionViewController {
   
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 2
+    return 4
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -110,9 +119,25 @@ extension AppsCompositionalCollectionViewController {
                                                     for: indexPath) as! AppsHeaderCollectionViewCell
       return cell
     default:
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsGroupCollectionViewCellId, for: indexPath)
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsRowCollectionViewCellId,
+                                                    for: indexPath) as! AppsRowCollectionViewCell
       cell.backgroundColor = .systemBlue
       return cell
     }
   }
 }
+
+// MARK: - CollectionViewHeader
+
+extension AppsCompositionalCollectionViewController {
+
+  override func collectionView(_ collectionView: UICollectionView,
+                               viewForSupplementaryElementOfKind kind: String,
+                               at indexPath: IndexPath) -> UICollectionReusableView {
+    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                 withReuseIdentifier: appsCompositionalHeaderReusableViewId,
+                                                                 for: indexPath) as! AppsCompositionalHeaderReusableView
+    return header
+  }
+}
+

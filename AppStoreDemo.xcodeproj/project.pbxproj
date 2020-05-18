@@ -53,6 +53,7 @@
 		E197616A2470816200016106 /* MusicSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19761692470816200016106 /* MusicSearchResults.swift */; };
 		E197616D2471CEA500016106 /* AppsCompositionalSwiftUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197616C2471CEA500016106 /* AppsCompositionalSwiftUiView.swift */; };
 		E19761702471D27F00016106 /* AppsCompositionalCollectionVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197616F2471D27F00016106 /* AppsCompositionalCollectionVIewController.swift */; };
+		E197617324731D8800016106 /* AppsCompositionalHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197617224731D8800016106 /* AppsCompositionalHeaderReusableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -124,6 +125,7 @@
 		E19761692470816200016106 /* MusicSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSearchResults.swift; sourceTree = "<group>"; };
 		E197616C2471CEA500016106 /* AppsCompositionalSwiftUiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCompositionalSwiftUiView.swift; sourceTree = "<group>"; };
 		E197616F2471D27F00016106 /* AppsCompositionalCollectionVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCompositionalCollectionVIewController.swift; sourceTree = "<group>"; };
+		E197617224731D8800016106 /* AppsCompositionalHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCompositionalHeaderReusableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -466,8 +468,17 @@
 			children = (
 				E197616C2471CEA500016106 /* AppsCompositionalSwiftUiView.swift */,
 				E197616F2471D27F00016106 /* AppsCompositionalCollectionVIewController.swift */,
+				E197617124731D4200016106 /* Collection View Supplementary Views */,
 			);
 			path = "Apps Compositional";
+			sourceTree = "<group>";
+		};
+		E197617124731D4200016106 /* Collection View Supplementary Views */ = {
+			isa = PBXGroup;
+			children = (
+				E197617224731D8800016106 /* AppsCompositionalHeaderReusableView.swift */,
+			);
+			path = "Collection View Supplementary Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -624,6 +635,7 @@
 				E13CDAC7246CCA4C0099D1CC /* AppGroupsCollectionViewCell.swift in Sources */,
 				39EA7E8C244BB092004D1E20 /* AppsHeaderReusableView.swift in Sources */,
 				E13CDAC5246CC84B0099D1CC /* TodayMultipleAppsCollectionViewController.swift in Sources */,
+				E197617324731D8800016106 /* AppsCompositionalHeaderReusableView.swift in Sources */,
 				E15176CA24647F9B000A254D /* AppsDetailPreviewScreensCollectionViewCell.swift in Sources */,
 				3906AB9A2443E86D0032C263 /* SearchResults.swift in Sources */,
 				39EA7E8424495124004D1E20 /* AppsHorizontalCollectionViewController.swift in Sources */,
