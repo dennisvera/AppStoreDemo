@@ -20,9 +20,17 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   private var newAppsGroup: AppGroup?
   private var topGrossingAppsGroup: AppGroup?
   private var topFreeAppsGroup: AppGroup?
-  private var appGroup: AppGroup?
+  private var appsGroup: AppGroup?
   private var appId: String?
   private var headerTitle: String?
+  
+  private let activityIndicatorView: UIActivityIndicatorView = {
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    activityIndicator.color = .darkGray
+    activityIndicator.startAnimating()
+    activityIndicator.hidesWhenStopped = true
+    return activityIndicator
+  }()
 
   // MARK: - Initialization
   
@@ -49,6 +57,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
+    setupActivityIndicator()
     fetchAppsData()
   }
   
@@ -67,6 +76,13 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     // Register Collection View Cell
     collectionView.register(AppsRowCollectionViewCell.self, forCellWithReuseIdentifier: appsRowCollectionViewCellId)
     collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: appsHeaderCollectionViewCellId)
+  }
+  
+  private func setupActivityIndicator() {
+    view.addSubview(activityIndicatorView)
+    activityIndicatorView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
   }
   
   private func fetchAppsData() {
@@ -120,9 +136,10 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
       strongSelf.topFreeAppsGroup = topFreeAppsGroup
     }
     
-    // completion
+    // Completion
     dispatchGroup.notify(queue: .main) {
-        self.collectionView.reloadData()
+      self.activityIndicatorView.stopAnimating()
+      self.collectionView.reloadData()
     }
   }
   
@@ -207,16 +224,16 @@ extension AppsCompositionalCollectionViewController {
       
       switch indexPath.section {
       case 1:
-        appGroup = newAppsGroup
+        appsGroup = newAppsGroup
       case 2:
-        appGroup = topGrossingAppsGroup
+        appsGroup = topGrossingAppsGroup
       case 3:
-        appGroup = topFreeAppsGroup
+        appsGroup = topFreeAppsGroup
       default:
         print("No Cells to Display")
       }
       
-      cell.app = appGroup?.feed.results[indexPath.item]
+      cell.app = appsGroup?.feed.results[indexPath.item]
       return cell
     }
   }
