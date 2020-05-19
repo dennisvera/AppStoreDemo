@@ -112,10 +112,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     }
   }
   
-  private func setupDiffableDataSource() {
-    collectionView.dataSource = diffableDataSource
-    
-    // Header Provider
+  private func setupHeaderDiffableDataSource() {
     diffableDataSource.supplementaryViewProvider = .some({ (collectionView, kind, indexPath) -> UICollectionReusableView? in
       let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                    withReuseIdentifier: self.appsCompositionalHeaderReusableViewId,
@@ -127,17 +124,25 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
       
       switch section {
       case .newApps:
-        header.titleLabel.text = "Title 1"
+        self.headerTitle = self.newAppsGroup?.feed.title
       case .topGrossingApps:
-        header.titleLabel.text = "Title 2"
+        self.headerTitle = self.topGrossingAppsGroup?.feed.title
       case .topFreeApps:
-        header.titleLabel.text = "Title 3"
+        self.headerTitle = self.topFreeAppsGroup?.feed.title
       default:
-        print("")
+        print("No Titles to Display")
       }
       
+      header.titleLabel.text = self.headerTitle
       return header
     })
+  }
+  
+  private func setupDiffableDataSource() {
+    collectionView.dataSource = diffableDataSource
+    
+    // Setup Header 
+    setupHeaderDiffableDataSource()
     
     // Fetch Apps Data
     ServiceClient.shared.fetchSocialApps { (socialApps, error) in
@@ -152,20 +157,25 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
           return
         }
         
-        ServiceClient.shared.fetchTopGrossingApps { (topGrossingApss, error) in
+        self.newAppsGroup = newApps
+        
+        ServiceClient.shared.fetchTopGrossingApps { (topGrossingApps, error) in
           if let error = error {
             print("Failed to Fetch Apps: ", error)
             return
           }
           
-          ServiceClient.shared.fetchTopFreeApps { [weak self] (topFreeApps, error) in
+          self.topGrossingAppsGroup = topGrossingApps
+          
+          ServiceClient.shared.fetchTopFreeApps { (topFreeApps, error) in
             if let error = error {
               print("Failed to Fetch Apps: ", error)
               return
             }
             
-            guard let strongSelf = self else { return }
-            var snapshot = strongSelf.diffableDataSource.snapshot()
+            self.topFreeAppsGroup = topFreeApps
+            
+            var snapshot = self.diffableDataSource.snapshot()
             
             // Append Sections
             snapshot.appendSections([.socialApps, .newApps, .topGrossingApps, .topFreeApps])
@@ -178,7 +188,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
             snapshot.appendItems(newApps, toSection: .newApps)
             
             // Append Top Grossing Apps Apps
-            guard let topGrossingApps = topGrossingApss?.feed.results else { return }
+            guard let topGrossingApps = topGrossingApps?.feed.results else { return }
             snapshot.appendItems(topGrossingApps, toSection: .topGrossingApps)
             
             // Append Top Grossing Apps Apps
@@ -186,7 +196,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
             snapshot.appendItems(topFreeApss, toSection: .topFreeApps)
             
             // Apply Snapshot
-            strongSelf.diffableDataSource.apply(snapshot)
+            self.diffableDataSource.apply(snapshot)
           }
         }
       }
