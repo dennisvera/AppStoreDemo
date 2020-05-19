@@ -10,7 +10,9 @@ import UIKit
 
 enum AppSection {
   case socialApps
+  case newApps
   case topGrossingApps
+  case topFreeApps
 }
 
 class AppsCompositionalCollectionViewController: UICollectionViewController {
@@ -29,13 +31,23 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   private var appId: String?
   private var headerTitle: String?
   
-  private lazy var diffableDataSource: UICollectionViewDiffableDataSource<AppSection, SocialApp> = .init(
-  collectionView: self.collectionView) { (collectionView, indexPath, socialApp) -> UICollectionViewCell? in
+  private lazy var diffableDataSource: UICollectionViewDiffableDataSource<AppSection, AnyHashable> = .init(
+  collectionView: self.collectionView) { (collectionView, indexPath, object) -> UICollectionViewCell? in
     
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.appsHeaderCollectionViewCellId,
-                                                  for: indexPath) as! AppsHeaderCollectionViewCell
-    cell.socialApp = socialApp
-    return cell
+    if let socialApps = object as? SocialApp {
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.appsHeaderCollectionViewCellId,
+                                                    for: indexPath) as! AppsHeaderCollectionViewCell
+      cell.socialApp = socialApps
+      return cell
+    } else if let groupApps = object as? FeedResult {
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.appsRowCollectionViewCellId,
+                                                    for: indexPath) as! AppsRowCollectionViewCell
+      cell.app = groupApps
+
+      return cell
+    }
+    
+    return nil
   }
   
   private let activityIndicatorView: UIActivityIndicatorView = {
@@ -100,19 +112,84 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     }
   }
   
-  private func setupDiffableDataSource() {    
-    ServiceClient.shared.fetchSocialApps { [weak self] (socialApps, error) in
+  private func setupDiffableDataSource() {
+    collectionView.dataSource = diffableDataSource
+    
+    // Header Provider
+    diffableDataSource.supplementaryViewProvider = .some({ (collectionView, kind, indexPath) -> UICollectionReusableView? in
+      let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                   withReuseIdentifier: self.appsCompositionalHeaderReusableViewId,
+                                                                   for: indexPath) as! AppsCompositionalHeaderReusableView
+      
+      let snapshot = self.diffableDataSource.snapshot()
+      let object = self.diffableDataSource.itemIdentifier(for: indexPath)
+      let section = snapshot.sectionIdentifier(containingItem: object!)
+      
+      switch section {
+      case .newApps:
+        header.titleLabel.text = "Title 1"
+      case .topGrossingApps:
+        header.titleLabel.text = "Title 2"
+      case .topFreeApps:
+        header.titleLabel.text = "Title 3"
+      default:
+        print("")
+      }
+      
+      return header
+    })
+    
+    // Fetch Apps Data
+    ServiceClient.shared.fetchSocialApps { (socialApps, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
       
-      guard let strongSelf = self else { return }
-      var snapshot = strongSelf.diffableDataSource.snapshot()
-      snapshot.appendSections([.socialApps])
-      snapshot.appendItems(socialApps ?? [], toSection: .socialApps)
-      
-      strongSelf.diffableDataSource.apply(snapshot)
+      ServiceClient.shared.fetcNewApps { (newApps, error) in
+        if let error = error {
+          print("Failed to Fetch Apps: ", error)
+          return
+        }
+        
+        ServiceClient.shared.fetchTopGrossingApps { (topGrossingApss, error) in
+          if let error = error {
+            print("Failed to Fetch Apps: ", error)
+            return
+          }
+          
+          ServiceClient.shared.fetchTopFreeApps { [weak self] (topFreeApps, error) in
+            if let error = error {
+              print("Failed to Fetch Apps: ", error)
+              return
+            }
+            
+            guard let strongSelf = self else { return }
+            var snapshot = strongSelf.diffableDataSource.snapshot()
+            
+            // Append Sections
+            snapshot.appendSections([.socialApps, .newApps, .topGrossingApps, .topFreeApps])
+            
+            // Append Social Apps
+            snapshot.appendItems(socialApps ?? [], toSection: .socialApps)
+            
+            // Append New Apps
+            guard let newApps = newApps?.feed.results else { return }
+            snapshot.appendItems(newApps, toSection: .newApps)
+            
+            // Append Top Grossing Apps Apps
+            guard let topGrossingApps = topGrossingApss?.feed.results else { return }
+            snapshot.appendItems(topGrossingApps, toSection: .topGrossingApps)
+            
+            // Append Top Grossing Apps Apps
+            guard let topFreeApss = topFreeApps?.feed.results else { return }
+            snapshot.appendItems(topFreeApss, toSection: .topFreeApps)
+            
+            // Apply Snapshot
+            strongSelf.diffableDataSource.apply(snapshot)
+          }
+        }
+      }
     }
   }
   
