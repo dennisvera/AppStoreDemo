@@ -18,7 +18,11 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   
   private var socialApps = [SocialApp]()
   private var newAppsGroup: AppGroup?
+  private var topGrossingAppsGroup: AppGroup?
+  private var topFreeAppsGroup: AppGroup?
+  private var appGroup: AppGroup?
   private var appId: String?
+  private var headerTitle: String?
 
   // MARK: - Initialization
   
@@ -45,7 +49,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
-    fetchData()
+    fetchAppsData()
   }
   
   // MARK: - Helper Mehtods
@@ -65,28 +69,60 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: appsHeaderCollectionViewCellId)
   }
   
-  private func fetchData() {
-    ServiceClient.shared.fetchSocialApps { [weak self] (apps, error) in
+  private func fetchAppsData() {
+    let dispatchGroup = DispatchGroup()
+    
+    dispatchGroup.enter()
+    ServiceClient.shared.fetchSocialApps { [weak self] (socialApps, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
       
+      dispatchGroup.leave()
       guard let strongSelf = self else { return }
-      strongSelf.socialApps = apps ?? []
-      
-      ServiceClient.shared.fetcNewApps { (appGroup, error) in
-        if let error = error {
-          print("Failed to Fetch Apps: ", error)
-          return
-        }
-        
-        strongSelf.newAppsGroup = appGroup
-        
-        DispatchQueue.main.async {
-          strongSelf.collectionView.reloadData()
-        }
+      strongSelf.socialApps = socialApps ?? []
+    }
+    
+    dispatchGroup.enter()
+    ServiceClient.shared.fetcNewApps { [weak self] (newAppsGroup, error) in
+      if let error = error {
+        print("Failed to Fetch Apps: ", error)
+        return
       }
+      
+      dispatchGroup.leave()
+      guard let strongSelf = self else { return }
+      strongSelf.newAppsGroup = newAppsGroup
+    }
+    
+    dispatchGroup.enter()
+    ServiceClient.shared.fetchTopGrossingApps { [weak self] (topGrossingAppGroup, error) in
+      if let error = error {
+        print("Failed to Fetch Apps: ", error)
+        return
+      }
+      
+      dispatchGroup.leave()
+      guard let strongSelf = self else { return }
+      strongSelf.topGrossingAppsGroup = topGrossingAppGroup
+    }
+    
+    dispatchGroup.enter()
+    ServiceClient.shared.fetchTopFreeApps { [weak self] (topFreeAppsGroup, error) in
+      if let error = error {
+         print("Failed to Fetch Apps: ", error)
+         return
+       }
+       
+       dispatchGroup.leave()
+       guard let strongSelf = self else { return }
+      strongSelf.topFreeAppsGroup = topFreeAppsGroup
+    }
+    
+    // completion
+    dispatchGroup.notify(queue: .main) {
+        self.collectionView.reloadData()
     }
   }
   
@@ -95,10 +131,10 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   static private func layoutSectionOne() -> NSCollectionLayoutSection {
     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .fractionalHeight(1)))
-    item.contentInsets = .init(top: 0, leading: 0, bottom: 16, trailing: 16)
+    item.contentInsets = .init(top: 0, leading: 0, bottom: 20, trailing: 16)
     
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
-                                                                     heightDimension: .absolute(300)),
+                                                                     heightDimension: .absolute(320)),
                                                    subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)
@@ -111,7 +147,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   static private func layoutSectionTwo() -> NSCollectionLayoutSection {
     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .fractionalHeight(1/3)))
-    item.contentInsets = .init(top: 16, leading: 0, bottom: 16, trailing: 16)
+    item.contentInsets = .init(top: 20, leading: 0, bottom: 16, trailing: 16)
     
     let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
                                                                    heightDimension: .absolute(300)),
@@ -122,7 +158,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     section.contentInsets.leading = 16
     
     let headerKind = UICollectionView.elementKindSectionHeader
-    section.boundarySupplementaryItems = [ .init(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
+    section.boundarySupplementaryItems = [ .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                    heightDimension: .absolute(50)),
                                                  elementKind: headerKind,
                                                  alignment: .topLeading)]
@@ -136,15 +172,24 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
 extension AppsCompositionalCollectionViewController {
   
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 2
+    return 4
   }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    if section == 0 {
+    switch section {
+    case 0:
       return socialApps.count
+    case 1:
+      return newAppsGroup?.feed.results.count ?? 0
+    case 2:
+      return topGrossingAppsGroup?.feed.results.count ?? 0
+    case 3:
+      return topFreeAppsGroup?.feed.results.count ?? 0
+    default:
+      print("No Apps to Display")
     }
     
-    return newAppsGroup?.feed.results.count ?? 0
+    return 0
   }
 
   override func collectionView(_ collectionView: UICollectionView,
@@ -153,27 +198,41 @@ extension AppsCompositionalCollectionViewController {
     case 0:
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsHeaderCollectionViewCellId,
                                                     for: indexPath) as! AppsHeaderCollectionViewCell
-      cell.socialApp = socialApps[indexPath.item]
       
+      cell.socialApp = socialApps[indexPath.item]
       return cell
     default:
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsRowCollectionViewCellId,
                                                     for: indexPath) as! AppsRowCollectionViewCell
       
-      let app = newAppsGroup?.feed.results[indexPath.item]
-      cell.companyLabel.text = app?.artistName
-      cell.nameLabel.text = app?.name
-      cell.appIconImageView.sd_setImage(with: URL(string: app?.artworkUrl100 ?? ""))
+      switch indexPath.section {
+      case 1:
+        appGroup = newAppsGroup
+      case 2:
+        appGroup = topGrossingAppsGroup
+      case 3:
+        appGroup = topFreeAppsGroup
+      default:
+        print("No Cells to Display")
+      }
       
+      cell.app = appGroup?.feed.results[indexPath.item]
       return cell
     }
   }
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    if indexPath.section == 0 {
+    switch indexPath.section {
+    case 0:
       appId = socialApps[indexPath.item].id
-    } else {
+    case 1:
       appId = newAppsGroup?.feed.results[indexPath.item].id ?? ""
+    case 2:
+      appId = topGrossingAppsGroup?.feed.results[indexPath.item].id ?? ""
+    case 3:
+      appId = topFreeAppsGroup?.feed.results[indexPath.item].id ?? ""
+    default:
+      print("No Cells Selected")
     }
     
     guard let appId = appId else { return }
@@ -192,8 +251,18 @@ extension AppsCompositionalCollectionViewController {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                  withReuseIdentifier: appsCompositionalHeaderReusableViewId,
                                                                  for: indexPath) as! AppsCompositionalHeaderReusableView
+    switch indexPath.section {
+    case 1:
+      headerTitle = newAppsGroup?.feed.title
+    case 2:
+      headerTitle = topGrossingAppsGroup?.feed.title
+    case 3:
+      headerTitle = topFreeAppsGroup?.feed.title
+    default:
+      print("No Header Title to Display")
+    }
     
-    header.titleLabel.text = newAppsGroup?.feed.title
+    header.titleLabel.text = headerTitle
     return header
   }
 }

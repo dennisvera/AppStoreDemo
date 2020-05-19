@@ -42,6 +42,15 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
     button.backgroundColor = UIColor(white: 0.95, alpha: 1)
     return button
   }()
+  
+  var app: FeedResult? {
+    didSet {
+      guard let app = app else { return }
+      companyLabel.text = app.artistName
+      nameLabel.text = app.name
+      appIconImageView.sd_setImage(with: URL(string: app.artworkUrl100))
+    }
+  }
 
   // MARK: - Initialization
 

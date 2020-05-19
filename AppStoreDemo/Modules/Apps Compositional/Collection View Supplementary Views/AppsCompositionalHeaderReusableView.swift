@@ -16,7 +16,7 @@ class AppsCompositionalHeaderReusableView: UICollectionReusableView {
   let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "Header Title"
-    label.font = .boldSystemFont(ofSize: 32)
+    label.font = .boldSystemFont(ofSize: 28)
     return label
   }()
 
