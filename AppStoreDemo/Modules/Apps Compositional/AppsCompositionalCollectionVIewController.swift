@@ -294,11 +294,11 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
 
 // MARK: UICollectionViewDataSource
 
-extension AppsCompositionalCollectionViewController {
-  
-  override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 0
-  }
+//extension AppsCompositionalCollectionViewController {
+//
+//  override func numberOfSections(in collectionView: UICollectionView) -> Int {
+//    return 0
+//  }
 
 //  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //    switch section {
@@ -364,31 +364,31 @@ extension AppsCompositionalCollectionViewController {
 //    let appsDetailController = AppsDetailCollectionViewController(appId: appId)
 //    navigationController?.pushViewController(appsDetailController, animated: true)
 //  }
-}
+//}
 
 // MARK: - CollectionViewHeader
 
-extension AppsCompositionalCollectionViewController {
-
-  override func collectionView(_ collectionView: UICollectionView,
-                               viewForSupplementaryElementOfKind kind: String,
-                               at indexPath: IndexPath) -> UICollectionReusableView {
-    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                 withReuseIdentifier: appsCompositionalHeaderReusableViewId,
-                                                                 for: indexPath) as! AppsCompositionalHeaderReusableView
-    switch indexPath.section {
-    case 1:
-      headerTitle = newAppsGroup?.feed.title
-    case 2:
-      headerTitle = topGrossingAppsGroup?.feed.title
-    case 3:
-      headerTitle = topFreeAppsGroup?.feed.title
-    default:
-      print("No Header Title to Display")
-    }
-    
-    header.titleLabel.text = headerTitle
-    return header
-  }
-}
+//extension AppsCompositionalCollectionViewController {
+//
+//  override func collectionView(_ collectionView: UICollectionView,
+//                               viewForSupplementaryElementOfKind kind: String,
+//                               at indexPath: IndexPath) -> UICollectionReusableView {
+//    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+//                                                                 withReuseIdentifier: appsCompositionalHeaderReusableViewId,
+//                                                                 for: indexPath) as! AppsCompositionalHeaderReusableView
+//    switch indexPath.section {
+//    case 1:
+//      headerTitle = newAppsGroup?.feed.title
+//    case 2:
+//      headerTitle = topGrossingAppsGroup?.feed.title
+//    case 3:
+//      headerTitle = topFreeAppsGroup?.feed.title
+//    default:
+//      print("No Header Title to Display")
+//    }
+//
+//    header.titleLabel.text = headerTitle
+//    return header
+//  }
+//}
 
