@@ -15,7 +15,7 @@ class MusicFooterCollectionReusableView: UICollectionReusableView {
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "Loading more ..."
-    label.font = .boldSystemFont(ofSize: 16)
+    label.font = .boldSystemFont(ofSize: 18)
     return label
   }()
   
@@ -43,7 +43,7 @@ class MusicFooterCollectionReusableView: UICollectionReusableView {
   // MARK: - Helper Methods
   
   private func setupViews() {
-    backgroundColor = UIColor(white: 0.1, alpha: 0.1)
+    backgroundColor = .white
     
     let stackView = UIStackView(arrangedSubviews: [activityIndicatorView, titleLabel])
     stackView.axis = .vertical

@@ -63,9 +63,7 @@ extension AppsHeaderHorizontalCollectionViewController {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppsHeaderCollectionViewCellId,
                                                   for: indexPath) as! AppsHeaderCollectionViewCell
     let app = socialApps[indexPath.item]
-    cell.companyLabel.text = app.name
-    cell.descriptionLabel.text = app.tagline
-    cell.imageView.sd_setImage(with: URL(string: app.imageUrl))
+    cell.socialApp = app
     
     return cell
   }

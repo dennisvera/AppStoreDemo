@@ -16,9 +16,10 @@ class AppsCollectionViewController: UICollectionViewController {
 
   private let appsGroupCollectionViewCellId = "AppsGroupCollectionViewCellId"
   private let appsHeaderReusableViewId = "AppsHeaderReusableViewId"
+  
   private var appsFeedGroup: AppGroup?
-  private var socialApps = [SocialApp]()
   private var appGroups = [AppGroup]()
+  private var socialApps = [SocialApp]()
   private var group1: AppGroup?
   private var group2: AppGroup?
   private var group3: AppGroup?
@@ -75,47 +76,51 @@ class AppsCollectionViewController: UICollectionViewController {
     let dispatchGroup = DispatchGroup()
 
     dispatchGroup.enter()
-    ServiceClient.shared.fetcNewApps { (appGroup, error) in
+    ServiceClient.shared.fetcNewApps { [weak self] (appGroup, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
 
       dispatchGroup.leave()
-      self.group1 = appGroup
+      guard let strongSelf = self else { return }
+      strongSelf.group1 = appGroup
     }
 
     dispatchGroup.enter()
-    ServiceClient.shared.fetchTopGrossingApps { (appGroup, error) in
+    ServiceClient.shared.fetchTopGrossingApps { [weak self] (appGroup, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
 
       dispatchGroup.leave()
-      self.group2 = appGroup
+      guard let strongSelf = self else { return }
+      strongSelf.group2 = appGroup
     }
 
     dispatchGroup.enter()
-    ServiceClient.shared.fetchTopFreeApps { (appGroup, error) in
+    ServiceClient.shared.fetchTopFreeApps { [weak self] (appGroup, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
 
       dispatchGroup.leave()
-      self.group3 = appGroup
+      guard let strongSelf = self else { return }
+      strongSelf.group3 = appGroup
     }
 
     dispatchGroup.enter()
-    ServiceClient.shared.fetchSocialApps { (apps, error) in
+    ServiceClient.shared.fetchSocialApps { [weak self] (apps, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
 
       dispatchGroup.leave()
-      self.socialApps = apps ?? []
+      guard let strongSelf = self else { return }
+      strongSelf.socialApps = apps ?? []
     }
 
     dispatchGroup.notify(queue: .main) {

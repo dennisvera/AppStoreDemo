@@ -65,10 +65,7 @@ extension AppsHorizontalCollectionViewController {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppsRowCollectionViewCellId,
                                                   for: indexPath) as! AppsRowCollectionViewCell
 
-    let app = appsFeedGroup?.feed.results[indexPath.row]
-    cell.nameLabel.text = app?.artistName
-    cell.companyLabel.text = app?.name
-    cell.appIconImageView.sd_setImage(with: URL(string: app?.artworkUrl100 ?? ""))
+    cell.app = appsFeedGroup?.feed.results[indexPath.item]
 
     return cell
   }

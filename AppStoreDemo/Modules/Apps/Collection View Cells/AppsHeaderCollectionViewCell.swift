@@ -13,21 +13,21 @@ class AppsHeaderCollectionViewCell: UICollectionViewCell {
 
   // MARK: - Properties
 
-  let companyLabel: UILabel = {
+  private let companyLabel: UILabel = {
     let label = UILabel()
     label.textColor = .blue
     label.font = .boldSystemFont(ofSize: 14)
     return label
   }()
 
-  let descriptionLabel: UILabel = {
+  private let descriptionLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 2
     label.font = .systemFont(ofSize: 24)
     return label
   }()
 
-  let imageView: UIImageView = {
+  private let imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 8
     imageView.clipsToBounds = true
