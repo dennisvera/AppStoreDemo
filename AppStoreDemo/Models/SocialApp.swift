@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SocialApp: Decodable {
+struct SocialApp: Decodable, Hashable {
 
   // MARK: - Properties
 

@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum AppSection {
+  case socialApps
+  case topGrossingApps
+}
+
 class AppsCompositionalCollectionViewController: UICollectionViewController {
   
   // MARK: - Properties
@@ -23,6 +28,15 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   private var appsGroup: AppGroup?
   private var appId: String?
   private var headerTitle: String?
+  
+  private lazy var diffableDataSource: UICollectionViewDiffableDataSource<AppSection, SocialApp> = .init(
+  collectionView: self.collectionView) { (collectionView, indexPath, socialApp) -> UICollectionViewCell? in
+    
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.appsHeaderCollectionViewCellId,
+                                                  for: indexPath) as! AppsHeaderCollectionViewCell
+    cell.socialApp = socialApp
+    return cell
+  }
   
   private let activityIndicatorView: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -57,8 +71,9 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     
     setupCollectionView()
-    setupActivityIndicator()
-    fetchAppsData()
+    setupDiffableDataSource()
+//    setupActivityIndicator()
+//    fetchAppsData()
   }
   
   // MARK: - Helper Mehtods
@@ -82,6 +97,22 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     view.addSubview(activityIndicatorView)
     activityIndicatorView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
+    }
+  }
+  
+  private func setupDiffableDataSource() {    
+    ServiceClient.shared.fetchSocialApps { [weak self] (socialApps, error) in
+      if let error = error {
+        print("Failed to Fetch Apps: ", error)
+        return
+      }
+      
+      guard let strongSelf = self else { return }
+      var snapshot = strongSelf.diffableDataSource.snapshot()
+      snapshot.appendSections([.socialApps])
+      snapshot.appendItems(socialApps ?? [], toSection: .socialApps)
+      
+      strongSelf.diffableDataSource.apply(snapshot)
     }
   }
   
@@ -189,73 +220,73 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
 extension AppsCompositionalCollectionViewController {
   
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 4
-  }
-
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    switch section {
-    case 0:
-      return socialApps.count
-    case 1:
-      return newAppsGroup?.feed.results.count ?? 0
-    case 2:
-      return topGrossingAppsGroup?.feed.results.count ?? 0
-    case 3:
-      return topFreeAppsGroup?.feed.results.count ?? 0
-    default:
-      print("No Apps to Display")
-    }
-    
     return 0
   }
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    switch indexPath.section {
-    case 0:
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsHeaderCollectionViewCellId,
-                                                    for: indexPath) as! AppsHeaderCollectionViewCell
-      
-      cell.socialApp = socialApps[indexPath.item]
-      return cell
-    default:
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsRowCollectionViewCellId,
-                                                    for: indexPath) as! AppsRowCollectionViewCell
-      
-      switch indexPath.section {
-      case 1:
-        appsGroup = newAppsGroup
-      case 2:
-        appsGroup = topGrossingAppsGroup
-      case 3:
-        appsGroup = topFreeAppsGroup
-      default:
-        print("No Cells to Display")
-      }
-      
-      cell.app = appsGroup?.feed.results[indexPath.item]
-      return cell
-    }
-  }
+//  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//    switch section {
+//    case 0:
+//      return socialApps.count
+//    case 1:
+//      return newAppsGroup?.feed.results.count ?? 0
+//    case 2:
+//      return topGrossingAppsGroup?.feed.results.count ?? 0
+//    case 3:
+//      return topFreeAppsGroup?.feed.results.count ?? 0
+//    default:
+//      print("No Apps to Display")
+//    }
+//
+//    return 0
+//  }
+
+//  override func collectionView(_ collectionView: UICollectionView,
+//                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//    switch indexPath.section {
+//    case 0:
+//      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsHeaderCollectionViewCellId,
+//                                                    for: indexPath) as! AppsHeaderCollectionViewCell
+//
+//      cell.socialApp = socialApps[indexPath.item]
+//      return cell
+//    default:
+//      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: appsRowCollectionViewCellId,
+//                                                    for: indexPath) as! AppsRowCollectionViewCell
+//
+//      switch indexPath.section {
+//      case 1:
+//        appsGroup = newAppsGroup
+//      case 2:
+//        appsGroup = topGrossingAppsGroup
+//      case 3:
+//        appsGroup = topFreeAppsGroup
+//      default:
+//        print("No Cells to Display")
+//      }
+//
+//      cell.app = appsGroup?.feed.results[indexPath.item]
+//      return cell
+//    }
+//  }
   
-  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    switch indexPath.section {
-    case 0:
-      appId = socialApps[indexPath.item].id
-    case 1:
-      appId = newAppsGroup?.feed.results[indexPath.item].id ?? ""
-    case 2:
-      appId = topGrossingAppsGroup?.feed.results[indexPath.item].id ?? ""
-    case 3:
-      appId = topFreeAppsGroup?.feed.results[indexPath.item].id ?? ""
-    default:
-      print("No Cells Selected")
-    }
-    
-    guard let appId = appId else { return }
-    let appsDetailController = AppsDetailCollectionViewController(appId: appId)
-    navigationController?.pushViewController(appsDetailController, animated: true)
-  }
+//  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//    switch indexPath.section {
+//    case 0:
+//      appId = socialApps[indexPath.item].id
+//    case 1:
+//      appId = newAppsGroup?.feed.results[indexPath.item].id ?? ""
+//    case 2:
+//      appId = topGrossingAppsGroup?.feed.results[indexPath.item].id ?? ""
+//    case 3:
+//      appId = topFreeAppsGroup?.feed.results[indexPath.item].id ?? ""
+//    default:
+//      print("No Cells Selected")
+//    }
+//
+//    guard let appId = appId else { return }
+//    let appsDetailController = AppsDetailCollectionViewController(appId: appId)
+//    navigationController?.pushViewController(appsDetailController, animated: true)
+//  }
 }
 
 // MARK: - CollectionViewHeader
