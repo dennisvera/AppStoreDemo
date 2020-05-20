@@ -132,12 +132,6 @@ class TodayCollectionViewController: UICollectionViewController {
       self.activityIndicatorView.stopAnimating()
       
       self.items = [
-        TodayItem(category: "DAILY LIST",
-                  title: self.topGrossingAppsGroup?.feed.title ?? "",
-                  image: #imageLiteral(resourceName: "gardenImage"),
-                  description: "",
-                  backgroundColor: .white, cellType: .multiple,
-                  apps: self.topGrossingAppsGroup?.feed.results ?? []),
         TodayItem(category: "LIFE HACK",
                   title: "Utilizing your Time",
                   image: #imageLiteral(resourceName: "gardenImage"),
@@ -145,17 +139,23 @@ class TodayCollectionViewController: UICollectionViewController {
                   backgroundColor: .white, cellType: .single,
                   apps: []),
         TodayItem(category: "DAILY LIST",
-                  title: self.newAppsGroup?.feed.title ?? "",
+                  title: self.topGrossingAppsGroup?.feed.title ?? "",
                   image: #imageLiteral(resourceName: "gardenImage"),
                   description: "",
                   backgroundColor: .white, cellType: .multiple,
-                  apps: self.newAppsGroup?.feed.results ?? []),
+                  apps: self.topGrossingAppsGroup?.feed.results ?? []),
         TodayItem(category: "HOLIDAYS",
                   title: "Travel on a Budget",
                   image: #imageLiteral(resourceName: "holiday_Image"),
                   description: "Find out all you need to know on how to travel without packing everything!",
                   backgroundColor: #colorLiteral(red: 0.988055408, green: 0.958909452, blue: 0.7275250554, alpha: 1), cellType: .single,
-                  apps: [])
+                  apps: []),
+        TodayItem(category: "DAILY LIST",
+                  title: self.newAppsGroup?.feed.title ?? "",
+                  image: #imageLiteral(resourceName: "gardenImage"),
+                  description: "",
+                  backgroundColor: .white, cellType: .multiple,
+                  apps: self.newAppsGroup?.feed.results ?? [])
       ]
       
       self.collectionView.reloadData()

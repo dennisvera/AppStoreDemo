@@ -123,7 +123,6 @@ class TodayCollectionViewCell: UICollectionViewCell {
     backgroundView?.layer.cornerRadius = 16
     backgroundColor = .white
     
-    
     // The shouldRasterize property helps with slow performace caused by the layer shadow
     // The downside is that the shouldRasterize property makes text and images look blurry and poor
     // The solution is to set the self.backgroundView = UIView() and have the layers set to self.backgroundView?.
