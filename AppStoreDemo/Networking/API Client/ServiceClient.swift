@@ -32,7 +32,7 @@ class ServiceClient {
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
   
-  // Itunes API endpoint for fetching app details
+  // Itunes API endpoint for fetching App Details
   func fetchApps(id: String, completion: @escaping (SearchResults?, Error?) -> Void) {
     let urlString = "https://itunes.apple.com/lookup?id=\(id)"
     

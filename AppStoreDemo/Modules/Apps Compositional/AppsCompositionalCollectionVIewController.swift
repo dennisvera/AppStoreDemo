@@ -13,6 +13,7 @@ enum AppSection {
   case newApps
   case topGrossingApps
   case topFreeApps
+  case topFreeAppsCopy
 }
 
 class AppsCompositionalCollectionViewController: UICollectionViewController {
@@ -88,6 +89,8 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     setupCollectionView()
     setupDiffableDataSource()
     setupActivityIndicator()
+    setupNavigationButton()
+    refreshController()
     //    fetchAppsData()
   }
   
@@ -108,11 +111,23 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     collectionView.register(AppsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: appsHeaderCollectionViewCellId)
   }
   
+  private func setupNavigationButton() {
+    navigationItem.rightBarButtonItem = .init(title: "Fecth New Section",
+                                              style: .plain,
+                                              target: self,
+                                              action: #selector(handleFetchNewSection))
+  }
+  
   private func setupActivityIndicator() {
     view.addSubview(activityIndicatorView)
     activityIndicatorView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
+  }
+  
+  private func refreshController() {
+    collectionView.refreshControl = UIRefreshControl()
+    collectionView.refreshControl?.addTarget(self, action: #selector(handleRefreshDeleteFreeAppsCopySection), for: .valueChanged)
   }
   
   // MARK: - Header DiffablDataSource
@@ -134,6 +149,8 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
         self.headerTitle = self.topGrossingAppsGroup?.feed.title
       case .topFreeApps:
         self.headerTitle = self.topFreeAppsGroup?.feed.title
+        case .topFreeAppsCopy:
+          self.headerTitle = self.topFreeAppsGroup?.feed.title
       default:
         print("No Titles to Display")
       }
@@ -212,14 +229,15 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
       guard let strongSelf = self else { return }
       strongSelf.topFreeAppsGroup = topFreeApps
       
-      // Append Top Grossing Apps
-      guard let topFreeApss = topFreeApps?.feed.results else { return }
-      snapshot.appendItems(topFreeApss, toSection: .topFreeApps)
+      // Append Top Free Apps
+      guard let topFreeApps = topFreeApps?.feed.results else { return }
+      snapshot.appendItems(topFreeApps, toSection: .topFreeApps)
       dispatchGroup.leave()
     }
     
     dispatchGroup.notify(queue: .main) {
       self.activityIndicatorView.stopAnimating()
+      self.collectionView.reloadData()
       
       // Apply Snapshot
       self.diffableDataSource.apply(snapshot)
@@ -247,7 +265,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   static private func layoutSectionTwo() -> NSCollectionLayoutSection {
     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .fractionalHeight(1/3)))
-    item.contentInsets = .init(top: 16, leading: 0, bottom: 16, trailing: 16)
+    item.contentInsets = .init(top: 10, leading: 0, bottom: 10, trailing: 16)
     
     let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
                                                                    heightDimension: .absolute(300)),
@@ -271,7 +289,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   @objc private func handleDeleteCell(button: UIButton) {
     var superview = button.superview
     
-    // Reach for the parent cell button getButton to acces the indexPath
+    // Reach for the parent cell button to access the indexPath
     while superview != nil {
       if let cell = superview as? UICollectionViewCell {
         guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
@@ -284,6 +302,33 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
       }
       superview = superview?.superview
     }
+  }
+  
+  @objc private func handleFetchNewSection() {
+    ServiceClient.shared.fetchTopFreeApps { [weak self] (topFreeApps, error) in
+      if let error = error {
+        print("Failed to Fetch Apps: ", error)
+        return
+      }
+      
+      // Append Top Free Apps
+      guard let strongSelf = self else { return }
+      var snapshot = strongSelf.diffableDataSource.snapshot()
+      snapshot.insertSections([.topFreeAppsCopy], afterSection: .socialApps)
+      
+      guard let topFreeApps = topFreeApps?.feed.results else { return }
+      snapshot.appendItems(topFreeApps, toSection: .topFreeAppsCopy)
+      
+      strongSelf.diffableDataSource.apply(snapshot)
+    }
+  }
+  
+  @objc private func handleRefreshDeleteFreeAppsCopySection() {
+    collectionView.refreshControl?.endRefreshing()
+    
+    var snapshot = diffableDataSource.snapshot()
+    snapshot.deleteSections([.topFreeAppsCopy])
+    diffableDataSource.apply(snapshot)
   }
 }
 
