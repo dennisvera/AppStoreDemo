@@ -18,6 +18,12 @@ class AppsCompositionalHeaderReusableView: UICollectionReusableView {
     label.font = .boldSystemFont(ofSize: 28)
     return label
   }()
+  
+  private let separatorLineView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
+    return view
+  }()
 
    // MARK: - Initialization
   
@@ -33,10 +39,17 @@ class AppsCompositionalHeaderReusableView: UICollectionReusableView {
   
   // MARK: - Helper Methods
   
-  private func setupViews() {    
+  private func setupViews() {
+    addSubview(separatorLineView)
+    separatorLineView.snp.makeConstraints { make in
+      make.top.leading.trailing.equalToSuperview()
+        make.height.equalTo(0.5)
+    }
+    
     addSubview(titleLabel)
     titleLabel.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.top.equalTo(separatorLineView.snp.bottom).offset(10)
+      make.leading.trailing.equalToSuperview()
     }
   }
 }

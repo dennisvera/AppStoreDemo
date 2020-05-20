@@ -43,7 +43,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.appsRowCollectionViewCellId,
                                                     for: indexPath) as! AppsRowCollectionViewCell
       cell.app = groupApps
-
+      
       return cell
     }
     
@@ -57,7 +57,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     activityIndicator.hidesWhenStopped = true
     return activityIndicator
   }()
-
+  
   // MARK: - Initialization
   
   init() {
@@ -84,8 +84,8 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     
     setupCollectionView()
     setupDiffableDataSource()
-//    setupActivityIndicator()
-//    fetchAppsData()
+    setupActivityIndicator()
+    //    fetchAppsData()
   }
   
   // MARK: - Helper Mehtods
@@ -111,6 +111,8 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
       make.edges.equalToSuperview()
     }
   }
+  
+  // MARK: - Header DiffablDataSource
   
   private func setupHeaderDiffableDataSource() {
     diffableDataSource.supplementaryViewProvider = .some({ (collectionView, kind, indexPath) -> UICollectionReusableView? in
@@ -138,126 +140,86 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     })
   }
   
-  private func setupDiffableDataSource() {
-    collectionView.dataSource = diffableDataSource
-    
+  // MARK: - Sections DiffablDataSource & Fetch Data
+  
+  private func setupDiffableDataSource() {    
     // Setup Header 
     setupHeaderDiffableDataSource()
     
-    // Fetch Apps Data
+    // Instantiate Diffable Snapshot
+    var snapshot = self.diffableDataSource.snapshot()
+    
+    // Append Sections
+    snapshot.appendSections([.socialApps, .newApps, .topGrossingApps, .topFreeApps])
+    
+    // Instantiate DispatchGroup
+    let dispatchGroup = DispatchGroup()
+    
+    dispatchGroup.enter()
     ServiceClient.shared.fetchSocialApps { (socialApps, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
       
-      ServiceClient.shared.fetcNewApps { (newApps, error) in
-        if let error = error {
-          print("Failed to Fetch Apps: ", error)
-          return
-        }
-        
-        self.newAppsGroup = newApps
-        
-        ServiceClient.shared.fetchTopGrossingApps { (topGrossingApps, error) in
-          if let error = error {
-            print("Failed to Fetch Apps: ", error)
-            return
-          }
-          
-          self.topGrossingAppsGroup = topGrossingApps
-          
-          ServiceClient.shared.fetchTopFreeApps { (topFreeApps, error) in
-            if let error = error {
-              print("Failed to Fetch Apps: ", error)
-              return
-            }
-            
-            self.topFreeAppsGroup = topFreeApps
-            
-            var snapshot = self.diffableDataSource.snapshot()
-            
-            // Append Sections
-            snapshot.appendSections([.socialApps, .newApps, .topGrossingApps, .topFreeApps])
-            
-            // Append Social Apps
-            snapshot.appendItems(socialApps ?? [], toSection: .socialApps)
-            
-            // Append New Apps
-            guard let newApps = newApps?.feed.results else { return }
-            snapshot.appendItems(newApps, toSection: .newApps)
-            
-            // Append Top Grossing Apps Apps
-            guard let topGrossingApps = topGrossingApps?.feed.results else { return }
-            snapshot.appendItems(topGrossingApps, toSection: .topGrossingApps)
-            
-            // Append Top Grossing Apps Apps
-            guard let topFreeApss = topFreeApps?.feed.results else { return }
-            snapshot.appendItems(topFreeApss, toSection: .topFreeApps)
-            
-            // Apply Snapshot
-            self.diffableDataSource.apply(snapshot)
-          }
-        }
-      }
+      // Append Social Apps
+      snapshot.appendItems(socialApps ?? [], toSection: .socialApps)
+      dispatchGroup.leave()
     }
-  }
-  
-  private func fetchAppsData() {
-    let dispatchGroup = DispatchGroup()
     
     dispatchGroup.enter()
-    ServiceClient.shared.fetchSocialApps { [weak self] (socialApps, error) in
+    ServiceClient.shared.fetcNewApps { [weak self] (newApps, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
       
-      dispatchGroup.leave()
       guard let strongSelf = self else { return }
-      strongSelf.socialApps = socialApps ?? []
+      strongSelf.newAppsGroup = newApps
+      
+      // Append New Apps
+      guard let newApps = newApps?.feed.results else { return }
+      snapshot.appendItems(newApps, toSection: .newApps)
+      dispatchGroup.leave()
     }
     
     dispatchGroup.enter()
-    ServiceClient.shared.fetcNewApps { [weak self] (newAppsGroup, error) in
+    ServiceClient.shared.fetchTopGrossingApps { [weak self] (topGrossingApps, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
       
-      dispatchGroup.leave()
       guard let strongSelf = self else { return }
-      strongSelf.newAppsGroup = newAppsGroup
+      strongSelf.topGrossingAppsGroup = topGrossingApps
+      
+      // Append Top Grossing Apps
+      guard let topGrossingApps = topGrossingApps?.feed.results else { return }
+      snapshot.appendItems(topGrossingApps, toSection: .topGrossingApps)
+      dispatchGroup.leave()
     }
     
     dispatchGroup.enter()
-    ServiceClient.shared.fetchTopGrossingApps { [weak self] (topGrossingAppGroup, error) in
+    ServiceClient.shared.fetchTopFreeApps { [weak self] (topFreeApps, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
       
-      dispatchGroup.leave()
       guard let strongSelf = self else { return }
-      strongSelf.topGrossingAppsGroup = topGrossingAppGroup
+      strongSelf.topFreeAppsGroup = topFreeApps
+      
+      // Append Top Grossing Apps
+      guard let topFreeApss = topFreeApps?.feed.results else { return }
+      snapshot.appendItems(topFreeApss, toSection: .topFreeApps)
+      dispatchGroup.leave()
     }
     
-    dispatchGroup.enter()
-    ServiceClient.shared.fetchTopFreeApps { [weak self] (topFreeAppsGroup, error) in
-      if let error = error {
-         print("Failed to Fetch Apps: ", error)
-         return
-       }
-       
-       dispatchGroup.leave()
-       guard let strongSelf = self else { return }
-      strongSelf.topFreeAppsGroup = topFreeAppsGroup
-    }
-    
-    // Completion
     dispatchGroup.notify(queue: .main) {
       self.activityIndicatorView.stopAnimating()
-      self.collectionView.reloadData()
+      
+      // Apply Snapshot
+      self.diffableDataSource.apply(snapshot)
     }
   }
   
@@ -274,7 +236,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .groupPaging
-    section.contentInsets.leading = 16
+    section.contentInsets = .init(top: 0, leading: 16, bottom: 10, trailing: 0)
     
     return section
   }
@@ -282,7 +244,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
   static private func layoutSectionTwo() -> NSCollectionLayoutSection {
     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .fractionalHeight(1/3)))
-    item.contentInsets = .init(top: 20, leading: 0, bottom: 16, trailing: 16)
+    item.contentInsets = .init(top: 16, leading: 0, bottom: 16, trailing: 16)
     
     let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
                                                                    heightDimension: .absolute(300)),
@@ -290,17 +252,76 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .groupPaging
-    section.contentInsets.leading = 16
+    section.contentInsets = .init(top: 0, leading: 16, bottom: 10, trailing: 0)
     
     let headerKind = UICollectionView.elementKindSectionHeader
     section.boundarySupplementaryItems = [ .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                   heightDimension: .absolute(50)),
+                                                                   heightDimension: .absolute(60)),
                                                  elementKind: headerKind,
                                                  alignment: .topLeading)]
     
     return section
   }
 }
+  
+//  private func fetchAppsData() {
+//    let dispatchGroup = DispatchGroup()
+//
+//    dispatchGroup.enter()
+//    ServiceClient.shared.fetchSocialApps { [weak self] (socialApps, error) in
+//      if let error = error {
+//        print("Failed to Fetch Apps: ", error)
+//        return
+//      }
+//
+//      dispatchGroup.leave()
+//      guard let strongSelf = self else { return }
+//      strongSelf.socialApps = socialApps ?? []
+//    }
+//
+//    dispatchGroup.enter()
+//    ServiceClient.shared.fetcNewApps { [weak self] (newAppsGroup, error) in
+//      if let error = error {
+//        print("Failed to Fetch Apps: ", error)
+//        return
+//      }
+//
+//      dispatchGroup.leave()
+//      guard let strongSelf = self else { return }
+//      strongSelf.newAppsGroup = newAppsGroup
+//    }
+//
+//    dispatchGroup.enter()
+//    ServiceClient.shared.fetchTopGrossingApps { [weak self] (topGrossingAppGroup, error) in
+//      if let error = error {
+//        print("Failed to Fetch Apps: ", error)
+//        return
+//      }
+//
+//      dispatchGroup.leave()
+//      guard let strongSelf = self else { return }
+//      strongSelf.topGrossingAppsGroup = topGrossingAppGroup
+//    }
+//
+//    dispatchGroup.enter()
+//    ServiceClient.shared.fetchTopFreeApps { [weak self] (topFreeAppsGroup, error) in
+//      if let error = error {
+//        print("Failed to Fetch Apps: ", error)
+//        return
+//      }
+//
+//      dispatchGroup.leave()
+//      guard let strongSelf = self else { return }
+//      strongSelf.topFreeAppsGroup = topFreeAppsGroup
+//    }
+//
+//    // Completion
+//    dispatchGroup.notify(queue: .main) {
+//      self.activityIndicatorView.stopAnimating()
+//      self.collectionView.reloadData()
+//    }
+//  }
+//}
 
 // MARK: UICollectionViewDataSource
 
@@ -355,7 +376,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
 //      return cell
 //    }
 //  }
-  
+
 //  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //    switch indexPath.section {
 //    case 0:
@@ -401,4 +422,3 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
 //    return header
 //  }
 //}
-
