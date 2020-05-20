@@ -38,11 +38,14 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.appsHeaderCollectionViewCellId,
                                                     for: indexPath) as! AppsHeaderCollectionViewCell
       cell.socialApp = socialApps
+      
       return cell
     } else if let groupApps = object as? FeedResult {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.appsRowCollectionViewCellId,
                                                     for: indexPath) as! AppsRowCollectionViewCell
       cell.app = groupApps
+      cell.getButton.setTitle("Delete", for: .normal)
+      cell.getButton.addTarget(self, action: #selector(self.handleDeleteCell), for: .primaryActionTriggered)
       
       return cell
     }
@@ -262,8 +265,48 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     
     return section
   }
-}
   
+  // MARK: - Actions
+  
+  @objc private func handleDeleteCell(button: UIButton) {
+    var superview = button.superview
+    
+    // Reach for the parent cell button getButton to acces the indexPath
+    while superview != nil {
+      if let cell = superview as? UICollectionViewCell {
+        guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+        guard let selectedIndexPath = diffableDataSource.itemIdentifier(for: indexPath) else { return }
+        
+        // Delete selected cell
+        var snapshot = diffableDataSource.snapshot()
+        snapshot.deleteItems([selectedIndexPath])
+        diffableDataSource.apply(snapshot)
+      }
+      superview = superview?.superview
+    }
+  }
+}
+
+// MARK: UICollectionViewDataSource
+
+extension AppsCompositionalCollectionViewController {
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let itemIdentifier = diffableDataSource.itemIdentifier(for: indexPath)
+    
+    if let app = itemIdentifier as? SocialApp {
+      self.appId = app.id
+    } else if let app = itemIdentifier as? FeedResult {
+      self.appId = app.id
+    }
+    
+    let appsDetailController = AppsDetailCollectionViewController(appId: self.appId ?? "")
+    navigationController?.pushViewController(appsDetailController, animated: true)
+  }
+}
+
+// MARK: -
+
 //  private func fetchAppsData() {
 //    let dispatchGroup = DispatchGroup()
 //

@@ -33,7 +33,7 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
     return label
   }()
 
-  private let getBUtton: UIButton = {
+  let getButton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle("GET", for: .normal)
     button.setTitleColor(.blue, for: .normal)
@@ -73,8 +73,8 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
       make.width.height.equalTo(64)
     }
     
-    addSubview(getBUtton)
-    getBUtton.snp.makeConstraints { make in
+    addSubview(getButton)
+    getButton.snp.makeConstraints { make in
       make.centerX.centerY.equalToSuperview()
       make.width.equalTo(80)
       make.height.equalTo(32)
@@ -84,7 +84,7 @@ class AppsRowCollectionViewCell: UICollectionViewCell {
     labelsStackView.axis = .vertical
     labelsStackView.spacing = 4
     
-    let mainStackView = UIStackView(arrangedSubviews: [appIconImageView, labelsStackView, getBUtton])
+    let mainStackView = UIStackView(arrangedSubviews: [appIconImageView, labelsStackView, getButton])
     mainStackView.axis = .horizontal
     mainStackView.alignment = .center
     mainStackView.spacing = 16
