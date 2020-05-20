@@ -18,6 +18,7 @@ class TodaySingleAppFullScreenViewController: UIViewController {
   let tableView = UITableView(frame: .zero, style: .plain)
   
   private let floatingContainerView = UIView()
+  private let floatingContainerViewHeight: CGFloat = 90
   private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
 
   private let categoryLabel: UILabel = {
@@ -114,7 +115,7 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     floatingContainerView.snp.makeConstraints { make in
       make.leading.equalToSuperview().offset(16)
       make.trailing.equalToSuperview().offset(-16)
-      make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(90)
+      make.bottom.equalToSuperview().offset(floatingContainerViewHeight)
       make.height.equalTo(90)
     }
     
@@ -158,7 +159,9 @@ class TodaySingleAppFullScreenViewController: UIViewController {
                    initialSpringVelocity: 0.7,
                    options: .curveEaseOut,
                    animations: {
-                    self.floatingContainerView.transform = .init(translationX: 0, y: -90)
+                    let statusBarFrameHeight = self.view.window?.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0
+                    let floatingContainerHeight = -self.floatingContainerViewHeight - statusBarFrameHeight
+                    self.floatingContainerView.transform = .init(translationX: 0, y: floatingContainerHeight)
     })
   }
   
@@ -171,8 +174,8 @@ class TodaySingleAppFullScreenViewController: UIViewController {
     }
     
     let statusBarFrameHeight = self.view.window?.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0
-    let translationY = -90 - statusBarFrameHeight
-    let transform = scrollView.contentOffset.y > 100 ? CGAffineTransform(translationX: 0, y: translationY) : .identity
+    let translationY = -floatingContainerViewHeight - statusBarFrameHeight
+    let transform = scrollView.contentOffset.y > 0 ? CGAffineTransform(translationX: 0, y: translationY) : .identity
     UIView.animate(withDuration: 0.7,
                    delay: 0,
                    usingSpringWithDamping: 0.7,

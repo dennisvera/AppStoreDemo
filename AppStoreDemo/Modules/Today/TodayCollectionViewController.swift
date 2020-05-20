@@ -236,7 +236,7 @@ class TodayCollectionViewController: UICollectionViewController {
                     // Starts Animation
                     self.view.layoutIfNeeded()
                     
-                    self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
+                    self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height
                     
                     // Set the TodayCollectionViewCell topConstraint below the status bar to 48pts
                     guard let cell = self.singleAppFullScreenController.tableView.cellForRow(at: [0, 0]) as? TodaySingleAppFullScreenHeaderTableViewCell else { return }
