@@ -93,9 +93,6 @@ class TodaySingleAppFullScreenViewController: UIViewController {
   }
   
   private func setupDismissButton() {
-    // BUG: the button is being blocked by the navigationbar, not tappable
-    // I set the button top constraint to 140 to get access to the button
-    // This needs to be resolved by properly removing the navigationbar
     view.addSubview(dismissButton)
     dismissButton.snp.makeConstraints { make in
       make.top.equalTo(view.safeAreaLayoutGuide.snp.top)

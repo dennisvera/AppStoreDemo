@@ -63,6 +63,7 @@ class TodayCollectionViewController: UICollectionViewController {
     // TODO - SOLUTION IS NOT WORKING
     // SOLUTIION: This fixes the bug of the tab bar not anchoring down when seguing back to the controller
     tabBarController?.tabBar.superview?.setNeedsLayout()
+    navigationController?.setNavigationBarHidden(true, animated: animated)
   }
   
   // MARK: - Helper Methods
@@ -412,9 +413,8 @@ extension TodayCollectionViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       insetForSectionAt section: Int) -> UIEdgeInsets {
-    let minusNavigationBarAndPadding: CGFloat = -80
     
-    return .init(top: minusNavigationBarAndPadding, left: 0, bottom: 32, right: 0)
+    return .init(top: 32, left: 0, bottom: 32, right: 0)
   }
 }
 

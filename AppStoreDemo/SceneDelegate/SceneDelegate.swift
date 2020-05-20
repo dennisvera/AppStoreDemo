@@ -18,14 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   // MARK: - Application Life Cycle
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-    if let windowScene = scene as? UIWindowScene {
-      window = UIWindow(windowScene: windowScene)
-      window?.makeKeyAndVisible()
-      window?.rootViewController = BaseTabBarController()
-      
-      // Launch the SwiftUI Compositional Controller
-      //      window?.rootViewController = UINavigationController(rootViewController: AppsCompositionalCollectionViewController())
-    }
+    guard let windowScene = scene as? UIWindowScene else { return }
+    window = UIWindow(windowScene: windowScene)
+    window?.rootViewController = BaseTabBarController()
+    window?.makeKeyAndVisible()
+    
+    // Launch the SwiftUI Compositional Controller
+    //      window?.rootViewController = UINavigationController(rootViewController: AppsCompositionalCollectionViewController())
   }
 
   func sceneDidDisconnect(_ scene: UIScene) {
