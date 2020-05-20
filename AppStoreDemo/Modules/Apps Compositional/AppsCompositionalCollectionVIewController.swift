@@ -10,7 +10,7 @@ import UIKit
 
 enum AppSection {
   case socialApps
-  case newApps
+  case topNewApps
   case topGrossingApps
   case topFreeApps
   case topFreeAppsCopy
@@ -143,7 +143,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
       let section = snapshot.sectionIdentifier(containingItem: object!)
       
       switch section {
-      case .newApps:
+      case .topNewApps:
         self.headerTitle = self.newAppsGroup?.feed.title
       case .topGrossingApps:
         self.headerTitle = self.topGrossingAppsGroup?.feed.title
@@ -170,7 +170,7 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     var snapshot = self.diffableDataSource.snapshot()
     
     // Append Sections
-    snapshot.appendSections([.socialApps, .newApps, .topGrossingApps, .topFreeApps])
+    snapshot.appendSections([.socialApps, .topNewApps, .topGrossingApps, .topFreeApps])
     
     // Instantiate DispatchGroup
     let dispatchGroup = DispatchGroup()
@@ -188,18 +188,18 @@ class AppsCompositionalCollectionViewController: UICollectionViewController {
     }
     
     dispatchGroup.enter()
-    ServiceClient.shared.fetcNewApps { [weak self] (newApps, error) in
+    ServiceClient.shared.fetchTopNewApps { [weak self] (topNewApps, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
       }
       
       guard let strongSelf = self else { return }
-      strongSelf.newAppsGroup = newApps
+      strongSelf.newAppsGroup = topNewApps
       
       // Append New Apps
-      guard let newApps = newApps?.feed.results else { return }
-      snapshot.appendItems(newApps, toSection: .newApps)
+      guard let newApps = topNewApps?.feed.results else { return }
+      snapshot.appendItems(newApps, toSection: .topNewApps)
       dispatchGroup.leave()
     }
     

@@ -58,7 +58,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchBarDel
   }
 
   private func fetchItunesApps() {
-    ServiceClient.shared.fetchApps(searchTerm: instagram) { [weak self] search, error in
+    ServiceClient.shared.fetchAppsWith(searchTerm: instagram) { [weak self] search, error in
       guard let strongSelf = self else {return }
 
       if let error = error {
@@ -86,7 +86,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchBarDel
     // Set a delay before performing a search -- Timer throttling after 0.5 sec
     timer?.invalidate()
     timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-      ServiceClient.shared.fetchApps(searchTerm: searchText) { [weak self] search, error in
+      ServiceClient.shared.fetchAppsWith(searchTerm: searchText) { [weak self] search, error in
         guard let strongSelf = self else {return }
         if let error = error {
           print("Failed to Fetch Apps: ", error)

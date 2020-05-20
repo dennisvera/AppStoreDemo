@@ -114,7 +114,7 @@ class TodayCollectionViewController: UICollectionViewController {
     
     // Starts Second DispatchGroup
     disptachGroup.enter()
-    ServiceClient.shared.fetcNewApps { [weak self] (appsGroup, error)  in
+    ServiceClient.shared.fetchTopNewApps { [weak self] (appsGroup, error)  in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return

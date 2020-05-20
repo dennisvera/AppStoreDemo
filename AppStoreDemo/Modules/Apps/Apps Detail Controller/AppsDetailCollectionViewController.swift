@@ -56,7 +56,7 @@ class AppsDetailCollectionViewController: UICollectionViewController {
   }
   
   private func fetchData() {
-    ServiceClient.shared.fetchApps(id: appId) { [weak self] result, error in
+    ServiceClient.shared.fetchAppWith(id: appId) { [weak self] result, error in
       guard let strongSelf = self else { return }
       if let error = error {
         print("Failed to Fetch Apps: ", error)

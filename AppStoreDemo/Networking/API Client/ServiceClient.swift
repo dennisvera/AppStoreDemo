@@ -24,16 +24,16 @@ class ServiceClient {
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
 
-  // Itunes API endpoint for Searching Apps
-  func fetchApps(searchTerm: String, completion: @escaping (SearchResults?, Error?) -> Void) {
+  // Itunes API endpoint for Searching Apps by Name
+  func fetchAppsWith(searchTerm: String, completion: @escaping (SearchResults?, Error?) -> Void) {
     guard let searchTerm = searchTerm.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return }
     let urlString = "https://itunes.apple.com/search?term=\(searchTerm)&entity=software"
 
     fetchGenericJsonData(urlString: urlString, completion: completion)
   }
   
-  // Itunes API endpoint for fetching App Details
-  func fetchApps(id: String, completion: @escaping (SearchResults?, Error?) -> Void) {
+  // Itunes API endpoint for fetching App with Id
+  func fetchAppWith(id: String, completion: @escaping (SearchResults?, Error?) -> Void) {
     let urlString = "https://itunes.apple.com/lookup?id=\(id)"
     
     fetchGenericJsonData(urlString: urlString, completion: completion)
@@ -47,7 +47,7 @@ class ServiceClient {
   }
 
   // Itunes API endpoint for fetching Free New Apps
-  func fetcNewApps(completion: @escaping (AppGroup?, Error?) -> Void) {
+  func fetchTopNewApps(completion: @escaping (AppGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/25/explicit.json"
 
     fetchGenericJsonData(urlString: urlString, completion: completion)

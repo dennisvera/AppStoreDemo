@@ -76,7 +76,7 @@ class AppsCollectionViewController: UICollectionViewController {
     let dispatchGroup = DispatchGroup()
 
     dispatchGroup.enter()
-    ServiceClient.shared.fetcNewApps { [weak self] (appGroup, error) in
+    ServiceClient.shared.fetchTopNewApps { [weak self] (appGroup, error) in
       if let error = error {
         print("Failed to Fetch Apps: ", error)
         return
